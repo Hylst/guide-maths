@@ -1,0 +1,28 @@
+<svg width="600" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#fffbeb" />
+  <text x="50%" y="30" font-family="Arial" font-size="22" font-weight="bold" fill="#b45309" text-anchor="middle">L'Urne et les Probabilités</text>
+  
+  <!-- L'urne -->
+  <path d="M 200 100 L 200 250 Q 200 280 250 280 L 350 280 Q 400 280 400 250 L 400 100 Z" fill="#e2e8f0" stroke="#475569" stroke-width="4" />
+  <ellipse cx="300" cy="100" rx="100" ry="20" fill="#cbd5e1" stroke="#475569" stroke-width="4" />
+  
+  <!-- Les boules (3 Rouges, 2 Bleues, 1 Verte) -->
+  <!-- Rouges -->
+  <circle cx="250" cy="240" r="20" fill="#ef4444" stroke="#b91c1c" stroke-width="2" />
+  <circle cx="300" cy="250" r="20" fill="#ef4444" stroke="#b91c1c" stroke-width="2" />
+  <circle cx="350" cy="230" r="20" fill="#ef4444" stroke="#b91c1c" stroke-width="2" />
+  
+  <!-- Bleues -->
+  <circle cx="270" cy="190" r="20" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2" />
+  <circle cx="330" cy="180" r="20" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2" />
+  
+  <!-- Verte -->
+  <circle cx="300" cy="140" r="20" fill="#10b981" stroke="#047857" stroke-width="2" />
+  
+  <!-- Explications -->
+  <text x="100" y="150" font-family="Arial" font-size="16" font-weight="bold" fill="#0f172a">Total : 6 boules</text>
+  
+  <text x="450" y="150" font-family="Arial" font-size="16" font-weight="bold" fill="#ef4444">P(Rouge) = 3/6 = 1/2</text>
+  <text x="450" y="190" font-family="Arial" font-size="16" font-weight="bold" fill="#3b82f6">P(Bleue) = 2/6 = 1/3</text>
+  <text x="450" y="230" font-family="Arial" font-size="16" font-weight="bold" fill="#10b981">P(Verte) = 1/6</text>
+</svg>

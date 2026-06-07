@@ -1,0 +1,19 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cube de 1000 (10x10x10) -->
+  <g transform="translate(20, 40)">
+    <!-- Face avant -->
+    <rect x="0" y="30" width="80" height="80" fill="#fde68a" stroke="#d97706" stroke-width="1"/>
+    <!-- Face dessus -->
+    <path d="M 0 30 L 30 0 L 110 0 L 80 30 Z" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+    <!-- Face droite -->
+    <path d="M 80 30 L 110 0 L 110 80 L 80 110 Z" fill="#fbbf24" stroke="#d97706" stroke-width="1"/>
+    
+    <!-- Grillage pour suggérer les 1000 unités -->
+    <line x1="0" y1="38" x2="80" y2="38" stroke="#d97706" stroke-width="0.5" opacity="0.3"/>
+    <line x1="0" y1="46" x2="80" y2="46" stroke="#d97706" stroke-width="0.5" opacity="0.3"/>
+    <line x1="8" y1="30" x2="8" y2="110" stroke="#d97706" stroke-width="0.5" opacity="0.3"/>
+    <line x1="16" y1="30" x2="16" y2="110" stroke="#d97706" stroke-width="0.5" opacity="0.3"/>
+    
+    <text x="55" y="130" font-family="Arial" font-size="14" fill="#1e293b" text-anchor="middle" font-weight="bold">1 000 (Le Millier)</text>
+  </g>
+</svg>

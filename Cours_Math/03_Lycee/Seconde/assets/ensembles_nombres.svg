@@ -1,0 +1,22 @@
+<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .set { fill-opacity: 0.1; stroke-width: 2; animation: fadeIn 2s ease-in-out infinite alternate; }
+    .text { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: bold; }
+    @keyframes fadeIn { from { opacity: 0.5; } to { opacity: 1; } }
+  </style>
+  <!-- R -->
+  <ellipse cx="400" cy="200" rx="350" ry="180" fill="#3b82f6" stroke="#2563eb" class="set"/>
+  <text x="70" y="200" class="text" fill="#1e3a8a">ℝ (Réels)</text>
+  <!-- Q -->
+  <ellipse cx="430" cy="200" rx="280" ry="150" fill="#10b981" stroke="#059669" class="set"/>
+  <text x="180" y="200" class="text" fill="#064e3b">ℚ (Rationnels)</text>
+  <!-- D -->
+  <ellipse cx="460" cy="200" rx="210" ry="120" fill="#f59e0b" stroke="#d97706" class="set"/>
+  <text x="280" y="200" class="text" fill="#78350f">𝔻 (Décimaux)</text>
+  <!-- Z -->
+  <ellipse cx="490" cy="200" rx="140" ry="90" fill="#8b5cf6" stroke="#6d28d9" class="set"/>
+  <text x="380" y="200" class="text" fill="#4c1d95">ℤ (Entiers relatifs)</text>
+  <!-- N -->
+  <ellipse cx="520" cy="200" rx="70" ry="50" fill="#ec4899" stroke="#db2777" class="set"/>
+  <text x="490" y="205" class="text" fill="#831843">ℕ (Naturels)</text>
+</svg>

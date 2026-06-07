@@ -1,0 +1,31 @@
+<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .axis { stroke: #94a3b8; stroke-width: 2; marker-end: url(#arrow); }
+    .asymptote { stroke: #f43f5e; stroke-width: 2; stroke-dasharray: 5; }
+    .curve { stroke: #3b82f6; stroke-width: 3; fill: none; stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: draw 4s ease-in-out infinite alternate; }
+    .label { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: bold; fill: #334155; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/></marker>
+  </defs>
+  <rect width="600" height="400" fill="#ffffff" />
+  
+  <!-- Axes -->
+  <line x1="50" y1="350" x2="550" y2="350" class="axis"/>
+  <line x1="100" y1="380" x2="100" y2="50" class="axis"/>
+  
+  <!-- Asymptotes -->
+  <line x1="200" y1="380" x2="200" y2="50" class="asymptote"/>
+  <text x="210" y="70" class="label" fill="#f43f5e">x = a (A.V.)</text>
+  
+  <line x1="50" y1="150" x2="550" y2="150" class="asymptote"/>
+  <text x="450" y="140" class="label" fill="#f43f5e">y = L (A.H.)</text>
+  
+  <!-- Curve f(x) = L + 1/(x-a) -->
+  <path d="M 210 50 Q 220 140 300 145 T 550 148" class="curve" />
+  <path d="M 50 350 Q 180 340 190 380" class="curve" />
+  
+  <text x="350" y="120" class="label" fill="#3b82f6">lim f(x) = L quand x -> +∞</text>
+  <text x="50" y="320" class="label" fill="#3b82f6">lim f(x) = -∞ quand x -> a</text>
+</svg>

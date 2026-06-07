@@ -1,0 +1,32 @@
+<svg width="600" height="250" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#fef2f2" />
+  <text x="50%" y="30" font-family="Arial" font-size="22" font-weight="bold" fill="#7f1d1d" text-anchor="middle">Multiplication de Fractions</text>
+  
+  <!-- Formule générale -->
+  <g transform="translate(150, 80)">
+    <!-- Fraction 1 -->
+    <text x="20" y="20" font-family="Courier New" font-size="24" font-weight="bold" fill="#2563eb">a</text>
+    <line x1="10" y1="30" x2="40" y2="30" stroke="#0f172a" stroke-width="3" />
+    <text x="20" y="55" font-family="Courier New" font-size="24" font-weight="bold" fill="#dc2626">b</text>
+    
+    <!-- Signe multiplier -->
+    <text x="60" y="40" font-family="Arial" font-size="24" font-weight="bold" fill="#0f172a">×</text>
+    
+    <!-- Fraction 2 -->
+    <text x="100" y="20" font-family="Courier New" font-size="24" font-weight="bold" fill="#2563eb">c</text>
+    <line x1="90" y1="30" x2="120" y2="30" stroke="#0f172a" stroke-width="3" />
+    <text x="100" y="55" font-family="Courier New" font-size="24" font-weight="bold" fill="#dc2626">d</text>
+    
+    <!-- Signe égal -->
+    <text x="140" y="40" font-family="Arial" font-size="24" font-weight="bold" fill="#0f172a">=</text>
+    
+    <!-- Résultat -->
+    <text x="200" y="20" font-family="Courier New" font-size="24" font-weight="bold" fill="#2563eb">a × c</text>
+    <line x1="170" y1="30" x2="260" y2="30" stroke="#0f172a" stroke-width="3" />
+    <text x="200" y="55" font-family="Courier New" font-size="24" font-weight="bold" fill="#dc2626">b × d</text>
+  </g>
+  
+  <!-- Explication texte -->
+  <text x="300" y="180" font-family="Arial" font-size="18" fill="#7f1d1d" text-anchor="middle">On multiplie les numérateurs entre eux (en haut)</text>
+  <text x="300" y="210" font-family="Arial" font-size="18" fill="#7f1d1d" text-anchor="middle">ET on multiplie les dénominateurs entre eux (en bas)</text>
+</svg>

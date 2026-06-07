@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <defs>
+    <style>
+      .set { fill: #f8fafc; stroke: #94a3b8; stroke-width: 2; rx: 40; }
+      .subset-ker { fill: #fecaca; stroke: #ef4444; stroke-width: 2; rx: 20; }
+      .subset-im { fill: #d1fae5; stroke: #10b981; stroke-width: 2; rx: 20; }
+      .point { fill: #334155; }
+      .point-zero { fill: #ef4444; }
+      .arrow { stroke: #4f46e5; stroke-width: 2; fill: none; marker-end: url(#arrow-head); }
+      .arrow-ker { stroke: #ef4444; stroke-width: 2; stroke-dasharray: 4 4; fill: none; marker-end: url(#arrow-head-red); }
+      .text-label { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: bold; }
+      .text-math { font-family: 'JetBrains Mono', monospace; font-size: 14px; }
+      
+      /* Animations */
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes drawArrow { from { stroke-dasharray: 0 300; } to { stroke-dasharray: 300 300; } }
+      @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+      
+      .anim-fade { animation: fadeIn 1s ease-out forwards; opacity: 0; }
+      .anim-arrow { animation: drawArrow 1.5s ease-out forwards; }
+      .anim-pulse { animation: pulse 2s infinite ease-in-out; transform-origin: center; }
+      
+      .delay-1 { animation-delay: 0.5s; }
+      .delay-2 { animation-delay: 1.5s; }
+      .delay-3 { animation-delay: 2.5s; }
+      .delay-4 { animation-delay: 3.5s; }
+      .delay-5 { animation-delay: 4.5s; }
+    </style>
+    <marker id="arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4f46e5"/>
+    </marker>
+    <marker id="arrow-head-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="400" fill="#ffffff" />
+
+  <!-- Title -->
+  <text x="300" y="30" class="text-label anim-fade" fill="#1e293b" text-anchor="middle" font-size="18px">Noyau et Image d'une application linéaire f</text>
+
+  <!-- Sets E and F -->
+  <g class="anim-fade delay-1">
+    <!-- Set E (Domain) -->
+    <rect x="50" y="80" width="200" height="240" class="set" />
+    <text x="150" y="110" class="text-label" fill="#334155" text-anchor="middle">Espace de départ E</text>
+    
+    <!-- Set F (Codomain) -->
+    <rect x="350" y="80" width="200" height="240" class="set" />
+    <text x="450" y="110" class="text-label" fill="#334155" text-anchor="middle">Espace d'arrivée F</text>
+    
+    <!-- Function f -->
+    <path d="M 260 200 Q 300 150 340 200" class="arrow" stroke-dasharray="300" />
+    <text x="300" y="170" class="text-label" fill="#4f46e5" text-anchor="middle">f</text>
+  </g>
+
+  <!-- Kernel (Noyau) -->
+  <g class="anim-fade delay-2">
+    <rect x="80" y="140" width="140" height="100" class="subset-ker" />
+    <text x="150" y="165" class="text-label" fill="#ef4444" text-anchor="middle">Ker(f)</text>
+    
+    <!-- Points in Ker(f) -->
+    <circle cx="110" cy="190" r="4" class="point" />
+    <text x="110" y="210" class="text-math" fill="#334155" text-anchor="middle">x₁</text>
+    
+    <circle cx="150" cy="210" r="4" class="point" />
+    <text x="150" y="230" class="text-math" fill="#334155" text-anchor="middle">x₂</text>
+    
+    <circle cx="190" cy="180" r="4" class="point" />
+    <text x="190" y="200" class="text-math" fill="#334155" text-anchor="middle">0_E</text>
+  </g>
+
+  <!-- Image -->
+  <g class="anim-fade delay-3">
+    <rect x="380" y="140" width="140" height="150" class="subset-im" />
+    <text x="450" y="165" class="text-label" fill="#10b981" text-anchor="middle">Im(f)</text>
+    
+    <!-- Zero vector in F -->
+    <circle cx="450" cy="200" r="6" class="point-zero anim-pulse" />
+    <text x="450" y="225" class="text-math" fill="#ef4444" text-anchor="middle" font-weight="bold">0_F</text>
+    
+    <!-- Other points in Im(f) -->
+    <circle cx="410" cy="250" r="4" class="point" />
+    <text x="410" y="270" class="text-math" fill="#334155" text-anchor="middle">y₁</text>
+    
+    <circle cx="490" cy="240" r="4" class="point" />
+    <text x="490" y="260" class="text-math" fill="#334155" text-anchor="middle">y₂</text>
+  </g>
+
+  <!-- Mappings -->
+  <g class="anim-fade delay-4">
+    <!-- Ker(f) mapping to 0_F -->
+    <path d="M 110 190 Q 280 100 445 195" class="arrow-ker anim-arrow" />
+    <path d="M 150 210 Q 300 120 445 200" class="arrow-ker anim-arrow" />
+    <path d="M 190 180 Q 320 140 445 198" class="arrow-ker anim-arrow" />
+    
+    <!-- Other points mapping to Im(f) -->
+    <!-- Point outside Ker(f) -->
+    <circle cx="120" cy="280" r="4" class="point" />
+    <text x="120" y="300" class="text-math" fill="#334155" text-anchor="middle">x₃</text>
+    <path d="M 120 280 Q 280 350 405 255" class="arrow anim-arrow" />
+    
+    <circle cx="180" cy="290" r="4" class="point" />
+    <text x="180" y="310" class="text-math" fill="#334155" text-anchor="middle">x₄</text>
+    <path d="M 180 290 Q 330 360 485 245" class="arrow anim-arrow" />
+  </g>
+
+  <!-- Explanation Box -->
+  <g class="anim-fade delay-5">
+    <rect x="50" y="340" width="500" height="40" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" />
+    <text x="300" y="365" class="text-math" fill="#334155" text-anchor="middle" font-size="12px">
+      <tspan fill="#ef4444" font-weight="bold">Ker(f)</tspan> = { x ∈ E | f(x) = 0_F }  |  <tspan fill="#10b981" font-weight="bold">Im(f)</tspan> = { y ∈ F | ∃ x ∈ E, y = f(x) }
+    </text>
+  </g>
+
+</svg>

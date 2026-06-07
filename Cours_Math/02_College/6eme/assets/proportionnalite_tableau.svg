@@ -1,0 +1,22 @@
+<svg width="600" height="250" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#f0fdf4" />
+  <text x="50%" y="40" font-family="Arial" font-size="22" font-weight="bold" fill="#14532d" text-anchor="middle">Tableau de Proportionnalité</text>
+  <!-- Table -->
+  <rect x="150" y="80" width="300" height="100" fill="#ffffff" stroke="#16a34a" stroke-width="3" />
+  <line x1="150" y1="130" x2="450" y2="130" stroke="#16a34a" stroke-width="3" />
+  <line x1="300" y1="80" x2="300" y2="180" stroke="#16a34a" stroke-width="3" />
+  <!-- Text -->
+  <text x="225" y="115" font-family="Arial" font-size="18" fill="#15803d" text-anchor="middle">Masse de pommes (kg)</text>
+  <text x="375" y="115" font-family="Arial" font-size="20" font-weight="bold" fill="#15803d" text-anchor="middle">3</text>
+  <text x="225" y="165" font-family="Arial" font-size="18" fill="#15803d" text-anchor="middle">Prix à payer (€)</text>
+  <text x="375" y="165" font-family="Arial" font-size="20" font-weight="bold" fill="#15803d" text-anchor="middle">6</text>
+  <!-- Arrows -->
+  <path d="M 470 105 Q 520 130 470 155" fill="none" stroke="#dc2626" stroke-width="3" marker-end="url(#arrow)" />
+  <text x="530" y="135" font-family="Arial" font-size="18" font-weight="bold" fill="#dc2626" text-anchor="middle">× 2</text>
+  <text x="530" y="155" font-family="Arial" font-size="12" fill="#dc2626" text-anchor="middle">Coefficient</text>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dc2626" />
+    </marker>
+  </defs>
+</svg>

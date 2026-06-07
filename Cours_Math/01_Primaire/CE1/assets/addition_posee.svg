@@ -1,0 +1,34 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .number { font-family: 'Courier New', Courier, monospace; font-size: 24px; fill: #1e293b; }
+    .retenue { font-family: Arial; font-size: 14px; fill: #ef4444; font-weight: bold; }
+    .line { stroke: #1e293b; stroke-width: 2; }
+    .header { font-family: Arial; font-size: 12px; fill: #64748b; font-weight: bold; }
+  </style>
+  
+  <!-- Colonnes -->
+  <text x="60" y="30" class="header" text-anchor="middle">D</text>
+  <text x="100" y="30" class="header" text-anchor="middle">U</text>
+  
+  <!-- Retenue -->
+  <circle cx="60" cy="45" r="10" fill="none" stroke="#ef4444" stroke-width="1"/>
+  <text x="60" y="50" class="retenue" text-anchor="middle">1</text>
+  
+  <!-- Calcul -->
+  <text x="60" y="80" class="number" text-anchor="middle">4</text>
+  <text x="100" y="80" class="number" text-anchor="middle">7</text>
+  
+  <text x="20" y="115" class="number" text-anchor="middle">+</text>
+  <text x="60" y="115" class="number" text-anchor="middle">2</text>
+  <text x="100" y="115" class="number" text-anchor="middle">5</text>
+  
+  <line x1="20" y1="130" x2="130" y2="130" class="line"/>
+  
+  <!-- Résultat -->
+  <text x="60" y="165" class="number" text-anchor="middle">7</text>
+  <text x="100" y="165" class="number" text-anchor="middle">2</text>
+  
+  <text x="145" y="80" font-family="Arial" font-size="12" fill="#64748b">7 + 5 = 12</text>
+  <text x="145" y="100" font-family="Arial" font-size="12" fill="#64748b">Je pose 2</text>
+  <text x="145" y="120" font-family="Arial" font-size="12" fill="#ef4444">Retiens 1</text>
+</svg>

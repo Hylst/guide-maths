@@ -1,0 +1,34 @@
+<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .plane { fill: #10b981; opacity: 0.2; stroke: #059669; stroke-width: 2; }
+    .line-d { stroke: #f59e0b; stroke-width: 3; }
+    .line-d-dashed { stroke: #f59e0b; stroke-width: 3; stroke-dasharray: 5; }
+    .point { fill: #f43f5e; }
+    .label { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: bold; }
+    .anim-point { fill: #3b82f6; animation: movePoint 4s linear infinite; }
+    @keyframes movePoint { 0% { transform: translate(-150px, -200px); } 100% { transform: translate(150px, 200px); } }
+  </style>
+  <rect width="600" height="400" fill="#ffffff" />
+  
+  <!-- Plane P -->
+  <polygon points="100,250 400,250 500,150 200,150" class="plane" />
+  <text x="450" y="180" class="label" fill="#059669">Plan P</text>
+  
+  <!-- Line D (Top part) -->
+  <line x1="225" y1="50" x2="300" y2="150" class="line-d" />
+  <!-- Line D (Dashed part under plane) -->
+  <line x1="300" y1="150" x2="337.5" y2="200" class="line-d-dashed" />
+  <!-- Line D (Bottom part) -->
+  <line x1="337.5" y1="200" x2="450" y2="350" class="line-d" />
+  
+  <text x="210" y="60" class="label" fill="#f59e0b">Droite D</text>
+  
+  <!-- Intersection Point I -->
+  <circle cx="337.5" cy="200" r="6" class="point" />
+  <text x="350" y="205" class="label" fill="#f43f5e">I (Intersection)</text>
+  
+  <!-- Animated point moving along the line -->
+  <g style="animation: movePoint 4s linear infinite;">
+    <circle cx="337.5" cy="200" r="4" class="anim-point" />
+  </g>
+</svg>

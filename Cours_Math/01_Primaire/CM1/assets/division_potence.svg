@@ -1,0 +1,47 @@
+<svg width="500" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#f8fafc" />
+  <text x="50%" y="30" font-family="Arial" font-size="20" fill="#0f172a" text-anchor="middle">La Potence de la Division</text>
+  
+  <!-- La potence -->
+  <path d="M 250 80 L 250 220" stroke="#334155" stroke-width="4" />
+  <path d="M 250 120 L 400 120" stroke="#334155" stroke-width="4" />
+  
+  <!-- Les nombres -->
+  <text x="170" y="110" font-family="Arial" font-size="32" font-weight="bold" fill="#2563eb" text-anchor="middle">745</text>
+  <text x="320" y="110" font-family="Arial" font-size="32" font-weight="bold" fill="#dc2626" text-anchor="middle">3</text>
+  <text x="320" y="160" font-family="Arial" font-size="32" font-weight="bold" fill="#16a34a" text-anchor="middle">248</text>
+  <text x="170" y="240" font-family="Arial" font-size="32" font-weight="bold" fill="#d97706" text-anchor="middle">1</text>
+  
+  <!-- Les étiquettes -->
+  <rect x="20" y="85" width="100" height="30" rx="5" fill="#dbeafe" />
+  <text x="70" y="105" font-family="Arial" font-size="14" font-weight="bold" fill="#1d4ed8" text-anchor="middle">Dividende</text>
+  <path d="M 120 100 L 140 100" stroke="#1d4ed8" stroke-width="2" marker-end="url(#arrowBlue)" />
+  
+  <rect x="410" y="85" width="80" height="30" rx="5" fill="#fee2e2" />
+  <text x="450" y="105" font-family="Arial" font-size="14" font-weight="bold" fill="#b91c1c" text-anchor="middle">Diviseur</text>
+  <path d="M 410 100 L 350 100" stroke="#b91c1c" stroke-width="2" marker-end="url(#arrowRed)" />
+  
+  <rect x="410" y="135" width="80" height="30" rx="5" fill="#dcfce7" />
+  <text x="450" y="155" font-family="Arial" font-size="14" font-weight="bold" fill="#15803d" text-anchor="middle">Quotient</text>
+  <path d="M 410 150 L 370 150" stroke="#15803d" stroke-width="2" marker-end="url(#arrowGreen)" />
+  
+  <rect x="20" y="215" width="80" height="30" rx="5" fill="#fef3c7" />
+  <text x="60" y="235" font-family="Arial" font-size="14" font-weight="bold" fill="#b45309" text-anchor="middle">Reste</text>
+  <path d="M 100 230 L 140 230" stroke="#b45309" stroke-width="2" marker-end="url(#arrowOrange)" />
+  
+  <!-- Définition des flèches -->
+  <defs>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#1d4ed8" />
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#b91c1c" />
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#15803d" />
+    </marker>
+    <marker id="arrowOrange" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#b45309" />
+    </marker>
+  </defs>
+</svg>

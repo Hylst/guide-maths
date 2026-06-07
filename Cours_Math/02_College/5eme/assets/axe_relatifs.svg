@@ -1,0 +1,54 @@
+<svg width="600" height="250" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#f8fafc" />
+  <text x="50%" y="40" font-family="Arial" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">L'Axe des Nombres Relatifs</text>
+
+  <!-- L'axe principal -->
+  <line x1="50" y1="120" x2="550" y2="120" stroke="#334155" stroke-width="4" marker-end="url(#arrow)" />
+  
+  <!-- L'origine (Zéro) -->
+  <line x1="300" y1="100" x2="300" y2="140" stroke="#0f172a" stroke-width="4" />
+  <text x="300" y="165" font-family="Arial" font-size="20" font-weight="bold" fill="#0f172a" text-anchor="middle">0</text>
+  <text x="300" y="90" font-family="Arial" font-size="16" font-weight="bold" fill="#0f172a" text-anchor="middle">Origine</text>
+
+  <!-- Côté Négatif (Rouge) -->
+  <g stroke="#ef4444" stroke-width="3">
+    <line x1="250" y1="110" x2="250" y2="130" />
+    <line x1="200" y1="110" x2="200" y2="130" />
+    <line x1="150" y1="110" x2="150" y2="130" />
+    <line x1="100" y1="110" x2="100" y2="130" />
+  </g>
+  <g font-family="Arial" font-size="18" font-weight="bold" fill="#ef4444" text-anchor="middle">
+    <text x="250" y="160">-1</text>
+    <text x="200" y="160">-2</text>
+    <text x="150" y="160">-3</text>
+    <text x="100" y="160">-4</text>
+  </g>
+  <text x="175" y="200" font-family="Arial" font-size="16" fill="#ef4444" text-anchor="middle">Nombres Négatifs (-)</text>
+
+  <!-- Côté Positif (Bleu) -->
+  <g stroke="#3b82f6" stroke-width="3">
+    <line x1="350" y1="110" x2="350" y2="130" />
+    <line x1="400" y1="110" x2="400" y2="130" />
+    <line x1="450" y1="110" x2="450" y2="130" />
+    <line x1="500" y1="110" x2="500" y2="130" />
+  </g>
+  <g font-family="Arial" font-size="18" font-weight="bold" fill="#3b82f6" text-anchor="middle">
+    <text x="350" y="160">+1</text>
+    <text x="400" y="160">+2</text>
+    <text x="450" y="160">+3</text>
+    <text x="500" y="160">+4</text>
+  </g>
+  <text x="425" y="200" font-family="Arial" font-size="16" fill="#3b82f6" text-anchor="middle">Nombres Positifs (+)</text>
+
+  <!-- Distance à zéro et Opposés -->
+  <path d="M 150 80 Q 225 30 300 80" fill="none" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5" />
+  <path d="M 450 80 Q 375 30 300 80" fill="none" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5" />
+  <text x="300" y="45" font-family="Arial" font-size="14" font-weight="bold" fill="#10b981" text-anchor="middle">Même distance à zéro (3 unités)</text>
+  <text x="300" y="65" font-family="Arial" font-size="14" font-weight="bold" fill="#10b981" text-anchor="middle">-3 et +3 sont des nombres OPPOSÉS</text>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155" />
+    </marker>
+  </defs>
+</svg>

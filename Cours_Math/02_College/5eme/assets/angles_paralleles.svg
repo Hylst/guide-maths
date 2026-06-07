@@ -1,0 +1,20 @@
+<svg width="600" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#fffbeb" />
+  <text x="50%" y="30" font-family="Arial" font-size="22" font-weight="bold" fill="#b45309" text-anchor="middle">Angles Alternes-Internes</text>
+  <!-- Droites parallèles -->
+  <line x1="100" y1="100" x2="500" y2="100" stroke="#0f172a" stroke-width="3" />
+  <text x="80" y="105" font-family="Arial" font-size="16" fill="#0f172a">(d1)</text>
+  <line x1="100" y1="200" x2="500" y2="200" stroke="#0f172a" stroke-width="3" />
+  <text x="80" y="205" font-family="Arial" font-size="16" fill="#0f172a">(d2)</text>
+  <!-- Sécante -->
+  <line x1="200" y1="50" x2="400" y2="250" stroke="#dc2626" stroke-width="3" />
+  <text x="180" y="45" font-family="Arial" font-size="16" fill="#dc2626">(secante)</text>
+  <!-- Angles -->
+  <path d="M 275 100 A 25 25 0 0 0 262 112" fill="none" stroke="#3b82f6" stroke-width="4" />
+  <text x="240" y="130" font-family="Arial" font-size="16" font-weight="bold" fill="#3b82f6">a</text>
+  
+  <path d="M 325 200 A 25 25 0 0 0 338 188" fill="none" stroke="#3b82f6" stroke-width="4" />
+  <text x="350" y="180" font-family="Arial" font-size="16" font-weight="bold" fill="#3b82f6">b</text>
+  
+  <text x="300" y="280" font-family="Arial" font-size="16" font-weight="bold" fill="#b45309" text-anchor="middle">Si (d1) // (d2), alors les angles a et b sont égaux.</text>
+</svg>

@@ -1,0 +1,21 @@
+<svg width="400" height="150" viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
+  <!-- Angle droit -->
+  <g transform="translate(20, 20)">
+    <line x1="0" y1="80" x2="80" y2="80" stroke="#1e293b" stroke-width="2"/>
+    <line x1="0" y1="80" x2="0" y2="0" stroke="#1e293b" stroke-width="2"/>
+    <rect x="0" y="70" width="10" height="10" fill="none" stroke="#ef4444" stroke-width="1"/>
+    <text x="40" y="100" font-family="Arial" font-size="12" fill="#1e293b" text-anchor="middle">Angle Droit</text>
+  </g>
+  
+  <!-- Polygone (Pentagone) -->
+  <g transform="translate(150, 20)">
+    <path d="M 40 0 L 80 30 L 65 80 L 15 80 L 0 30 Z" fill="#60a5fa" stroke="#1d4ed8" stroke-width="2" opacity="0.7"/>
+    <text x="40" y="100" font-family="Arial" font-size="12" fill="#1e293b" text-anchor="middle">Polygone</text>
+  </g>
+  
+  <!-- Quadrilatère (Losange) -->
+  <g transform="translate(280, 20)">
+    <path d="M 40 0 L 80 40 L 40 80 L 0 40 Z" fill="#fbbf24" stroke="#d97706" stroke-width="2" opacity="0.7"/>
+    <text x="40" y="100" font-family="Arial" font-size="12" fill="#1e293b" text-anchor="middle">Losange</text>
+  </g>
+</svg>

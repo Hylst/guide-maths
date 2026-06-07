@@ -1,0 +1,41 @@
+<svg width="600" height="350" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#f8fafc" />
+  <text x="50%" y="30" font-family="Arial" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Les Blocs Personnalisés (Fonctions)</text>
+  
+  <!-- Définition du Bloc Personnalisé -->
+  <g transform="translate(50, 60)">
+    <!-- Chapeau de définition -->
+    <path d="M 0 20 Q 20 0 40 20 L 250 20 A 5 5 0 0 1 255 25 L 255 55 A 5 5 0 0 1 250 60 L 100 60 L 95 65 L 85 65 L 80 60 L 5 60 A 5 5 0 0 1 0 55 Z" fill="#ec4899" stroke="#be185d" stroke-width="2" />
+    <text x="15" y="45" font-family="Arial" font-size="16" font-weight="bold" fill="#ffffff">définir Carré (taille)</text>
+    
+    <!-- Corps de la fonction (Boucle) -->
+    <path d="M 0 60 L 30 60 L 35 65 L 45 65 L 50 60 L 200 60 A 5 5 0 0 1 205 65 L 205 95 A 5 5 0 0 1 200 100 L 50 100 L 45 105 L 35 105 L 30 100 L 20 100 L 20 180 L 30 180 L 35 185 L 45 185 L 50 180 L 200 180 A 5 5 0 0 1 205 185 L 205 205 A 5 5 0 0 1 200 210 L 5 210 A 5 5 0 0 1 0 205 Z" fill="#f97316" stroke="#ea580c" stroke-width="2" />
+    <text x="15" y="85" font-family="Arial" font-size="16" font-weight="bold" fill="#ffffff">répéter 4 fois</text>
+    
+    <!-- Instructions internes -->
+    <path d="M 20 100 L 30 100 L 35 105 L 45 105 L 50 100 L 180 100 A 5 5 0 0 1 185 105 L 185 135 A 5 5 0 0 1 180 140 L 50 140 L 45 145 L 35 145 L 30 140 L 25 140 A 5 5 0 0 1 20 135 Z" fill="#3b82f6" stroke="#2563eb" stroke-width="2" />
+    <text x="35" y="125" font-family="Arial" font-size="16" font-weight="bold" fill="#ffffff">avancer de (taille) pas</text>
+    
+    <path d="M 20 140 L 30 140 L 35 145 L 45 145 L 50 140 L 180 140 A 5 5 0 0 1 185 145 L 185 175 A 5 5 0 0 1 180 180 L 50 180 L 45 185 L 35 185 L 30 180 L 25 180 A 5 5 0 0 1 20 175 Z" fill="#3b82f6" stroke="#2563eb" stroke-width="2" />
+    <text x="35" y="165" font-family="Arial" font-size="16" font-weight="bold" fill="#ffffff">tourner ↻ de 90 degrés</text>
+  </g>
+
+  <!-- Programme Principal -->
+  <g transform="translate(350, 60)">
+    <path d="M 0 20 Q 20 0 40 20 L 200 20 A 5 5 0 0 1 205 25 L 205 55 A 5 5 0 0 1 200 60 L 50 60 L 45 65 L 35 65 L 30 60 L 5 60 A 5 5 0 0 1 0 55 Z" fill="#f59e0b" stroke="#d97706" stroke-width="2" />
+    <text x="15" y="45" font-family="Arial" font-size="16" font-weight="bold" fill="#ffffff">Quand 🏁 est cliqué</text>
+    
+    <!-- Appel 1 -->
+    <path d="M 0 60 L 30 60 L 35 65 L 45 65 L 50 60 L 200 60 A 5 5 0 0 1 205 65 L 205 95 A 5 5 0 0 1 200 100 L 50 100 L 45 105 L 35 105 L 30 100 L 5 100 A 5 5 0 0 1 0 95 Z" fill="#ec4899" stroke="#be185d" stroke-width="2" />
+    <text x="15" y="85" font-family="Arial" font-size="16" font-weight="bold" fill="#ffffff">Carré (50)</text>
+    
+    <!-- Appel 2 -->
+    <path d="M 0 100 L 30 100 L 35 105 L 45 105 L 50 100 L 200 100 A 5 5 0 0 1 205 105 L 205 135 A 5 5 0 0 1 200 140 L 50 140 L 45 145 L 35 145 L 30 140 L 5 140 A 5 5 0 0 1 0 135 Z" fill="#ec4899" stroke="#be185d" stroke-width="2" />
+    <text x="15" y="125" font-family="Arial" font-size="16" font-weight="bold" fill="#ffffff">Carré (100)</text>
+  </g>
+
+  <!-- Explications -->
+  <text x="175" y="310" font-family="Arial" font-size="14" font-weight="bold" fill="#be185d" text-anchor="middle">1. On crée la "recette" (Le sous-programme)</text>
+  <text x="450" y="200" font-family="Arial" font-size="14" font-weight="bold" fill="#be185d" text-anchor="middle">2. On utilise le bloc</text>
+  <text x="450" y="220" font-family="Arial" font-size="14" font-weight="bold" fill="#be185d" text-anchor="middle">dans le programme principal</text>
+</svg>

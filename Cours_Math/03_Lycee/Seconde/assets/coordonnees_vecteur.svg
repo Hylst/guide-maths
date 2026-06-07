@@ -1,0 +1,33 @@
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .grid { stroke: #e2e8f0; stroke-width: 1; }
+    .axis { stroke: #64748b; stroke-width: 2; marker-end: url(#arrow-axis); }
+    .vec { stroke: #8b5cf6; stroke-width: 4; fill: none; marker-end: url(#arrow-vec); }
+    .proj-x { stroke: #3b82f6; stroke-width: 3; stroke-dasharray: 5; animation: dash 2s linear infinite; }
+    .proj-y { stroke: #ef4444; stroke-width: 3; stroke-dasharray: 5; animation: dash 2s linear infinite reverse; }
+    .label { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: bold; }
+    @keyframes dash { to { stroke-dashoffset: -20; } }
+  </style>
+  <defs>
+    <marker id="arrow-axis" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/></marker>
+    <marker id="arrow-vec" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#8b5cf6"/></marker>
+  </defs>
+  <!-- Grid -->
+  <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+    <path d="M 50 0 L 0 0 0 50" fill="none" class="grid"/>
+  </pattern>
+  <rect width="500" height="500" fill="url(#grid)" />
+  <!-- Axes -->
+  <line x1="50" y1="450" x2="480" y2="450" class="axis"/>
+  <line x1="50" y1="450" x2="50" y2="20" class="axis"/>
+  <text x="460" y="480" class="label" fill="#64748b">x</text>
+  <text x="20" y="40" class="label" fill="#64748b">y</text>
+  <!-- Vector from (1,1) to (5,4) -> dx=4 (200px), dy=3 (150px) -->
+  <line x1="100" y1="400" x2="300" y2="250" class="vec" />
+  <text x="180" y="310" class="label" fill="#8b5cf6">u (4; 3)</text>
+  <!-- Projections -->
+  <line x1="100" y1="400" x2="300" y2="400" class="proj-x" />
+  <text x="180" y="420" class="label" fill="#3b82f6">x_u = 4</text>
+  <line x1="300" y1="400" x2="300" y2="250" class="proj-y" />
+  <text x="310" y="330" class="label" fill="#ef4444">y_u = 3</text>
+</svg>

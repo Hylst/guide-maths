@@ -1,0 +1,45 @@
+<svg viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .axis { stroke: #94a3b8; stroke-width: 2; marker-end: url(#arrow); }
+    .curve-f { stroke: #6366f1; stroke-width: 4; fill: none; }
+    .curve-df { stroke: #f59e0b; stroke-width: 4; fill: none; }
+    .area-pos { fill: #10b981; opacity: 0.2; }
+    .area-neg { fill: #f43f5e; opacity: 0.2; }
+    .label { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: bold; fill: #334155; }
+    .guideline { stroke: #cbd5e1; stroke-width: 2; stroke-dasharray: 5; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/></marker>
+  </defs>
+  <rect width="600" height="500" fill="#ffffff" />
+  
+  <!-- Top Graph: f(x) -->
+  <text x="20" y="30" class="label" fill="#6366f1">Fonction f (Variations)</text>
+  <line x1="50" y1="150" x2="550" y2="150" class="axis"/>
+  <path d="M 100 200 C 200 50, 300 250, 400 100 L 500 50" class="curve-f" />
+  
+  <!-- Bottom Graph: f'(x) -->
+  <text x="20" y="280" class="label" fill="#f59e0b">Dérivée f' (Signe)</text>
+  <line x1="50" y1="400" x2="550" y2="400" class="axis"/>
+  
+  <!-- Areas for f'(x) -->
+  <path d="M 100 400 L 100 350 Q 175 300 250 400 Z" class="area-pos" />
+  <path d="M 250 400 Q 300 450 350 400 Z" class="area-neg" />
+  <path d="M 350 400 Q 425 300 500 350 L 500 400 Z" class="area-pos" />
+  
+  <path d="M 100 350 Q 175 300 250 400 T 350 400 T 500 350" class="curve-df" />
+  
+  <!-- Guidelines connecting extrema to roots -->
+  <line x1="250" y1="125" x2="250" y2="400" class="guideline" />
+  <line x1="350" y1="175" x2="350" y2="400" class="guideline" />
+  
+  <!-- Annotations -->
+  <text x="150" y="100" class="label" fill="#10b981">Croissante</text>
+  <text x="160" y="380" class="label" fill="#10b981">f'(x) > 0</text>
+  
+  <text x="260" y="100" class="label" fill="#f43f5e">Décroissante</text>
+  <text x="270" y="440" class="label" fill="#f43f5e">f'(x) < 0</text>
+  
+  <text x="400" y="100" class="label" fill="#10b981">Croissante</text>
+  <text x="410" y="380" class="label" fill="#10b981">f'(x) > 0</text>
+</svg>

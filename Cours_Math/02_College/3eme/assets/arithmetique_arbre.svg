@@ -1,0 +1,39 @@
+<svg width="600" height="350" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#fdf4ff" />
+  <text x="50%" y="30" font-family="Arial" font-size="22" font-weight="bold" fill="#701a75" text-anchor="middle">Décomposition en Facteurs Premiers</text>
+  
+  <!-- Arbre pour le nombre 60 -->
+  <text x="300" y="80" font-family="Arial" font-size="28" font-weight="bold" fill="#0f172a" text-anchor="middle">60</text>
+  
+  <!-- Niveau 1 -->
+  <line x1="280" y1="90" x2="220" y2="130" stroke="#64748b" stroke-width="3" />
+  <line x1="320" y1="90" x2="380" y2="130" stroke="#64748b" stroke-width="3" />
+  
+  <circle cx="200" cy="150" r="25" fill="#fecaca" stroke="#ef4444" stroke-width="3" />
+  <text x="200" y="158" font-family="Arial" font-size="22" font-weight="bold" fill="#b91c1c" text-anchor="middle">2</text>
+  
+  <text x="380" y="158" font-family="Arial" font-size="24" font-weight="bold" fill="#0f172a" text-anchor="middle">30</text>
+  
+  <!-- Niveau 2 -->
+  <line x1="360" y1="170" x2="300" y2="210" stroke="#64748b" stroke-width="3" />
+  <line x1="400" y1="170" x2="460" y2="210" stroke="#64748b" stroke-width="3" />
+  
+  <circle cx="280" cy="230" r="25" fill="#fecaca" stroke="#ef4444" stroke-width="3" />
+  <text x="280" y="238" font-family="Arial" font-size="22" font-weight="bold" fill="#b91c1c" text-anchor="middle">2</text>
+  
+  <text x="460" y="238" font-family="Arial" font-size="24" font-weight="bold" fill="#0f172a" text-anchor="middle">15</text>
+  
+  <!-- Niveau 3 -->
+  <line x1="440" y1="250" x2="380" y2="290" stroke="#64748b" stroke-width="3" />
+  <line x1="480" y1="250" x2="540" y2="290" stroke="#64748b" stroke-width="3" />
+  
+  <circle cx="360" cy="310" r="25" fill="#fecaca" stroke="#ef4444" stroke-width="3" />
+  <text x="360" y="318" font-family="Arial" font-size="22" font-weight="bold" fill="#b91c1c" text-anchor="middle">3</text>
+  
+  <circle cx="560" cy="310" r="25" fill="#fecaca" stroke="#ef4444" stroke-width="3" />
+  <text x="560" y="318" font-family="Arial" font-size="22" font-weight="bold" fill="#b91c1c" text-anchor="middle">5</text>
+  
+  <!-- Résultat -->
+  <text x="150" y="280" font-family="Courier New" font-size="22" font-weight="bold" fill="#701a75" text-anchor="middle">60 = 2 × 2 × 3 × 5</text>
+  <text x="150" y="310" font-family="Courier New" font-size="22" font-weight="bold" fill="#701a75" text-anchor="middle">60 = 2² × 3 × 5</text>
+</svg>

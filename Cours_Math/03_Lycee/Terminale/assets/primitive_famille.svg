@@ -1,0 +1,30 @@
+<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .axis { stroke: #94a3b8; stroke-width: 2; marker-end: url(#arrow); }
+    .curve { stroke: #10b981; stroke-width: 3; fill: none; }
+    .curve-anim { stroke: #3b82f6; stroke-width: 4; fill: none; animation: moveC 4s ease-in-out infinite alternate; }
+    .label { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: bold; }
+    
+    @keyframes moveC { 0% { transform: translateY(-100px); } 100% { transform: translateY(100px); } }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/></marker>
+  </defs>
+  <rect width="600" height="400" fill="#ffffff" />
+  
+  <!-- Axes -->
+  <line x1="50" y1="200" x2="550" y2="200" class="axis"/>
+  <line x1="300" y1="380" x2="300" y2="50" class="axis"/>
+  
+  <!-- Family of primitives F(x) = x^3/3 - x (just a cubic shape) -->
+  <path d="M 100 350 C 200 -50, 400 450, 500 50" class="curve" style="opacity: 0.3; transform: translateY(-50px);" />
+  <path d="M 100 350 C 200 -50, 400 450, 500 50" class="curve" style="opacity: 0.3; transform: translateY(0px);" />
+  <path d="M 100 350 C 200 -50, 400 450, 500 50" class="curve" style="opacity: 0.3; transform: translateY(50px);" />
+  
+  <!-- Animated Primitive -->
+  <path d="M 100 350 C 200 -50, 400 450, 500 50" class="curve-anim" />
+  
+  <text x="350" y="100" class="label" fill="#3b82f6">F(x) + C</text>
+  <text x="50" y="50" class="label">Une infinité de primitives</text>
+  <text x="50" y="70" class="label">différant d'une constante C</text>
+</svg>

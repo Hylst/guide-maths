@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <defs>
+    <style>
+      .axis { stroke: #94a3b8; stroke-width: 2; }
+      .grid { stroke: #e2e8f0; stroke-width: 1; stroke-dasharray: 4 4; }
+      .point { fill: #4f46e5; }
+      .line { stroke: #4f46e5; stroke-width: 2; stroke-dasharray: 4 4; }
+      .vector { stroke: #10b981; stroke-width: 3; marker-end: url(#arrow-green); }
+      .text-label { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; }
+      .text-math { font-family: 'JetBrains Mono', monospace; font-size: 16px; }
+      
+      /* Animations */
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes drawLine { from { stroke-dasharray: 0 1000; } to { stroke-dasharray: 1000 1000; } }
+      @keyframes popIn { 0% { transform: scale(0); } 80% { transform: scale(1.2); } 100% { transform: scale(1); } }
+      
+      .anim-fade { animation: fadeIn 1s ease-out forwards; opacity: 0; }
+      .anim-draw { animation: drawLine 1.5s ease-out forwards; }
+      .anim-pop { animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; transform-origin: 400px 100px; opacity: 0; }
+      
+      .delay-1 { animation-delay: 0.5s; }
+      .delay-2 { animation-delay: 1.5s; }
+      .delay-3 { animation-delay: 2.5s; }
+      .delay-4 { animation-delay: 3.5s; }
+    </style>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#10b981"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="400" fill="#f8fafc" rx="12" />
+
+  <!-- Grid -->
+  <g class="grid">
+    <line x1="50" y1="100" x2="550" y2="100" />
+    <line x1="50" y1="200" x2="550" y2="200" />
+    <line x1="50" y1="300" x2="550" y2="300" />
+    <line x1="100" y1="50" x2="100" y2="350" />
+    <line x1="200" y1="50" x2="200" y2="350" />
+    <line x1="300" y1="50" x2="300" y2="350" />
+    <line x1="400" y1="50" x2="400" y2="350" />
+    <line x1="500" y1="50" x2="500" y2="350" />
+  </g>
+
+  <!-- Axes -->
+  <g class="axis">
+    <line x1="50" y1="200" x2="550" y2="200" marker-end="url(#arrow-gray)" /> <!-- Real axis -->
+    <line x1="200" y1="350" x2="200" y2="50" marker-end="url(#arrow-gray)" /> <!-- Imaginary axis -->
+  </g>
+
+  <!-- Labels -->
+  <text x="530" y="220" class="text-label" fill="#64748b">Re(z)</text>
+  <text x="150" y="60" class="text-label" fill="#64748b">Im(z)</text>
+  <text x="185" y="215" class="text-label" fill="#64748b">O</text>
+  
+  <!-- Unit vectors -->
+  <line x1="200" y1="200" x2="300" y2="200" stroke="#64748b" stroke-width="2" marker-end="url(#arrow-gray)" />
+  <line x1="200" y1="200" x2="200" y2="100" stroke="#64748b" stroke-width="2" marker-end="url(#arrow-gray)" />
+  <text x="250" y="220" class="text-math" fill="#64748b" font-size="12px">1</text>
+  <text x="180" y="150" class="text-math" fill="#64748b" font-size="12px">i</text>
+
+  <!-- Title -->
+  <text x="300" y="30" class="text-label anim-fade" fill="#1e293b" text-anchor="middle" font-size="18px" font-weight="600">Le Plan Complexe</text>
+
+  <!-- Point M(z = a + ib) -->
+  <!-- Let a = 2 (so x = 200 + 2*100 = 400), b = 1 (so y = 200 - 1*100 = 100) -->
+  
+  <!-- Projections -->
+  <g class="anim-fade delay-1">
+    <line x1="400" y1="200" x2="400" y2="100" class="line anim-draw" />
+    <line x1="200" y1="100" x2="400" y2="100" class="line anim-draw" />
+    <text x="395" y="220" class="text-math" fill="#4f46e5">a</text>
+    <text x="175" y="105" class="text-math" fill="#4f46e5">ib</text>
+  </g>
+
+  <!-- Vector OM -->
+  <g class="anim-fade delay-2">
+    <line x1="200" y1="200" x2="395" y2="102" class="vector anim-draw" />
+  </g>
+
+  <!-- Point M -->
+  <g class="anim-pop delay-3">
+    <circle cx="400" cy="100" r="6" class="point" />
+    <text x="415" y="95" class="text-math" fill="#4f46e5" font-weight="bold">M(z)</text>
+    <text x="415" y="115" class="text-math" fill="#4f46e5" font-size="14px">z = a + ib</text>
+  </g>
+
+  <!-- Explanation Box -->
+  <g class="anim-fade delay-4">
+    <rect x="50" y="340" width="500" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="2" />
+    <text x="300" y="365" class="text-label" fill="#334155" text-anchor="middle">Le nombre complexe <tspan font-family="JetBrains Mono" font-weight="bold" fill="#4f46e5">z = a + ib</tspan> est l'affixe du point <tspan font-family="JetBrains Mono" font-weight="bold" fill="#4f46e5">M(a, b)</tspan>.</text>
+  </g>
+
+</svg>

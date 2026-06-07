@@ -1,0 +1,48 @@
+<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .axis { stroke: #94a3b8; stroke-width: 2; marker-end: url(#arrow); }
+    .curve-pos { stroke: #10b981; stroke-width: 3; fill: none; opacity: 0; animation: showPos 9s infinite; }
+    .curve-zero { stroke: #3b82f6; stroke-width: 3; fill: none; opacity: 0; animation: showZero 9s infinite; }
+    .curve-neg { stroke: #f43f5e; stroke-width: 3; fill: none; opacity: 0; animation: showNeg 9s infinite; }
+    .root { fill: #1e293b; opacity: 0; }
+    .label { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: bold; }
+    
+    @keyframes showPos { 0%, 30% { opacity: 1; } 33%, 100% { opacity: 0; } }
+    @keyframes showZero { 0%, 30% { opacity: 0; } 33%, 63% { opacity: 1; } 66%, 100% { opacity: 0; } }
+    @keyframes showNeg { 0%, 63% { opacity: 0; } 66%, 96% { opacity: 1; } 100% { opacity: 0; } }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/></marker>
+  </defs>
+  <rect width="600" height="400" fill="#ffffff" />
+  
+  <!-- Axes -->
+  <line x1="50" y1="250" x2="550" y2="250" class="axis"/>
+  <text x="540" y="280" class="label" fill="#64748b">x</text>
+  <line x1="300" y1="350" x2="300" y2="50" class="axis"/>
+  <text x="260" y="60" class="label" fill="#64748b">f(x)</text>
+  
+  <!-- Case 1: Delta > 0 (2 roots) -->
+  <g style="animation: showPos 9s infinite;">
+    <path d="M 100 50 Q 300 450 500 50" class="curve-pos" />
+    <circle cx="217" cy="250" r="5" class="root" style="animation: showPos 9s infinite;" />
+    <text x="190" y="280" class="label" fill="#10b981">x1</text>
+    <circle cx="383" cy="250" r="5" class="root" style="animation: showPos 9s infinite;" />
+    <text x="380" y="280" class="label" fill="#10b981">x2</text>
+    <text x="320" y="100" class="label" fill="#10b981">Δ > 0 : 2 racines</text>
+  </g>
+  
+  <!-- Case 2: Delta = 0 (1 root) -->
+  <g style="animation: showZero 9s infinite;">
+    <path d="M 100 50 Q 300 250 500 50" class="curve-zero" />
+    <circle cx="300" cy="150" r="5" class="root" style="animation: showZero 9s infinite;" />
+    <text x="310" y="170" class="label" fill="#3b82f6">x0</text>
+    <text x="320" y="100" class="label" fill="#3b82f6">Δ = 0 : 1 racine double</text>
+  </g>
+  
+  <!-- Case 3: Delta < 0 (0 roots) -->
+  <g style="animation: showNeg 9s infinite;">
+    <path d="M 100 50 Q 300 50 500 50" class="curve-neg" />
+    <text x="320" y="100" class="label" fill="#f43f5e">Δ < 0 : 0 racine réelle</text>
+  </g>
+</svg>

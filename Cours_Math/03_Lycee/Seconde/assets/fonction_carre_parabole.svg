@@ -1,0 +1,25 @@
+<svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .grid { stroke: #f1f5f9; stroke-width: 1; }
+    .axis { stroke: #94a3b8; stroke-width: 2; marker-end: url(#arrow); }
+    .curve { stroke: #ec4899; stroke-width: 4; fill: none; stroke-dasharray: 2000; stroke-dashoffset: 2000; animation: drawCurve 4s ease-in-out infinite alternate; }
+    .label { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: bold; fill: #334155; }
+    @keyframes drawCurve { to { stroke-dashoffset: 0; } }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/></marker>
+  </defs>
+  <!-- Grid -->
+  <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+    <path d="M 50 0 L 0 0 0 50" fill="none" class="grid"/>
+  </pattern>
+  <rect width="600" height="600" fill="url(#grid)" />
+  <!-- Axes (Origin at 300, 500) -->
+  <line x1="0" y1="500" x2="580" y2="500" class="axis"/>
+  <line x1="300" y1="600" x2="300" y2="20" class="axis"/>
+  <text x="560" y="530" class="label">x</text>
+  <text x="270" y="30" class="label">f(x)</text>
+  <!-- Parabola y = x^2. Scale: 1 unit = 50px. x from -4 to 4 -> y from 16 to 16 -->
+  <path d="M 100 100 L 150 275 L 200 400 L 250 475 L 300 500 L 350 475 L 400 400 L 450 275 L 500 100" class="curve" />
+  <text x="400" y="200" class="label" fill="#ec4899">f(x) = x²</text>
+</svg>

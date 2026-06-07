@@ -1,0 +1,53 @@
+<svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .axis { stroke: #94a3b8; stroke-width: 2; marker-end: url(#arrow); }
+    .point { fill: #3b82f6; }
+    .line { stroke: #3b82f6; stroke-width: 2; stroke-dasharray: 4; opacity: 0.5; }
+    .jump { stroke: #f59e0b; stroke-width: 2; fill: none; marker-end: url(#arrow-jump); animation: bounce 2s infinite; }
+    .label { font-family: 'JetBrains Mono', monospace; font-size: 14px; fill: #334155; }
+    @keyframes bounce { 0% { transform: translateY(0); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0); } }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/></marker>
+    <marker id="arrow-jump" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#f59e0b"/></marker>
+  </defs>
+  <rect width="600" height="300" fill="#ffffff" />
+  
+  <!-- Axes -->
+  <line x1="50" y1="250" x2="550" y2="250" class="axis"/>
+  <text x="540" y="280" class="label">n</text>
+  <line x1="100" y1="280" x2="100" y2="50" class="axis"/>
+  <text x="60" y="60" class="label">u_n</text>
+  
+  <!-- Points for u_n = 2n + 1 (Arithmétique, r=2) -->
+  <!-- n=0, u0=1 (y=230) -->
+  <circle cx="100" cy="230" r="6" class="point"/>
+  <text x="80" y="240" class="label">u0</text>
+  
+  <!-- n=1, u1=3 (y=190) -->
+  <circle cx="200" cy="190" r="6" class="point"/>
+  <line x1="200" y1="250" x2="200" y2="190" class="line"/>
+  <text x="195" y="270" class="label">1</text>
+  
+  <!-- n=2, u2=5 (y=150) -->
+  <circle cx="300" cy="150" r="6" class="point"/>
+  <line x1="300" y1="250" x2="300" y2="150" class="line"/>
+  <text x="295" y="270" class="label">2</text>
+  
+  <!-- n=3, u3=7 (y=110) -->
+  <circle cx="400" cy="110" r="6" class="point"/>
+  <line x1="400" y1="250" x2="400" y2="110" class="line"/>
+  <text x="395" y="270" class="label">3</text>
+  
+  <!-- Jumps (+r) -->
+  <path d="M 110 220 Q 150 190 190 190" class="jump"/>
+  <text x="140" y="195" class="label" fill="#f59e0b">+ r</text>
+  
+  <path d="M 210 180 Q 250 150 290 150" class="jump"/>
+  <text x="240" y="155" class="label" fill="#f59e0b">+ r</text>
+  
+  <path d="M 310 140 Q 350 110 390 110" class="jump"/>
+  <text x="340" y="115" class="label" fill="#f59e0b">+ r</text>
+  
+  <text x="150" y="40" class="label" fill="#3b82f6" font-weight="bold">Suite Arithmétique : u_{n+1} = u_n + r</text>
+</svg>

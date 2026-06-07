@@ -1,0 +1,28 @@
+<svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .grid { stroke: #f1f5f9; stroke-width: 1; }
+    .axis { stroke: #94a3b8; stroke-width: 2; marker-end: url(#arrow); }
+    .curve { stroke: #14b8a6; stroke-width: 4; fill: none; stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: drawHyper 3s ease-in-out infinite alternate; }
+    .label { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: bold; fill: #334155; }
+    .asymptote { stroke: #f59e0b; stroke-width: 2; stroke-dasharray: 5; }
+    @keyframes drawHyper { to { stroke-dashoffset: 0; } }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/></marker>
+  </defs>
+  <!-- Grid -->
+  <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+    <path d="M 50 0 L 0 0 0 50" fill="none" class="grid"/>
+  </pattern>
+  <rect width="600" height="600" fill="url(#grid)" />
+  <!-- Axes (Origin at 300, 300) -->
+  <line x1="0" y1="300" x2="580" y2="300" class="axis"/>
+  <line x1="300" y1="600" x2="300" y2="20" class="axis"/>
+  <text x="560" y="330" class="label">x</text>
+  <text x="260" y="30" class="label">g(x)</text>
+  <!-- Hyperbola y = 1/x. Scale: 1 unit = 50px. -->
+  <path d="M 310 50 L 325 100 L 350 200 L 400 250 L 500 275 L 580 285" class="curve" />
+  <!-- Negative part -->
+  <path d="M 290 550 L 275 500 L 250 400 L 200 350 L 100 325 L 20 315" class="curve" />
+  <text x="420" y="150" class="label" fill="#14b8a6">g(x) = 1/x</text>
+</svg>

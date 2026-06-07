@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --border: #f1f5f9;
+  --border-strong: #e2e8f0;
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-light: #eef2ff;
+  --primary-foreground: #ffffff;
+  --muted: #f1f5f9;
+  --muted-text: #64748b;
+  --muted-text-subtle: #94a3b8;
+  --sidebar: #ffffff;
+  --sidebar-hover: #f8fafc;
+  --sidebar-active: #eef2ff;
+  --sidebar-active-border: #e0e7ff;
+  --sidebar-border: #e2e8f0;
+  --faq-bg: #f1f5f9;
+}
+
+.dark {
+  --background: #020817; 
+  --foreground: #f8fafc; 
+  --card: #0f172a;
+  --card-foreground: #f8fafc;
+  --border: #1e293b;
+  --border-strong: #334155;
+  --primary: #818cf8;
+  --primary-hover: #6366f1;
+  --primary-light: #1e293b;
+  --primary-foreground: #ffffff;
+  --muted: #1e293b;
+  --muted-text: #94a3b8;
+  --muted-text-subtle: #64748b;
+  --sidebar: #0f172a;
+  --sidebar-hover: #1e293b;
+  --sidebar-active: #1e293b; 
+  --sidebar-active-border: #334155;
+  --sidebar-border: #1e293b;
+  --faq-bg: #1e293b;
+}
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-light: var(--primary-light);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-text: var(--muted-text);
+  --color-muted-text-subtle: var(--muted-text-subtle);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-hover: var(--sidebar-hover);
+  --color-sidebar-active: var(--sidebar-active);
+  --color-sidebar-active-border: var(--sidebar-active-border);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-faq-bg: var(--faq-bg);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure Katex formulas always inherit their parent color for things like Flashcards */
+.katex {
+  color: inherit !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Hide scrollbar for clean UI in some areas if needed */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media print {
+  /* Hide sidebar, mobile header, and all marked elements */
+  .md\:hidden,
+  .fixed.inset-y-0.left-0,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Make main content take full width and remove background/padding */
+  .flex-1.overflow-y-auto {
+    padding: 0 !important;
+    background: white !important;
+    overflow: visible !important;
+  }
+
+  /* Remove shadow and border from course content container */
+  .bg-white.p-8.md\:p-12.lg\:p-16.rounded-\[2rem\] {
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+  
+  /* Hide subtle gradient */
+  .absolute.top-0.left-0.right-0.h-1 {
+    display: none !important;
+  }
+
+  /* Hide the quiz section when printing */
+  .mt-16.w-full.max-w-2xl.mx-auto.bg-white.rounded-2xl.shadow-sm.border {
+    display: none !important;
+  }
+
+  /* Ensure text is black for better printing */
+  body {
+    color: black !important;
+    background: white !important;
+  }
+}
+
+/* Premium Details & Summary Overrides */
+details {
+  transition: all 0.3s ease-in-out;
+}
+details[open] summary {
+  margin-bottom: 10px;
+}
+details > summary {
+  list-style: none; /* Hide default arrow */
+  display: flex;
+  align-items: center;
+  user-select: none;
+  font-weight: 600;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details > summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 8px;
+  font-size: 1.2em;
+  transition: transform 0.2s ease-in-out;
+  color: #4f46e5; /* Indigo-600 */
+}
+details[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+/* Base Shadow Updates for Apple-like float */
+.shadow-sm {
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05), 0 1px 3px 0 rgb(79 70 229 / 0.06);
+}
+.shadow-md {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(79 70 229 / 0.05);
+}
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(79 70 229 / 0.05);
+}
+
+/* 3D Transforms Utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Removed hardcoded color CSS overrides as they are fixed in components natively */
+
+

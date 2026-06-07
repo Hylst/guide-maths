@@ -1,0 +1,12 @@
+<svg width="500" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#fff1f2" />
+  <text x="50%" y="40" font-family="Arial" font-size="20" fill="#9f1239" text-anchor="middle">Du Carré au Cube (Animé)</text>
+  <!-- Carré (Aire) -->
+  <rect x="80" y="100" width="100" height="100" fill="#fecdd3" stroke="#e11d48" stroke-width="2" />
+  <text x="130" y="220" font-family="Arial" font-size="14" fill="#9f1239" text-anchor="middle">Aire (2D)</text>
+  <!-- Cube (Volume) -->
+  <path d="M 300 130 L 400 130 L 400 230 L 300 230 Z" fill="#fecdd3" stroke="#e11d48" stroke-width="2" />
+  <path d="M 300 130 L 330 100 L 430 100 L 400 130" fill="#fda4af" stroke="#e11d48" stroke-width="2" />
+  <path d="M 400 130 L 430 100 L 430 200 L 400 230" fill="#fb7185" stroke="#e11d48" stroke-width="2" />
+  <text x="365" y="250" font-family="Arial" font-size="14" fill="#9f1239" text-anchor="middle">Volume (3D)</text>
+</svg>

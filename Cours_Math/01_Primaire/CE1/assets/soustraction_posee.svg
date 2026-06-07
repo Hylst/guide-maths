@@ -1,0 +1,35 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .number { font-family: 'Courier New', Courier, monospace; font-size: 24px; fill: #1e293b; }
+    .cassage { stroke: #ef4444; stroke-width: 2; }
+    .new-val { font-family: Arial; font-size: 14px; fill: #ef4444; font-weight: bold; }
+    .line { stroke: #1e293b; stroke-width: 2; }
+    .header { font-family: Arial; font-size: 12px; fill: #64748b; font-weight: bold; }
+  </style>
+  
+  <!-- Colonnes -->
+  <text x="60" y="30" class="header" text-anchor="middle">D</text>
+  <text x="100" y="30" class="header" text-anchor="middle">U</text>
+  
+  <!-- "Cassage" de dizaine -->
+  <line x1="50" y1="65" x2="70" y2="85" class="cassage"/>
+  <text x="50" y="55" class="new-val" text-anchor="middle">5</text>
+  <text x="85" y="75" class="new-val" text-anchor="middle">1</text>
+
+  <!-- Calcul -->
+  <text x="60" y="80" class="number" text-anchor="middle">6</text>
+  <text x="100" y="80" class="number" text-anchor="middle">2</text>
+  
+  <text x="20" y="115" class="number" text-anchor="middle">-</text>
+  <text x="60" y="115" class="number" text-anchor="middle">2</text>
+  <text x="100" y="115" class="number" text-anchor="middle">7</text>
+  
+  <line x1="20" y1="130" x2="130" y2="130" class="line"/>
+  
+  <!-- Résultat -->
+  <text x="60" y="165" class="number" text-anchor="middle">3</text>
+  <text x="100" y="165" class="number" text-anchor="middle">5</text>
+  
+  <text x="145" y="80" font-family="Arial" font-size="12" fill="#64748b">2 - 7 ? Non !</text>
+  <text x="145" y="100" font-family="Arial" font-size="12" fill="#64748b">12 - 7 = 5</text>
+</svg>

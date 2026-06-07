@@ -1,0 +1,11 @@
+<svg width="500" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#f0fdf4" />
+  <text x="50%" y="40" font-family="Arial" font-size="20" fill="#166534" text-anchor="middle">Construction au Compas (Interactif)</text>
+  <path d="M 150 250 L 350 250 L 250 76.8 Z" fill="#bbf7d0" stroke="#15803d" stroke-width="2" />
+  <circle cx="250" cy="76.8" r="4" fill="#15803d" />
+  <text x="250" y="65" font-family="Arial" font-size="14" fill="#166534" text-anchor="middle">C</text>
+  <text x="140" y="265" font-family="Arial" font-size="14" fill="#166534" text-anchor="middle">A</text>
+  <text x="360" y="265" font-family="Arial" font-size="14" fill="#166534" text-anchor="middle">B</text>
+  <path d="M 150 250 A 200 200 0 0 1 350 76.8" stroke="#15803d" stroke-dasharray="5,5" fill="none" opacity="0.3" />
+  <path d="M 350 250 A 200 200 0 0 0 150 76.8" stroke="#15803d" stroke-dasharray="5,5" fill="none" opacity="0.3" />
+</svg>

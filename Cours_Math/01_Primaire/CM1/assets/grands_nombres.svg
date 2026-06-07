@@ -1,0 +1,20 @@
+<svg width="500" height="150" viewBox="0 0 500 150" xmlns="http://www.w3.org/2000/svg">
+  <!-- Tableau de numération simplifié -->
+  <rect x="10" y="10" width="480" height="100" fill="none" stroke="#1e293b" stroke-width="2"/>
+  
+  <!-- Lignes verticales -->
+  <line x1="170" y1="10" x2="170" y2="110" stroke="#1e293b" stroke-width="2"/>
+  <line x1="330" y1="10" x2="330" y2="110" stroke="#1e293b" stroke-width="2"/>
+  
+  <!-- En-têtes -->
+  <text x="90" y="35" font-family="Arial" font-size="16" fill="#ef4444" text-anchor="middle" font-weight="bold">MILLIONS</text>
+  <text x="250" y="35" font-family="Arial" font-size="16" fill="#3b82f6" text-anchor="middle" font-weight="bold">MILLE</text>
+  <text x="410" y="35" font-family="Arial" font-size="16" fill="#10b981" text-anchor="middle" font-weight="bold">UNITÉS</text>
+  
+  <!-- Exemple de nombre : 125 400 000 -->
+  <text x="90" y="80" font-family="Courier New" font-size="24" fill="#1e293b" text-anchor="middle">1 2 5</text>
+  <text x="250" y="80" font-family="Courier New" font-size="24" fill="#1e293b" text-anchor="middle">4 0 0</text>
+  <text x="410" y="80" font-family="Courier New" font-size="24" fill="#1e293b" text-anchor="middle">0 0 0</text>
+  
+  <text x="250" y="140" font-family="Arial" font-size="14" fill="#1e293b" text-anchor="middle">Cent-vingt-cinq millions quatre-cent-mille</text>
+</svg>

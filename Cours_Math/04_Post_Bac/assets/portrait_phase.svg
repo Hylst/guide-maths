@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" class="w-full h-auto rounded-xl shadow-indigo-100 shadow-lg border border-slate-100 bg-slate-50">
+  <defs>
+    <marker id="arrowhead" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto">
+      <polygon points="0 0, 6 2, 0 4" fill="#6366f1" />
+    </marker>
+    <marker id="arrowhead-path" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto">
+      <polygon points="0 0, 6 2, 0 4" fill="#10b981" />
+    </marker>
+    <style>
+      .axis { stroke: #94a3b8; stroke-width: 2; }
+      .grid { stroke: #e2e8f0; stroke-width: 1; }
+      .trajectory { stroke: #10b981; stroke-width: 2; fill: none; marker-end: url(#arrowhead-path); opacity: 0.8; }
+      .trajectory:hover { stroke: #f43f5e; stroke-width: 3; opacity: 1; cursor: pointer; }
+      .eigenvector { stroke: #f59e0b; stroke-width: 2; stroke-dasharray: 5,5; }
+      
+      .text-label { font-family: 'Inter', sans-serif; font-size: 14px; fill: #475569; }
+      .title { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 600; fill: #1e293b; }
+      .subtitle { font-family: 'Inter', sans-serif; font-size: 14px; fill: #64748b; }
+      
+      @keyframes trace {
+        from { stroke-dashoffset: 1000; }
+        to { stroke-dashoffset: 0; }
+      }
+      .animate-trace {
+        stroke-dasharray: 1000;
+        animation: trace 3s ease-in-out forwards;
+      }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#f8fafc" rx="12" />
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" class="title">Portrait de Phase : Nœud Attractif</text>
+  <text x="400" y="65" text-anchor="middle" class="subtitle">Système X' = AX avec valeurs propres réelles négatives. Toutes les trajectoires convergent vers l'origine.</text>
+
+  <g transform="translate(400, 280)">
+    <!-- Grid -->
+    <g class="grid">
+      <line x1="-350" y1="-200" x2="350" y2="-200" />
+      <line x1="-350" y1="-100" x2="350" y2="-100" />
+      <line x1="-350" y1="100" x2="350" y2="100" />
+      <line x1="-350" y1="200" x2="350" y2="200" />
+      
+      <line x1="-300" y1="-220" x2="-300" y2="220" />
+      <line x1="-200" y1="-220" x2="-200" y2="220" />
+      <line x1="-100" y1="-220" x2="-100" y2="220" />
+      <line x1="100" y1="-220" x2="100" y2="220" />
+      <line x1="200" y1="-220" x2="200" y2="220" />
+      <line x1="300" y1="-220" x2="300" y2="220" />
+    </g>
+
+    <!-- Axes -->
+    <line x1="-350" y1="0" x2="350" y2="0" class="axis" marker-end="url(#arrowhead)" />
+    <line x1="0" y1="220" x2="0" y2="-220" class="axis" marker-end="url(#arrowhead)" />
+    
+    <text x="340" y="-10" class="text-label">x</text>
+    <text x="10" y="-210" class="text-label">y</text>
+    <text x="-15" y="15" class="text-label">0</text>
+
+    <!-- Eigenvectors (Directions of the eigenvectors) -->
+    <!-- Let's say lambda_1 = -1, v_1 = (1, 1) -->
+    <!-- Let's say lambda_2 = -2, v_2 = (1, -1) -->
+    <line x1="-200" y1="-200" x2="200" y2="200" class="eigenvector" />
+    <line x1="-200" y1="200" x2="200" y2="-200" class="eigenvector" />
+    
+    <text x="180" y="170" class="text-label" fill="#f59e0b">v₁ (λ₁ = -1)</text>
+    <text x="180" y="-170" class="text-label" fill="#f59e0b">v₂ (λ₂ = -2)</text>
+
+    <!-- Trajectories -->
+    <!-- Since lambda_2 < lambda_1 < 0, trajectories approach the origin tangent to v_1 -->
+    <!-- Q1 -->
+    <path d="M 300 -100 Q 150 -50 20 20" class="trajectory animate-trace" />
+    <path d="M 100 -300 Q 50 -150 20 20" class="trajectory animate-trace" style="animation-delay: 0.5s;" />
+    
+    <!-- Q2 -->
+    <path d="M -300 -100 Q -150 -50 -20 20" class="trajectory animate-trace" style="animation-delay: 1s;" />
+    <path d="M -100 -300 Q -50 -150 -20 20" class="trajectory animate-trace" style="animation-delay: 1.5s;" />
+    
+    <!-- Q3 -->
+    <path d="M -300 100 Q -150 50 -20 -20" class="trajectory animate-trace" style="animation-delay: 2s;" />
+    <path d="M -100 300 Q -50 150 -20 -20" class="trajectory animate-trace" style="animation-delay: 2.5s;" />
+    
+    <!-- Q4 -->
+    <path d="M 300 100 Q 150 50 20 -20" class="trajectory animate-trace" style="animation-delay: 3s;" />
+    <path d="M 100 300 Q 50 150 20 -20" class="trajectory animate-trace" style="animation-delay: 3.5s;" />
+
+    <!-- Equilibrium point -->
+    <circle cx="0" cy="0" r="5" fill="#ef4444" />
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(40, 420)">
+    <rect x="0" y="0" width="250" height="60" fill="#ffffff" rx="8" stroke="#e2e8f0" />
+    <line x1="15" y1="20" x2="45" y2="20" class="trajectory" style="stroke-dasharray: 0; animation: none;" />
+    <text x="55" y="25" class="text-label">Trajectoires</text>
+    <line x1="15" y1="40" x2="45" y2="40" class="eigenvector" />
+    <text x="55" y="45" class="text-label">Espaces propres</text>
+  </g>
+</svg>

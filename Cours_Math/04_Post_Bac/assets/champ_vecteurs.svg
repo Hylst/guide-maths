@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" class="w-full h-auto rounded-xl shadow-indigo-100 shadow-lg border border-slate-100 bg-slate-50">
+  <defs>
+    <marker id="arrowhead" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto">
+      <polygon points="0 0, 6 2, 0 4" fill="#6366f1" />
+    </marker>
+    <style>
+      .axis { stroke: #94a3b8; stroke-width: 2; }
+      .grid { stroke: #e2e8f0; stroke-width: 1; }
+      .vector { stroke: #6366f1; stroke-width: 1.5; marker-end: url(#arrowhead); opacity: 0.6; transition: all 0.3s ease; }
+      .vector:hover { stroke: #f43f5e; stroke-width: 2.5; opacity: 1; cursor: pointer; }
+      .solution-curve { stroke: #10b981; stroke-width: 3; fill: none; stroke-dasharray: 1000; stroke-dashoffset: 1000; }
+      .solution-curve-2 { stroke: #f59e0b; stroke-width: 3; fill: none; stroke-dasharray: 1000; stroke-dashoffset: 1000; }
+      
+      @keyframes drawCurve {
+        to { stroke-dashoffset: 0; }
+      }
+      .animate-curve { animation: drawCurve 4s ease-in-out forwards; }
+      .animate-curve-delayed { animation: drawCurve 4s ease-in-out 2s forwards; }
+      
+      .text-label { font-family: 'Inter', sans-serif; font-size: 14px; fill: #475569; }
+      .title { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 600; fill: #1e293b; }
+      .subtitle { font-family: 'Inter', sans-serif; font-size: 14px; fill: #64748b; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#f8fafc" rx="12" />
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" class="title">Champ de Vecteurs : y' = y - x</text>
+  <text x="400" y="65" text-anchor="middle" class="subtitle">Survolez les vecteurs pour les mettre en évidence. Les courbes représentent des solutions particulières.</text>
+
+  <g transform="translate(400, 280)">
+    <!-- Grid -->
+    <g class="grid">
+      <line x1="-350" y1="-200" x2="350" y2="-200" />
+      <line x1="-350" y1="-150" x2="350" y2="-150" />
+      <line x1="-350" y1="-100" x2="350" y2="-100" />
+      <line x1="-350" y1="-50" x2="350" y2="-50" />
+      <line x1="-350" y1="50" x2="350" y2="50" />
+      <line x1="-350" y1="100" x2="350" y2="100" />
+      <line x1="-350" y1="150" x2="350" y2="150" />
+      <line x1="-350" y1="200" x2="350" y2="200" />
+      
+      <line x1="-300" y1="-220" x2="-300" y2="220" />
+      <line x1="-250" y1="-220" x2="-250" y2="220" />
+      <line x1="-200" y1="-220" x2="-200" y2="220" />
+      <line x1="-150" y1="-220" x2="-150" y2="220" />
+      <line x1="-100" y1="-220" x2="-100" y2="220" />
+      <line x1="-50" y1="-220" x2="-50" y2="220" />
+      <line x1="50" y1="-220" x2="50" y2="220" />
+      <line x1="100" y1="-220" x2="100" y2="220" />
+      <line x1="150" y1="-220" x2="150" y2="220" />
+      <line x1="200" y1="-220" x2="200" y2="220" />
+      <line x1="250" y1="-220" x2="250" y2="220" />
+      <line x1="300" y1="-220" x2="300" y2="220" />
+    </g>
+
+    <!-- Axes -->
+    <line x1="-350" y1="0" x2="350" y2="0" class="axis" marker-end="url(#arrowhead)" />
+    <line x1="0" y1="220" x2="0" y2="-220" class="axis" marker-end="url(#arrowhead)" />
+    
+    <text x="340" y="-10" class="text-label">x</text>
+    <text x="10" y="-210" class="text-label">y</text>
+    <text x="-15" y="15" class="text-label">0</text>
+    <text x="45" y="15" class="text-label">1</text>
+    <text x="-15" y="-45" class="text-label">1</text>
+
+    <!-- Vector Field (Generated for y' = y - x) -->
+    <!-- Scale: 50px = 1 unit -->
+    <g id="vector-field">
+      <!-- x = -3 to 3, y = -2 to 2 -->
+      <!-- We will generate a few representative vectors -->
+      <!-- Row y = 2 (100px up) -->
+      <line x1="-150" y1="-100" x2="-138" y2="-112" class="vector" /> <!-- x=-3, y=2, y'=5 -->
+      <line x1="-100" y1="-100" x2="-89" y2="-111" class="vector" /> <!-- x=-2, y=2, y'=4 -->
+      <line x1="-50" y1="-100" x2="-40" y2="-110" class="vector" /> <!-- x=-1, y=2, y'=3 -->
+      <line x1="0" y1="-100" x2="9" y2="-109" class="vector" /> <!-- x=0, y=2, y'=2 -->
+      <line x1="50" y1="-100" x2="60" y2="-105" class="vector" /> <!-- x=1, y=2, y'=1 -->
+      <line x1="100" y1="-100" x2="112" y2="-100" class="vector" /> <!-- x=2, y=2, y'=0 -->
+      <line x1="150" y1="-100" x2="160" y2="-95" class="vector" /> <!-- x=3, y=2, y'=-1 -->
+      
+      <!-- Row y = 1 (50px up) -->
+      <line x1="-150" y1="-50" x2="-140" y2="-60" class="vector" /> <!-- x=-3, y=1, y'=4 -->
+      <line x1="-100" y1="-50" x2="-90" y2="-60" class="vector" /> <!-- x=-2, y=1, y'=3 -->
+      <line x1="-50" y1="-50" x2="-41" y2="-59" class="vector" /> <!-- x=-1, y=1, y'=2 -->
+      <line x1="0" y1="-50" x2="10" y2="-55" class="vector" /> <!-- x=0, y=1, y'=1 -->
+      <line x1="50" y1="-50" x2="62" y2="-50" class="vector" /> <!-- x=1, y=1, y'=0 -->
+      <line x1="100" y1="-50" x2="110" y2="-45" class="vector" /> <!-- x=2, y=1, y'=-1 -->
+      <line x1="150" y1="-50" x2="159" y2="-41" class="vector" /> <!-- x=3, y=1, y'=-2 -->
+
+      <!-- Row y = 0 (axis) -->
+      <line x1="-150" y1="0" x2="-141" y2="-9" class="vector" /> <!-- x=-3, y=0, y'=3 -->
+      <line x1="-100" y1="0" x2="-91" y2="-9" class="vector" /> <!-- x=-2, y=0, y'=2 -->
+      <line x1="-50" y1="0" x2="-40" y2="-5" class="vector" /> <!-- x=-1, y=0, y'=1 -->
+      <line x1="0" y1="0" x2="12" y2="0" class="vector" /> <!-- x=0, y=0, y'=0 -->
+      <line x1="50" y1="0" x2="60" y2="5" class="vector" /> <!-- x=1, y=0, y'=-1 -->
+      <line x1="100" y1="0" x2="109" y2="9" class="vector" /> <!-- x=2, y=0, y'=-2 -->
+      <line x1="150" y1="0" x2="158" y2="12" class="vector" /> <!-- x=3, y=0, y'=-3 -->
+
+      <!-- Row y = -1 (50px down) -->
+      <line x1="-150" y1="50" x2="-141" y2="41" class="vector" /> <!-- x=-3, y=-1, y'=2 -->
+      <line x1="-100" y1="50" x2="-90" y2="45" class="vector" /> <!-- x=-2, y=-1, y'=1 -->
+      <line x1="-50" y1="50" x2="-38" y2="50" class="vector" /> <!-- x=-1, y=-1, y'=0 -->
+      <line x1="0" y1="50" x2="10" y2="55" class="vector" /> <!-- x=0, y=-1, y'=-1 -->
+      <line x1="50" y1="50" x2="59" y2="59" class="vector" /> <!-- x=1, y=-1, y'=-2 -->
+      <line x1="100" y1="50" x2="108" y2="62" class="vector" /> <!-- x=2, y=-1, y'=-3 -->
+      <line x1="150" y1="50" x2="157" y2="64" class="vector" /> <!-- x=3, y=-1, y'=-4 -->
+      
+      <!-- Row y = -2 (100px down) -->
+      <line x1="-150" y1="100" x2="-140" y2="95" class="vector" /> <!-- x=-3, y=-2, y'=1 -->
+      <line x1="-100" y1="100" x2="-88" y2="100" class="vector" /> <!-- x=-2, y=-2, y'=0 -->
+      <line x1="-50" y1="100" x2="-40" y2="105" class="vector" /> <!-- x=-1, y=-2, y'=-1 -->
+      <line x1="0" y1="100" x2="9" y2="109" class="vector" /> <!-- x=0, y=-2, y'=-2 -->
+      <line x1="50" y1="100" x2="58" y2="112" class="vector" /> <!-- x=1, y=-2, y'=-3 -->
+      <line x1="100" y1="100" x2="107" y2="114" class="vector" /> <!-- x=2, y=-2, y'=-4 -->
+      <line x1="150" y1="100" x2="156" y2="116" class="vector" /> <!-- x=3, y=-2, y'=-5 -->
+    </g>
+
+    <!-- Solution Curves -->
+    <!-- General solution: y(x) = x + 1 + C*e^x -->
+    <!-- Curve 1: C = 1 -> y = x + 1 + e^x -->
+    <path d="M -150 -10.1 C -100 -23.5 -50 -38.4 0 -100 C 20 -137 35 -180 40 -220" class="solution-curve animate-curve" />
+    
+    <!-- Curve 2: C = -1 -> y = x + 1 - e^x -->
+    <path d="M -150 9.9 C -100 23.5 -50 38.4 0 0 C 20 -20 50 -20 100 0 C 120 20 130 50 140 100 C 145 150 150 200 150 220" class="solution-curve-2 animate-curve-delayed" />
+    
+    <!-- Isocline y' = 0 -> y = x -->
+    <line x1="-200" y1="200" x2="200" y2="-200" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,5" />
+    <text x="180" y="-210" class="text-label" fill="#94a3b8">y = x (y'=0)</text>
+
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(40, 420)">
+    <rect x="0" y="0" width="250" height="60" fill="#ffffff" rx="8" stroke="#e2e8f0" />
+    <line x1="15" y1="20" x2="45" y2="20" class="solution-curve" style="stroke-dasharray: 0; animation: none;" />
+    <text x="55" y="25" class="text-label">Solution y(0) = 2</text>
+    <line x1="15" y1="40" x2="45" y2="40" class="solution-curve-2" style="stroke-dasharray: 0; animation: none;" />
+    <text x="55" y="45" class="text-label">Solution y(0) = 0</text>
+  </g>
+</svg>

@@ -1,0 +1,40 @@
+<svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .axis { stroke: #94a3b8; stroke-width: 2; marker-end: url(#arrow); }
+    .curve { stroke: #3b82f6; stroke-width: 4; fill: none; }
+    .area-pos { fill: #10b981; opacity: 0.2; }
+    .area-neg { fill: #f43f5e; opacity: 0.2; }
+    .label { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: bold; }
+    .sign { font-size: 24px; font-weight: bold; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/></marker>
+  </defs>
+  <rect width="600" height="300" fill="#ffffff" />
+  
+  <!-- Axis -->
+  <line x1="50" y1="150" x2="550" y2="150" class="axis"/>
+  
+  <!-- Parabola a > 0, Delta > 0 -->
+  <path d="M 100 50 Q 300 350 500 50" class="curve" />
+  
+  <!-- Areas -->
+  <path d="M 100 50 Q 158 150 217 150 L 100 150 Z" class="area-pos" />
+  <path d="M 217 150 Q 300 350 383 150 Z" class="area-neg" />
+  <path d="M 383 150 Q 442 150 500 50 L 500 150 Z" class="area-pos" />
+  
+  <!-- Roots -->
+  <circle cx="217" cy="150" r="5" fill="#1e293b" />
+  <text x="205" y="180" class="label">x1</text>
+  <circle cx="383" cy="150" r="5" fill="#1e293b" />
+  <text x="375" y="180" class="label">x2</text>
+  
+  <!-- Signs -->
+  <text x="140" y="120" class="sign" fill="#10b981">+</text>
+  <text x="290" y="220" class="sign" fill="#f43f5e">-</text>
+  <text x="440" y="120" class="sign" fill="#10b981">+</text>
+  
+  <text x="100" y="40" class="label" fill="#3b82f6">Signe de a (ici a > 0)</text>
+  <text x="350" y="40" class="label" fill="#3b82f6">Signe de a</text>
+  <text x="250" y="280" class="label" fill="#f43f5e">Signe contraire de a</text>
+</svg>

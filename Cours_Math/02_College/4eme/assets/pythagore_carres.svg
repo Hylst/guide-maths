@@ -1,0 +1,40 @@
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#fafafa" />
+  
+  <!-- Titre -->
+  <text x="50%" y="40" font-family="Arial" font-size="24" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Le Théorème de Pythagore : L'aire des carrés</text>
+
+  <g transform="translate(150, 200)">
+    <!-- Le triangle rectangle central (côtés 3, 4, 5) -->
+    <!-- Multiplié par 30 pour l'échelle visuelle : 90, 120, 150 -->
+    <polygon points="0,0 120,0 0,-90" fill="#dbeafe" stroke="#1d4ed8" stroke-width="3" />
+    
+    <!-- Symbole angle droit -->
+    <polyline points="15,0 15,-15 0,-15" fill="none" stroke="#ef4444" stroke-width="3" />
+    
+    <!-- Carré sur le côté a (3) -> 90x90 -->
+    <rect x="-90" y="-90" width="90" height="90" fill="#fca5a5" opacity="0.7" stroke="#b91c1c" stroke-width="2" />
+    <text x="-45" y="-40" font-family="Arial" font-size="20" font-weight="bold" fill="#7f1d1d" text-anchor="middle">a² = 9</text>
+    <text x="-15" y="-45" font-family="Arial" font-size="16" fill="#7f1d1d" text-anchor="end">a=3</text>
+    
+    <!-- Carré sur le côté b (4) -> 120x120 -->
+    <rect x="0" y="0" width="120" height="120" fill="#86efac" opacity="0.7" stroke="#15803d" stroke-width="2" />
+    <text x="60" y="65" font-family="Arial" font-size="20" font-weight="bold" fill="#14532d" text-anchor="middle">b² = 16</text>
+    <text x="60" y="15" font-family="Arial" font-size="16" fill="#14532d" text-anchor="middle">b=4</text>
+    
+    <!-- Carré sur l'hypoténuse c (5) -> 150x150 -->
+    <!-- Angle de rotation = atan(90/120) = 36.87 degrés -->
+    <g transform="translate(120,0) rotate(-143.13)">
+      <rect x="0" y="0" width="150" height="150" fill="#fcd34d" opacity="0.7" stroke="#b45309" stroke-width="2" />
+      <text x="75" y="80" font-family="Arial" font-size="24" font-weight="bold" fill="#78350f" text-anchor="middle" transform="rotate(143.13, 75, 80)">c² = 25</text>
+    </g>
+    <text x="70" y="-55" font-family="Arial" font-size="16" font-weight="bold" fill="#78350f" text-anchor="middle">c=5 (Hypoténuse)</text>
+  </g>
+  
+  <!-- L'équation -->
+  <g transform="translate(300, 360)">
+    <rect x="-150" y="-25" width="300" height="50" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" />
+    <text x="0" y="5" font-family="Arial" font-size="22" font-weight="bold" fill="#1e3a8a" text-anchor="middle">a² + b² = c²</text>
+    <text x="0" y="45" font-family="Arial" font-size="16" fill="#1e3a8a" text-anchor="middle">9 + 16 = 25</text>
+  </g>
+</svg>

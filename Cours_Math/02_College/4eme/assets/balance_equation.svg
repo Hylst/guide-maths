@@ -1,0 +1,59 @@
+<svg width="600" height="350" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#fdf4ff" />
+  
+  <text x="50%" y="40" font-family="Arial" font-size="24" font-weight="bold" fill="#701a75" text-anchor="middle">L'Équation : La Balance de Roberval</text>
+
+  <!-- La structure de la balance -->
+  <path d="M 300 280 L 300 150" stroke="#475569" stroke-width="8" />
+  <path d="M 250 280 L 350 280" stroke="#475569" stroke-width="8" />
+  <polygon points="300,130 290,150 310,150" fill="#475569" />
+  
+  <!-- Le fléau (la barre horizontale) -->
+  <!-- Équilibre parfait, donc horizontal -->
+  <line x1="150" y1="140" x2="450" y2="140" stroke="#334155" stroke-width="6" />
+  
+  <!-- Plateau Gauche -->
+  <line x1="150" y1="140" x2="150" y2="200" stroke="#94a3b8" stroke-width="2" />
+  <path d="M 100 200 L 200 200 L 180 220 L 120 220 Z" fill="#cbd5e1" stroke="#64748b" stroke-width="2" />
+  
+  <!-- Plateau Droit -->
+  <line x1="450" y1="140" x2="450" y2="200" stroke="#94a3b8" stroke-width="2" />
+  <path d="M 400 200 L 500 200 L 480 220 L 420 220 Z" fill="#cbd5e1" stroke="#64748b" stroke-width="2" />
+  
+  <!-- Contenu Plateau Gauche : 2x + 3 -->
+  <!-- Boîte X 1 -->
+  <rect x="120" y="160" width="30" height="40" fill="#c084fc" stroke="#7e22ce" stroke-width="2" />
+  <text x="135" y="185" font-family="Arial" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">x</text>
+  <!-- Boîte X 2 -->
+  <rect x="155" y="160" width="30" height="40" fill="#c084fc" stroke="#7e22ce" stroke-width="2" />
+  <text x="170" y="185" font-family="Arial" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">x</text>
+  <!-- Poids 3 -->
+  <circle cx="145" cy="145" r="15" fill="#fcd34d" stroke="#b45309" stroke-width="2" />
+  <text x="145" y="150" font-family="Arial" font-size="14" font-weight="bold" fill="#78350f" text-anchor="middle">3</text>
+
+  <!-- Contenu Plateau Droit : x + 8 -->
+  <!-- Boîte X 1 -->
+  <rect x="420" y="160" width="30" height="40" fill="#c084fc" stroke="#7e22ce" stroke-width="2" />
+  <text x="435" y="185" font-family="Arial" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">x</text>
+  <!-- Poids 8 -->
+  <circle cx="465" cy="185" r="15" fill="#fcd34d" stroke="#b45309" stroke-width="2" />
+  <text x="465" y="190" font-family="Arial" font-size="14" font-weight="bold" fill="#78350f" text-anchor="middle">8</text>
+  
+  <!-- L'équation mathématique -->
+  <text x="150" y="320" font-family="Arial" font-size="24" font-weight="bold" fill="#7e22ce" text-anchor="middle">2x + 3</text>
+  <text x="300" y="320" font-family="Arial" font-size="30" font-weight="bold" fill="#0f172a" text-anchor="middle">=</text>
+  <text x="450" y="320" font-family="Arial" font-size="24" font-weight="bold" fill="#7e22ce" text-anchor="middle">x + 8</text>
+  
+  <!-- Flèches d'action (Ce qu'on fait d'un côté, on le fait de l'autre) -->
+  <path d="M 150 100 Q 225 50 300 100" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowRed)" />
+  <text x="225" y="60" font-family="Arial" font-size="14" font-weight="bold" fill="#ef4444" text-anchor="middle">- x</text>
+  
+  <path d="M 450 100 Q 375 50 300 100" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowRed)" />
+  <text x="375" y="60" font-family="Arial" font-size="14" font-weight="bold" fill="#ef4444" text-anchor="middle">- x</text>
+  
+  <defs>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#ef4444" />
+    </marker>
+  </defs>
+</svg>
