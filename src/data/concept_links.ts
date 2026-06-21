@@ -133,6 +133,16 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Algèbre Financière ECG",
     dependencies: ["/Cours_Math/03_Lycee/Terminale/05_Suites_et_Recurrence.md"]
   },
+  "/Cours_Math/04_Post_Bac/BTS_CG/01_Suites_et_Finance_CG.md": {
+    domain: "numbers",
+    shortTitle: "Suites & Finance CG",
+    dependencies: ["/Cours_Math/03_Lycee/Terminale/05_Suites_et_Recurrence.md"]
+  },
+  "/Cours_Math/04_Post_Bac/BTS_Tertiaire/01_Suites_Finance.md": {
+    domain: "numbers",
+    shortTitle: "Suites Finance Tertiaire",
+    dependencies: ["/Cours_Math/03_Lycee/Terminale/05_Suites_et_Recurrence.md"]
+  },
 
   // --- ALGÈBRE & ÉQUATIONS ---
   "/Cours_Math/02_College/5eme/11_Calcul_Litteral.md": {
@@ -327,6 +337,26 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Optimisation ECG",
     dependencies: ["/Cours_Math/04_Post_Bac/09_Calcul_Differentiel_Optimisation.md", "/Cours_Math/04_Post_Bac/19_CPGE_ECG_Suites_et_Series_Economie.md"]
   },
+  "/Cours_Math/04_Post_Bac/BTS/03_BTS_03_Traitement_Signal.md": {
+    domain: "analysis",
+    shortTitle: "Traitement Signal BTS",
+    dependencies: ["/Cours_Math/04_Post_Bac/BTS_Industriel/03_Fourier.md"]
+  },
+  "/Cours_Math/04_Post_Bac/BTS_Industriel/01_Vibrations.md": {
+    domain: "analysis",
+    shortTitle: "Vibrations BTS Ind",
+    dependencies: ["/Cours_Math/04_Post_Bac/04_Equations_Differentielles.md"]
+  },
+  "/Cours_Math/04_Post_Bac/BTS_Industriel/02_Resonance.md": {
+    domain: "analysis",
+    shortTitle: "Résonance BTS Ind",
+    dependencies: ["/Cours_Math/04_Post_Bac/BTS_Industriel/01_Vibrations.md"]
+  },
+  "/Cours_Math/04_Post_Bac/BTS_Industriel/03_Fourier.md": {
+    domain: "analysis",
+    shortTitle: "Fourier BTS Ind",
+    dependencies: ["/Cours_Math/04_Post_Bac/BTS_Industriel/02_Resonance.md"]
+  },
 
   // --- PROBABILITÉS & STATISTIQUES ---
   "/Cours_Math/02_College/4eme/08_Statistiques.md": {
@@ -409,6 +439,21 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Probabilités (BL)",
     dependencies: ["/Cours_Math/04_Post_Bac/07_Probabilites_Discretes.md"]
   },
+  "/Cours_Math/04_Post_Bac/BTS_CG/02_Ajustement_Lineaire_Previsions.md": {
+    domain: "probability",
+    shortTitle: "Ajustement Linéaire CG",
+    dependencies: ["/Cours_Math/04_Post_Bac/BTS/02_BTS_02_Statistiques_Inferentielles.md"]
+  },
+  "/Cours_Math/04_Post_Bac/BTS_CG/03_Lois_Probabilites_Gestion.md": {
+    domain: "probability",
+    shortTitle: "Lois Proba Gestion CG",
+    dependencies: ["/Cours_Math/04_Post_Bac/BTS_CG/01_Suites_et_Finance_CG.md"]
+  },
+  "/Cours_Math/04_Post_Bac/BTS_Tertiaire/02_Estimation_Echantillonnage.md": {
+    domain: "probability",
+    shortTitle: "Estimation BTS Tertiaire",
+    dependencies: ["/Cours_Math/04_Post_Bac/BTS/02_BTS_02_Statistiques_Inferentielles.md"]
+  },
 
   // --- ALGORITHMIQUE & LOGIQUE ---
   "/Cours_Math/02_College/4eme/05_Algorithmique_Scratch.md": {
@@ -440,6 +485,11 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     domain: "algorithms",
     shortTitle: "Réseaux Neurones",
     dependencies: ["/Cours_Math/04_Post_Bac/Ingenieur_IA_Data/02_Optimisation_Descente_Gradient.md", "/Cours_Math/04_Post_Bac/02_Algebre_Lineaire.md"]
+  },
+  "/Cours_Math/04_Post_Bac/BTS_Tertiaire/03_Simplexe_Optimisation.md": {
+    domain: "algorithms",
+    shortTitle: "Simplexe BTS Tertiaire",
+    dependencies: ["/Cours_Math/04_Post_Bac/BTS/01_BTS_01_Graphes_et_Reseaux.md"]
   }
 };
 
