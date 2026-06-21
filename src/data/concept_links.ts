@@ -190,6 +190,11 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Polynômes (CPGE)",
     dependencies: ["/Cours_Math/04_Post_Bac/CPGE/01_CPGE_01_Structures_Algebriques.md"]
   },
+  "/Cours_Math/04_Post_Bac/Sup_CPGE/Course_CPGE_BL_AlgebreLineaire.md": {
+    domain: "algebra",
+    shortTitle: "Algèbre Linéaire (BL)",
+    dependencies: ["/Cours_Math/04_Post_Bac/02_Algebre_Lineaire.md"]
+  },
 
   // --- ANALYSE & FONCTIONS ---
   "/Cours_Math/02_College/3eme/03_Notion_de_Fonction.md": {
@@ -302,6 +307,11 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Séries de Fourier",
     dependencies: ["/Cours_Math/04_Post_Bac/03_Series_Numeriques.md", "/Cours_Math/04_Post_Bac/CPGE/02_CPGE_02_Polynomes.md"]
   },
+  "/Cours_Math/04_Post_Bac/Sup_CPGE/Course_CPGE_BL_Optimisation.md": {
+    domain: "analysis",
+    shortTitle: "Optimisation (BL)",
+    dependencies: ["/Cours_Math/04_Post_Bac/09_Calcul_Differentiel_Optimisation.md"]
+  },
 
   // --- PROBABILITÉS & STATISTIQUES ---
   "/Cours_Math/02_College/4eme/08_Statistiques.md": {
@@ -378,6 +388,11 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     domain: "probability",
     shortTitle: "Calcul Stochastique",
     dependencies: ["/Cours_Math/04_Post_Bac/18_Probabilites_Vecteurs_Aleatoires.md"]
+  },
+  "/Cours_Math/04_Post_Bac/Sup_CPGE/Course_CPGE_BL_Proba.md": {
+    domain: "probability",
+    shortTitle: "Probabilités (BL)",
+    dependencies: ["/Cours_Math/04_Post_Bac/07_Probabilites_Discretes.md"]
   },
 
   // --- ALGORITHMIQUE & LOGIQUE ---
