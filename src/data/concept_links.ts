@@ -536,7 +536,7 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
   },
   "/Cours_Math/04_Post_Bac/20_BUT_SD_Statistique_Inference_Estimation.md": {
     domain: "probability",
-    shortTitle: "Inférence & Estimation BUT",
+    shortTitle: "Inférence Estimation BUT",
     dependencies: ["/Cours_Math/04_Post_Bac/11_BUT_SD_Statistiques_Descriptives.md"]
   },
   "/Cours_Math/04_Post_Bac/24_BUT_SD_Regression_Lineaire_Simple.md": {
