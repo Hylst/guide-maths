@@ -143,6 +143,11 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Suites Finance Tertiaire",
     dependencies: ["/Cours_Math/03_Lycee/Terminale/05_Suites_et_Recurrence.md"]
   },
+  "/Cours_Math/04_Post_Bac/BUT_GEA/01_Maths_Financieres_Gestion.md": {
+    domain: "numbers",
+    shortTitle: "Maths Financières GEA",
+    dependencies: ["/Cours_Math/04_Post_Bac/BTS_Tertiaire/01_Suites_Finance.md"]
+  },
 
   // --- ALGÈBRE & ÉQUATIONS ---
   "/Cours_Math/02_College/5eme/11_Calcul_Litteral.md": {
@@ -377,6 +382,21 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Fourier & Signal Ingé",
     dependencies: ["/Cours_Math/04_Post_Bac/CPGE/03_CPGE_03_Series_De_Fourier.md"]
   },
+  "/Cours_Math/04_Post_Bac/BUT_GEII/01_Impedance_Complexe_et_Fourier.md": {
+    domain: "analysis",
+    shortTitle: "Impédance & Fourier GEII",
+    dependencies: ["/Cours_Math/04_Post_Bac/01_Nombres_Complexes.md", "/Cours_Math/04_Post_Bac/BTS_Industriel/03_Fourier.md"]
+  },
+  "/Cours_Math/04_Post_Bac/BUT_GEII/02_Transformee_en_Z_et_Filtres.md": {
+    domain: "analysis",
+    shortTitle: "Transf. Z & Filtres GEII",
+    dependencies: ["/Cours_Math/04_Post_Bac/BUT_GEII/01_Impedance_Complexe_et_Fourier.md"]
+  },
+  "/Cours_Math/04_Post_Bac/BUT_GEII/03_Laplace_et_Systemes_Asservis.md": {
+    domain: "analysis",
+    shortTitle: "Laplace & Asservis GEII",
+    dependencies: ["/Cours_Math/04_Post_Bac/22_Ingenieur_Transformee_de_Laplace.md"]
+  },
 
   // --- PROBABILITÉS & STATISTIQUES ---
   "/Cours_Math/02_College/4eme/08_Statistiques.md": {
@@ -474,6 +494,36 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Estimation BTS Tertiaire",
     dependencies: ["/Cours_Math/04_Post_Bac/BTS/02_BTS_02_Statistiques_Inferentielles.md"]
   },
+  "/Cours_Math/04_Post_Bac/11_BUT_SD_Statistiques_Descriptives.md": {
+    domain: "probability",
+    shortTitle: "Stats Descriptives BUT",
+    dependencies: ["/Cours_Math/03_Lycee/Terminale/11_Probabilites_et_Lois_Continues.md"]
+  },
+  "/Cours_Math/04_Post_Bac/20_BUT_SD_Statistique_Inference_Estimation.md": {
+    domain: "probability",
+    shortTitle: "Inférence & Estimation BUT",
+    dependencies: ["/Cours_Math/04_Post_Bac/11_BUT_SD_Statistiques_Descriptives.md"]
+  },
+  "/Cours_Math/04_Post_Bac/24_BUT_SD_Regression_Lineaire_Simple.md": {
+    domain: "probability",
+    shortTitle: "Régression Linéaire BUT",
+    dependencies: ["/Cours_Math/04_Post_Bac/20_BUT_SD_Statistique_Inference_Estimation.md"]
+  },
+  "/Cours_Math/04_Post_Bac/26_BUT_SD_Analyse_en_Composantes_Principales_ACP.md": {
+    domain: "probability",
+    shortTitle: "ACP BUT SD",
+    dependencies: ["/Cours_Math/04_Post_Bac/24_BUT_SD_Regression_Lineaire_Simple.md", "/Cours_Math/04_Post_Bac/02_Algebre_Lineaire.md"]
+  },
+  "/Cours_Math/04_Post_Bac/BUT_GEA/03_Statistiques_Inference_Tests.md": {
+    domain: "probability",
+    shortTitle: "Tests d'Hypothèses GEA",
+    dependencies: ["/Cours_Math/04_Post_Bac/20_BUT_SD_Statistique_Inference_Estimation.md"]
+  },
+  "/Cours_Math/04_Post_Bac/BUT_Tertiaire/02_Files_Attente.md": {
+    domain: "probability",
+    shortTitle: "Files d'Attente BUT",
+    dependencies: ["/Cours_Math/04_Post_Bac/07_Probabilites_Discretes.md"]
+  },
 
   // --- ALGORITHMIQUE & LOGIQUE ---
   "/Cours_Math/02_College/4eme/05_Algorithmique_Scratch.md": {
@@ -510,6 +560,21 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     domain: "algorithms",
     shortTitle: "Simplexe BTS Tertiaire",
     dependencies: ["/Cours_Math/04_Post_Bac/BTS/01_BTS_01_Graphes_et_Reseaux.md"]
+  },
+  "/Cours_Math/04_Post_Bac/BUT_GEA/02_Recherche_Operationnelle_Simplexe.md": {
+    domain: "algorithms",
+    shortTitle: "Simplexe GEA",
+    dependencies: ["/Cours_Math/04_Post_Bac/BTS_Tertiaire/03_Simplexe_Optimisation.md"]
+  },
+  "/Cours_Math/04_Post_Bac/BUT_Tertiaire/01_Ordonnancement_PERT.md": {
+    domain: "algorithms",
+    shortTitle: "Ordonnancement PERT",
+    dependencies: ["/Cours_Math/04_Post_Bac/BTS/01_BTS_01_Graphes_et_Reseaux.md"]
+  },
+  "/Cours_Math/04_Post_Bac/BUT_Tertiaire/03_Theorie_Decision.md": {
+    domain: "algorithms",
+    shortTitle: "Théorie Décision BUT",
+    dependencies: ["/Cours_Math/04_Post_Bac/BUT_Tertiaire/01_Ordonnancement_PERT.md"]
   }
 };
 
