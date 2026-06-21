@@ -39,7 +39,7 @@ export default function App() {
     activeCourseContent,
     loadingCourseId,
   } = useCourses();
-  const { progress, validateCourse, saveQuizScore, getProgress, stats } =
+  const { progress, validateCourse, saveQuizScore, getProgress, stats, suggestedCourse, markReviewed } =
     useProgress();
   const account = useLocalAccount();
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
@@ -333,6 +333,7 @@ export default function App() {
         setIsInfoOpen={setIsInfoOpen}
         setIsOnboardingOpen={setIsOnboardingOpen}
         subLevelOrder={subLevelOrder}
+        suggestedCourse={suggestedCourse}
       />
 
       {/* Main Content */}
@@ -369,7 +370,7 @@ export default function App() {
               transition={{ duration: 0.3 }}
               className="p-4 md:p-8"
             >
-              <Dashboard stats={stats} groupedCourses={groupedCourses} progress={progress} subLevelOrder={subLevelOrder} account={account} />
+              <Dashboard stats={stats} groupedCourses={groupedCourses} progress={progress} subLevelOrder={subLevelOrder} account={account} suggestedCourse={suggestedCourse} markReviewed={markReviewed} handleCourseSelect={handleCourseSelect} />
             </motion.div>
           ) : isRewards ? (
             <motion.div
@@ -444,6 +445,7 @@ export default function App() {
                 progress={progress} 
                 navigate={navigate} 
                 handleCourseSelect={handleCourseSelect}
+                onBrowseChapters={() => setIsMobileMenuOpen(true)}
               />
             </motion.div>
           )}

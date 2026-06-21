@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { 
   X, 
@@ -19,7 +19,9 @@ import {
   Terminal,
   Clock,
   ShieldCheck,
-  BrainCircuit
+  BrainCircuit,
+  GitBranch,
+  Eye
 } from "lucide-react";
 
 interface InfoModalProps {
@@ -27,11 +29,52 @@ interface InfoModalProps {
   onClose: () => void;
 }
 
-type TabType = "author" | "project" | "guide" | "tips" | "tech";
+type TabType = "author" | "project" | "guide" | "tips" | "tech" | "graph";
 
 export default function InfoModal({ isOpen, onClose }: InfoModalProps) {
   const [activeTab, setActiveTab] = useState<TabType>("author");
   const [copied, setCopied] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  // Escape key closes modal
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [isOpen, onClose]);
+
+  // Focus trap: cycle Tab within modal
+  useEffect(() => {
+    if (!isOpen || !modalRef.current) return;
+    const modal = modalRef.current;
+    const focusable = modal.querySelectorAll<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    first.focus();
+
+    const handleTab = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    document.addEventListener("keydown", handleTab);
+    return () => document.removeEventListener("keydown", handleTab);
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -56,6 +99,8 @@ export default function InfoModal({ isOpen, onClose }: InfoModalProps) {
         return { text: "Conseils d'Étude", icon: <Lightbulb className="w-5 h-5 text-rose-500" /> };
       case "tech":
         return { text: "Coulisses Techniques", icon: <Terminal className="w-5 h-5 text-purple-500" /> };
+      case "graph":
+        return { text: "Graphe Conceptuel", icon: <GitBranch className="w-5 h-5 text-cyan-500" /> };
     }
   };
 
@@ -75,6 +120,10 @@ export default function InfoModal({ isOpen, onClose }: InfoModalProps) {
 
         {/* Modal Container */}
         <motion.div
+          ref={modalRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Informations sur le Guide Mathématiques"
           initial={{ opacity: 0, scale: 0.95, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
@@ -92,8 +141,18 @@ export default function InfoModal({ isOpen, onClose }: InfoModalProps) {
                   {currentHeaderInfo.text}
                 </h2>
                 <p className="text-xs text-muted-text font-semibold">Guide Mathématiques Applet • Informations</p>
-              </div>
-            </div>
+                    </div>
+                  </div>
+
+                  {/* AI Assistance */}
+                  <div className="bg-indigo-500/[0.03] p-4 rounded-2xl border border-indigo-500/15 space-y-1.5">
+                    <h4 className="flex items-center gap-1.5 text-xs font-black uppercase text-indigo-700 dark:text-indigo-400">
+                      <Cpu className="w-4 h-4 text-indigo-500" /> Conception Assistée par IA
+                    </h4>
+                    <p className="text-xs text-slate-500 dark:text-indigo-300/80 leading-normal font-semibold">
+                      Le code, les schémas interactifs, les activités pédagogiques, la recherche documentaire, la modélisation des concepts et une partie du contenu rédactionnel ont été assistés par intelligence artificielle, sous la direction et la validation humaine de l'auteur.
+                    </p>
+                  </div>
             
             <button
               onClick={onClose}
@@ -104,7 +163,7 @@ export default function InfoModal({ isOpen, onClose }: InfoModalProps) {
             </button>
           </div>
 
-          {/* Navigation Tabs (Scrollable on small screens to fit all 5 items) */}
+          {/* Navigation Tabs (Scrollable on small screens to fit all 6 items) */}
           <div className="px-6 md:px-8 py-2.5 bg-muted/20 border-b border-border-strong/35 flex items-center gap-1.5 overflow-x-auto scrollbar-none whitespace-nowrap">
             <button
               onClick={() => setActiveTab("author")}
@@ -164,6 +223,18 @@ export default function InfoModal({ isOpen, onClose }: InfoModalProps) {
             >
               <Terminal className="w-3.5 h-3.5 shrink-0" />
               Technique
+            </button>
+
+            <button
+              onClick={() => setActiveTab("graph")}
+              className={`px-3.5 py-2.5 rounded-xl text-2xs font-extrabold tracking-tight transition-all flex items-center gap-2 ${
+                activeTab === "graph"
+                  ? "bg-cyan-600 text-white dark:bg-cyan-500 shadow-md"
+                  : "text-muted-text hover:text-foreground hover:bg-muted font-bold"
+              }`}
+            >
+              <GitBranch className="w-3.5 h-3.5 shrink-0" />
+              Graphe
             </button>
           </div>
 
@@ -260,46 +331,47 @@ export default function InfoModal({ isOpen, onClose }: InfoModalProps) {
                   className="space-y-4"
                 >
                   <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300 font-medium">
-                    Ce guide de mathématiques se veut une ressource <strong>alternative, interactive et moderne</strong> pour surmonter l'anxiété face aux équations du primaire jusqu'aux classes préparatoires.
+                    Ce guide repense l'apprentissage des mathématiques autour de <strong>trois piliers</strong> : l'interactivité sensorielle, l'ancrage dans le réel et une progression spiralaire qui suit la façon dont le cerveau construit ses connaissances.
                   </p>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-2">
-                    <div className="p-3 bg-indigo-50/45 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-800/40 rounded-2xl flex items-start gap-2.5">
-                      <span className="text-lg">💸</span>
-                      <div>
-                        <h4 className="text-xs font-bold text-indigo-900 dark:text-indigo-200">100% Gratuit</h4>
-                        <p className="text-2xs text-indigo-700/80 dark:text-indigo-400 mt-1 leading-normal font-semibold">
-                          Sans abonnement ni boîte de dialogue intrusive. Un accès permanent à la connaissance pour tous.
+                  <div className="space-y-3">
+                    <div className="p-4 bg-indigo-50/45 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-800/40 rounded-2xl flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-950/50 flex items-center justify-center text-indigo-500 font-black text-sm shrink-0">1</div>
+                      <div className="space-y-1">
+                        <h4 className="text-xs font-extrabold text-foreground">Apprentissage Interactif</h4>
+                        <p className="text-2xs text-muted-text leading-relaxed font-semibold">
+                          Simulateurs 3D pour la géométrie, graphes dynamiques qui réagissent en temps réel au mouvement d'un curseur, algorithmique visuelle. L'objectif est de <strong>manipuler</strong> les objets mathématiques pour les comprendre intuitivement, pas seulement les mémoriser.
                         </p>
                       </div>
                     </div>
 
-                    <div className="p-3 bg-emerald-50/45 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-800/40 rounded-2xl flex items-start gap-2.5">
-                      <span className="text-lg">🤝</span>
-                      <div>
-                        <h4 className="text-xs font-bold text-emerald-900 dark:text-emerald-200">Bénévole</h4>
-                        <p className="text-2xs text-emerald-700/80 dark:text-emerald-400 mt-1 leading-normal font-semibold">
-                          Rédigé sur mon temps libre avec rigueur professionnelle mais humblement pour la communauté francophone.
+                    <div className="p-4 bg-emerald-50/45 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-800/40 rounded-2xl flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950/50 flex items-center justify-center text-emerald-500 font-black text-sm shrink-0">2</div>
+                      <div className="space-y-1">
+                        <h4 className="text-xs font-extrabold text-foreground">Ancrage dans le Réel</h4>
+                        <p className="text-2xs text-muted-text leading-relaxed font-semibold">
+                          Les mathématiques racontent notre monde. Chaque module relie la théorie à l'histoire, à la physique ou à l'économie : de l'orbite lunaire modélisée par Laplace à la croissance exponentielle en biologie ou en finance. <strong>Les formules prennent vie.</strong>
                         </p>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="space-y-2.5 bg-muted/30 p-4 rounded-2xl border border-border-strong/60">
-                    <h4 className="text-xs font-black uppercase text-foreground tracking-wider flex items-center gap-1.5">
-                      <Activity className="w-3.5 h-3.5 text-emerald-500" /> Philosophie Pédagogique
-                    </h4>
-                    <p className="text-xs text-muted-text leading-relaxed font-semibold">
-                      Plutôt que d'aligner des énoncés de cours monolithiques, ce projet privilégie "l'incarnation visuelle" des mathématiques. Grâce à des curseurs interactifs et des simulations instantanées, l'élève comprend les formules avant de chercher à les mémoriser par cœur.
-                    </p>
+                    <div className="p-4 bg-amber-50/45 dark:bg-amber-950/20 border border-amber-100 dark:border-amber-800/40 rounded-2xl flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950/50 flex items-center justify-center text-amber-500 font-black text-sm shrink-0">3</div>
+                      <div className="space-y-1">
+                        <h4 className="text-xs font-extrabold text-foreground">Pédagogie Spiralaire</h4>
+                        <p className="text-2xs text-muted-text leading-relaxed font-semibold">
+                          Du primaire jusqu'à l'enseignement supérieur, les concepts ne sont pas cloisonnés en chapitres étanches. Ils <strong>évoluent et se connectent</strong> naturellement au fil du parcours. La Carte Conceptuelle (126 nœuds) et l'algorithme de suggestion intégré au Tableau de Bord guident l'étudiant dans cette progression continue.
+                        </p>
+                      </div>
+                    </div>
                   </div>
 
                   <div className="bg-slate-50 dark:bg-slate-900/40 border border-border-strong p-4 rounded-2xl flex gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" />
+                    <Heart className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
                     <div className="space-y-1">
-                      <h4 className="text-xs font-bold text-foreground">Évolution en continu</h4>
+                      <h4 className="text-xs font-bold text-foreground">100% Gratuit & Bénévole</h4>
                       <p className="text-2xs text-muted-text leading-normal font-semibold">
-                        Le catalogue de cours, de questionnaires d'auto-évaluation et d'outils de géométrie plane est régulièrement étendu à partir de vos retours d'utilisation.
+                        Rédigé sur mon temps libre sans abonnement ni collecte de données. Le catalogue de cours et d'outils est régulièrement enrichi à partir des retours d'utilisation.
                       </p>
                     </div>
                   </div>
@@ -371,6 +443,36 @@ export default function InfoModal({ isOpen, onClose }: InfoModalProps) {
                         </p>
                       </div>
                     </div>
+
+                    {/* Mode Parcours */}
+                    <div className="flex items-start gap-3 p-3 bg-muted/40 rounded-xl border border-border-strong/40">
+                      <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-950/50 flex items-center justify-center text-cyan-500 font-extrabold text-xs shrink-0">
+                        5
+                      </div>
+                      <div className="space-y-0.5">
+                        <h4 className="text-xs font-extrabold text-foreground">Mode Parcours & Spirale</h4>
+                        <p className="text-2xs text-muted-text font-semibold leading-normal">
+                          Le Tableau de Bord analyse ta progression et te suggère le meilleur chapitre à étudier ensuite, selon la readiness de ses prérequis. C'est la <strong>pédagogie spiralaire</strong> appliquée à l'interface : un fil rouge qui t'accompagne de chapitre en chapitre.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Nouveautés */}
+                    <div className="flex items-start gap-3 p-3 bg-gradient-to-r from-rose-50/60 to-amber-50/60 dark:from-rose-950/10 dark:to-amber-950/10 rounded-xl border border-rose-200/50 dark:border-rose-900/30">
+                      <div className="w-8 h-8 rounded-lg bg-rose-100 dark:bg-rose-950/50 flex items-center justify-center text-rose-500 font-extrabold text-xs shrink-0">
+                        <Sparkles className="w-4 h-4" />
+                      </div>
+                      <div className="space-y-1">
+                        <h4 className="text-xs font-extrabold text-foreground">🆕 Nouveautés de la Session</h4>
+                        <ul className="text-2xs text-muted-text font-semibold leading-relaxed list-disc list-inside space-y-1">
+                          <li><strong>Timeline Spirale</strong> visible après chaque validation — visualise où se situe le concept dans le graphe</li>
+                          <li><strong>Connexions Personnelles</strong> — note dans quel contexte tu as croisé chaque notion</li>
+                          <li><strong>Tableau de Bord enrichi</strong> — suggestions de cours, badges par domaine, timeline XP</li>
+                          <li><strong>Page d'accueil</strong> — 3 piliers pédagogiques affichés, streak visible</li>
+                          <li><strong>Graphe conceptuel</strong> — 126 nœuds interconnectés</li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 </motion.div>
               )}
@@ -422,6 +524,93 @@ export default function InfoModal({ isOpen, onClose }: InfoModalProps) {
                 </motion.div>
               )}
 
+              {activeTab === "graph" && (
+                <motion.div
+                  key="graph-tab"
+                  initial={{ opacity: 0, y: 10, filter: "blur(2px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, y: -10, filter: "blur(2px)" }}
+                  transition={{ duration: 0.2 }}
+                  className="space-y-4"
+                >
+                  <p className="text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-300">
+                    Les mathématiques ne sont pas une succession de chapitres isolés, mais un <strong>graphe vivant de concepts interconnectés</strong>. La Carte Conceptuelle te permet de visualiser cette architecture.
+                  </p>
+
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3 p-3 bg-muted/40 rounded-xl border border-border-strong/40">
+                      <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-950/50 flex items-center justify-center text-cyan-500 font-extrabold text-xs shrink-0">
+                        1
+                      </div>
+                      <div className="space-y-0.5">
+                        <h4 className="text-xs font-extrabold text-foreground">Exploration Visuelle</h4>
+                        <p className="text-2xs text-muted-text font-semibold leading-normal">
+                          Parcours le graphe de 126 nœuds classés par domaine (Nombres, Algèbre, Analyse, Géométrie, Probabilités, Algorithmique). Chaque nœud est un cours, coloré par niveau scolaire.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 p-3 bg-muted/40 rounded-xl border border-border-strong/40">
+                      <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-950/50 flex items-center justify-center text-cyan-500 font-extrabold text-xs shrink-0">
+                        <Eye className="w-4 h-4" />
+                      </div>
+                      <div className="space-y-0.5">
+                        <h4 className="text-xs font-extrabold text-foreground">Survol Intelligent</h4>
+                        <p className="text-2xs text-muted-text font-semibold leading-normal">
+                          Passe la souris sur un nœud : sa lignée pédagogique s'illumine — les prérequis en vert, les notions suivantes en indigo. Tu vois d'un coup d'œil où tu te situes dans la spirale.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 p-3 bg-muted/40 rounded-xl border border-border-strong/40">
+                      <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-950/50 flex items-center justify-center text-cyan-500 font-extrabold text-xs shrink-0">
+                        <GraduationCap className="w-4 h-4" />
+                      </div>
+                      <div className="space-y-0.5">
+                        <h4 className="text-xs font-extrabold text-foreground">Navigation Contextuelle</h4>
+                        <p className="text-2xs text-muted-text font-semibold leading-normal">
+                          Clique sur un nœud pour voir ses dépendances en détail, puis lance le cours directement. Chaque cours affiche son propre "Fil d'Ariane" 🌱🌸 en haut de page.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 p-3 bg-muted/40 rounded-xl border border-border-strong/40">
+                      <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-950/50 flex items-center justify-center text-cyan-500 font-extrabold text-xs shrink-0">
+                        <Compass className="w-4 h-4" />
+                      </div>
+                      <div className="space-y-0.5">
+                        <h4 className="text-xs font-extrabold text-foreground">Pédagogie Spiralaire</h4>
+                        <p className="text-2xs text-muted-text font-semibold leading-normal">
+                          Le graphe incarne la pédagogie spiralaire : une notion naît au primaire, s'épaissit au collège, se formalise au lycée et s'approfondit dans le supérieur. Suis les flèches pour voyager à travers les niveaux.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 p-3 bg-muted/40 rounded-xl border border-border-strong/40">
+                      <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-950/50 flex items-center justify-center text-cyan-500 font-extrabold text-xs shrink-0">
+                        <Activity className="w-4 h-4" />
+                      </div>
+                      <div className="space-y-0.5">
+                        <h4 className="text-xs font-extrabold text-foreground">Navigation Suggestive</h4>
+                        <p className="text-2xs text-muted-text font-semibold leading-normal">
+                          L'algorithme du "Mode Parcours" utilise ce même graphe pour te suggérer le prochain cours : il analyse les prérequis déjà satisfaits et te propose le successeur le plus prêt à être abordé. Retrouve-le dans la carte "Continuer ma Spirale" du Tableau de Bord.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-cyan-50/50 dark:bg-cyan-950/10 border border-cyan-100/60 dark:border-cyan-950/50 p-4 rounded-2xl flex gap-3">
+                    <Eye className="w-5 h-5 text-cyan-500 shrink-0 mt-0.5" />
+                    <div className="space-y-1">
+                      <h4 className="text-xs font-bold text-foreground">Astuce</h4>
+                      <p className="text-2xs text-muted-text leading-relaxed font-semibold">
+                        Utilise la molette pour zoomer, glisse pour te déplacer, et active les filtres pour te concentrer sur un domaine ou un niveau spécifique. Le Mode Parcours est accessible depuis l'accueil et la sidebar.
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
               {activeTab === "tech" && (
                 <motion.div
                   key="tech-tab"
@@ -459,6 +648,11 @@ export default function InfoModal({ isOpen, onClose }: InfoModalProps) {
                     <div className="flex items-center justify-between p-3 bg-muted/40 rounded-xl border border-border-strong/50">
                       <span className="text-muted-text text-2xs">Génération Sonore</span>
                       <span className="font-mono text-2xs text-foreground bg-muted px-2.5 py-1 rounded border border-border-strong/40">Web Audio API (Fréquences Synthétisées)</span>
+                    </div>
+
+                    <div className="flex items-center justify-between p-3 bg-muted/40 rounded-xl border border-border-strong/50">
+                      <span className="text-muted-text text-2xs">Conception Assistée</span>
+                      <span className="font-mono text-2xs text-foreground bg-muted px-2.5 py-1 rounded border border-border-strong/40">IA (code, schémas, contenu, recherche)</span>
                     </div>
                   </div>
 

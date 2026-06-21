@@ -11,7 +11,9 @@ import {
   Copy, 
   Check, 
   BrainCircuit, 
-  AlertCircle 
+  AlertCircle,
+  GraduationCap,
+  Compass
 } from "lucide-react";
 
 interface OnboardingModalProps {
@@ -21,147 +23,122 @@ interface OnboardingModalProps {
 
 export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProps) {
   const [currentStep, setCurrentStep] = useState(0);
-  const [copied, setCopied] = useState(false);
+  const [goal, setGoal] = useState<string | null>(null);
+  const [userLevel, setUserLevel] = useState<string | null>(null);
+  const [mode, setMode] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
-  const email = "geoffroy.streit@gmail.com";
-
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const saveAndClose = () => {
+    const prefs = { goal, userLevel, mode };
+    localStorage.setItem("onboarding-preferences", JSON.stringify(prefs));
+    localStorage.setItem("onboarding-completed", "true");
+    onClose();
   };
+
+  const ChoiceCard = ({ value, label, desc, icon, selected, onSelect }: { value: string; label: string; desc: string; icon: string; selected: boolean; onSelect: () => void }) => (
+    <button
+      onClick={onSelect}
+      className={`w-full p-4 rounded-2xl border-2 text-left transition-all flex items-center gap-4 ${
+        selected
+          ? "border-indigo-500 bg-indigo-50/50 dark:bg-indigo-950/30 shadow-sm"
+          : "border-border-strong hover:border-indigo-200 dark:hover:border-indigo-800 bg-card hover:bg-muted/50"
+      }`}
+    >
+      <span className="text-2xl shrink-0">{icon}</span>
+      <div className="min-w-0">
+        <div className="font-extrabold text-sm text-foreground">{label}</div>
+        <div className="text-2xs text-muted-text font-semibold mt-0.5">{desc}</div>
+      </div>
+    </button>
+  );
 
   const steps = [
     {
       title: "Bienvenue !",
-      subtitle: "Votre Guide de Mathématiques Interactif",
+      subtitle: "Parlons un peu de toi",
       icon: (
         <div className="w-16 h-16 rounded-3xl bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-100 dark:border-indigo-800 flex items-center justify-center text-primary shadow-sm shadow-indigo-100/50">
           <BookOpen className="w-8 h-8 text-indigo-600 dark:text-indigo-400" />
         </div>
       ),
       content: (
-        <div className="space-y-4 text-center">
-          <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base leading-relaxed">
-            Ce site est né de la passion intense pour la science et de l'envie profonde de transmettre le savoir de façon claire, ludique et structurée.
-          </p>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-750 dark:text-emerald-400 text-xs font-bold rounded-full border border-emerald-100 dark:border-emerald-900/60 shadow-sm mt-2">
-            <Sparkles className="w-3.5 h-3.5" /> 100% Gratuit, Bénévole & Sans Publicité
-          </div>
+        <div className="space-y-3 w-full">
+          <p className="text-xs text-muted-text font-semibold text-center mb-2">Quel est ton objectif principal ?</p>
+          <ChoiceCard value="study" label="Étudier & Progresser" desc="Réviser un examen, consolider des bases ou avancer à ton rythme" icon="🎯" selected={goal === "study"} onSelect={() => setGoal("study")} />
+          <ChoiceCard value="teach" label="Enseigner & Accompagner" desc="Trouver des ressources interactives pour tes élèves ou enfants" icon="👩‍🏫" selected={goal === "teach"} onSelect={() => setGoal("teach")} />
+          <ChoiceCard value="explore" label="Explorer par Curiosité" desc="Découvrir les mathématiques autrement, sans pression scolaire" icon="🔭" selected={goal === "explore"} onSelect={() => setGoal("explore")} />
         </div>
       )
     },
     {
-      title: "Une œuvre humble",
-      subtitle: "Un projet vivant et perfectible",
+      title: "Ton niveau",
+      subtitle: "Pour adapter les suggestions",
       icon: (
-        <div className="w-16 h-16 rounded-3xl bg-rose-50 dark:bg-rose-950/50 border border-rose-100 dark:border-rose-900/30 flex items-center justify-center text-rose-500 shadow-sm shadow-rose-100/50">
-          <Heart className="w-8 h-8" />
+        <div className="w-16 h-16 rounded-3xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-100 dark:border-emerald-800/30 flex items-center justify-center text-emerald-500 shadow-sm shadow-emerald-100/50">
+          <GraduationCap className="w-8 h-8" />
         </div>
       ),
       content: (
-        <div className="space-y-4 text-left">
-          <div className="space-y-3">
-            <div className="flex gap-3 items-start bg-slate-50 dark:bg-slate-900/40 p-3 rounded-2xl border border-slate-100 dark:border-slate-800/80">
-              <span className="text-xl mt-0.5">🌱</span>
-              <div>
-                <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200">En cours d'amélioration</h4>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                  Ce guide est <strong>imparfait et encore incomplet</strong>. Les cours de mathématiques sont rédigés et enrichis de manière progressive.
-                </p>
-              </div>
-            </div>
-            
-            <div className="flex gap-3 items-start bg-slate-50 dark:bg-slate-900/40 p-3 rounded-2xl border border-slate-100 dark:border-slate-800/80">
-              <span className="text-xl mt-0.5">✨</span>
-              <div>
-                <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200">Toujours accessible</h4>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                  Pas d'inscription requise, pas de cookies publicitaires, juste un environnement sain et épuré pour se concentrer sur l'essentiel.
-                </p>
-              </div>
-            </div>
-          </div>
+        <div className="space-y-2.5 w-full">
+          <p className="text-xs text-muted-text font-semibold text-center mb-2">Où te situes-tu actuellement ?</p>
+          <ChoiceCard value="primaire" label="École Primaire" desc="CP au CM2 — les fondations" icon="🎒" selected={userLevel === "primaire"} onSelect={() => setUserLevel("primaire")} />
+          <ChoiceCard value="college" label="Collège" desc="6ᵉ à 3ᵉ — découverte de l'algèbre" icon="📐" selected={userLevel === "college"} onSelect={() => setUserLevel("college")} />
+          <ChoiceCard value="lycee" label="Lycée" desc="Seconde à Terminale — analyse et spécialités" icon="🔬" selected={userLevel === "lycee"} onSelect={() => setUserLevel("lycee")} />
+          <ChoiceCard value="postbac" label="Post-Bac / Supérieur" desc="Université, CPGE, BTS, BUT, écoles" icon="🏛️" selected={userLevel === "postbac"} onSelect={() => setUserLevel("postbac")} />
+          <ChoiceCard value="unsure" label="Je ne sais pas" desc="Laisse-toi guider par la carte conceptuelle" icon="🧭" selected={userLevel === "unsure"} onSelect={() => setUserLevel("unsure")} />
         </div>
       )
     },
     {
-      title: "Des outils interactifs",
-      subtitle: "Pour apprendre et ancrer vos connaissances",
+      title: "Mode de navigation",
+      subtitle: "Comment veux-tu explorer ?",
       icon: (
-        <div className="w-16 h-16 rounded-3xl bg-amber-50 dark:bg-amber-950/50 border border-amber-100 dark:border-amber-900/30 flex items-center justify-center text-amber-500 shadow-sm shadow-amber-100/50">
-          <BrainCircuit className="w-8 h-8 text-amber-600 dark:text-amber-400" />
+        <div className="w-16 h-16 rounded-3xl bg-amber-50 dark:bg-amber-950/50 border border-amber-100 dark:border-amber-800/30 flex items-center justify-center text-amber-500 shadow-sm shadow-amber-100/50">
+          <Compass className="w-8 h-8" />
         </div>
       ),
       content: (
-        <div className="space-y-3 text-left">
-          <p className="text-slate-600 dark:text-slate-300 text-xs md:text-sm text-center mb-2 leading-relaxed">
-            Pour aller au-delà de la simple lecture passive, nous avons intégré plusieurs modules conçus pour stimuler votre mémoire de manière ludique :
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-            <div className="p-3 bg-muted/65 dark:bg-muted/30 border border-border-strong/50 rounded-xl text-center">
-              <span className="text-lg">📊</span>
-              <h5 className="font-semibold text-xs mt-1 text-foreground">LaTeX Propre</h5>
-              <p className="text-3xs text-muted-text mt-1 leading-normal">Des équations impeccables et faciles à délier</p>
-            </div>
-            <div className="p-3 bg-muted/65 dark:bg-muted/30 border border-border-strong/50 rounded-xl text-center">
-              <span className="text-lg">🗂️</span>
-              <h5 className="font-semibold text-xs mt-1 text-foreground">Flashcards</h5>
-              <p className="text-3xs text-muted-text mt-1 leading-normal">Prêt-à-réviser interactif pour réactiver le cerveau</p>
-            </div>
-            <div className="p-3 bg-muted/65 dark:bg-muted/30 border border-border-strong/50 rounded-xl text-center">
-              <span className="text-lg">🏆</span>
-              <h5 className="font-semibold text-xs mt-1 text-foreground">Système d'XP</h5>
-              <p className="text-3xs text-muted-text mt-1 leading-normal">Gagnez de l'XP en validant des cours et des quiz !</p>
-            </div>
-          </div>
+        <div className="space-y-3 w-full">
+          <p className="text-xs text-muted-text font-semibold text-center mb-2">Comment souhaites-tu naviguer dans les cours ?</p>
+          <ChoiceCard value="guided" label="Parcours conseillé" desc="L'app te suggère le prochain cours à étudier en fonction de tes progrès" icon="🧭" selected={mode === "guided"} onSelect={() => setMode("guided")} />
+          <ChoiceCard value="free" label="Exploration libre" desc="Tu parcours les cours comme tu le souhaites, sans suggestion" icon="🗺️" selected={mode === "free"} onSelect={() => setMode("free")} />
         </div>
       )
     },
     {
-      title: "Co-construisons ensemble !",
-      subtitle: "Votre regard est une aide précieuse",
+      title: "Prêt à commencer !",
+      subtitle: "Une expérience conçue pour toi",
       icon: (
-        <div className="w-16 h-16 rounded-3xl bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-100 dark:border-indigo-900/30 flex items-center justify-center text-indigo-500 shadow-sm shadow-indigo-100/50">
-          <Mail className="w-8 h-8 text-indigo-600 dark:text-indigo-400" />
+        <div className="w-16 h-16 rounded-3xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/25">
+          <Sparkles className="w-8 h-8" />
         </div>
       ),
       content: (
         <div className="space-y-4 text-center">
           <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
-            S'agissant d'un projet mené seul à côté de mes activités, des coquilles, erreurs d'affichage de formules LaTeX ou imprécisions peuvent subsister.
+            Super ! Tu es prêt à explorer les mathématiques autrement.
           </p>
-          
-          <div className="bg-amber-500/5 border border-amber-500/20 rounded-2xl p-3.5 text-left flex gap-3 items-start max-w-md mx-auto">
-            <AlertCircle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
-            <p className="text-xs text-amber-900 dark:text-amber-200 leading-normal">
-              <strong>N'hésitez pas à me contacter !</strong> Que ce soit pour signaler une simple erreur de calcul, une faute, une incohérence ou soumettre une idée de cours ou d'exercice à ajouter !
-            </p>
-          </div>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 max-w-sm mx-auto pt-1">
-            <div className="w-full bg-muted border border-border-strong rounded-xl px-3 py-2 text-xs font-mono select-all flex items-center justify-between text-slate-700 dark:text-slate-300">
-              <span className="truncate">{email}</span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <div className="p-3 bg-muted/65 border border-border-strong/50 rounded-xl text-center">
+              <span className="text-lg">🎯</span>
+              <h5 className="font-semibold text-xs mt-1 text-foreground">{goal === "study" ? "Progresser" : goal === "teach" ? "Enseigner" : "Explorer"}</h5>
+              <p className="text-3xs text-muted-text mt-1">Objectif défini</p>
             </div>
-            <button
-              onClick={handleCopyEmail}
-              className="w-full sm:w-auto px-4 py-2 bg-slate-900 dark:bg-slate-100 hover:bg-slate-800 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 transition-all flex-shrink-0 active:scale-95"
-            >
-              {copied ? (
-                <>
-                  <Check className="w-4 h-4" />
-                  Copié !
-                </>
-              ) : (
-                <>
-                  <Copy className="w-4 h-4" />
-                  Copier le mail
-                </>
-              )}
-            </button>
+            <div className="p-3 bg-muted/65 border border-border-strong/50 rounded-xl text-center">
+              <span className="text-lg">📚</span>
+              <h5 className="font-semibold text-xs mt-1 text-foreground">{userLevel === "unsure" ? "Guidé" : userLevel || "—"}</h5>
+              <p className="text-3xs text-muted-text mt-1">Niveau de départ</p>
+            </div>
+            <div className="p-3 bg-muted/65 border border-border-strong/50 rounded-xl text-center">
+              <span className="text-lg">{mode === "guided" ? "🧭" : "🗺️"}</span>
+              <h5 className="font-semibold text-xs mt-1 text-foreground">{mode === "guided" ? "Parcours" : "Libre"}</h5>
+              <p className="text-3xs text-muted-text mt-1">Mode de navigation</p>
+            </div>
           </div>
+          <p className="text-xs text-muted-text font-semibold mt-2">
+            Tu pourras modifier ces préférences à tout moment dans les Paramètres.
+          </p>
         </div>
       )
     }
@@ -171,8 +148,7 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      localStorage.setItem("onboarding-completed", "true");
-      onClose();
+      saveAndClose();
     }
   };
 

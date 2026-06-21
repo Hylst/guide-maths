@@ -119,7 +119,7 @@ export function useLocalAccount() {
   // Export all app data as a JSON string
   const exportData = (): string => {
     const dataObj = {
-      version: 1,
+      version: 2,
       exportedAt: new Date().toISOString(),
       data: {
         profile,
@@ -128,7 +128,9 @@ export function useLocalAccount() {
         progress: JSON.parse(localStorage.getItem("maths_app_progress") || "{}"),
         glossaryXp: localStorage.getItem("guide-maths-custom-xp") || "0",
         onboardingCompleted: localStorage.getItem("onboarding-completed") || "false",
-        theme: localStorage.getItem("theme") || "light"
+        theme: localStorage.getItem("theme") || "light",
+        courseConnections: localStorage.getItem("maths_course_connections") || "[]",
+        quizRush: localStorage.getItem("maths_quizrush") || "null"
       }
     };
     return JSON.stringify(dataObj, null, 2);
@@ -138,7 +140,7 @@ export function useLocalAccount() {
   const importData = (jsonStr: string): boolean => {
     try {
       const parsed = JSON.parse(jsonStr);
-      if (!parsed || parsed.version !== 1 || !parsed.data) {
+      if (!parsed || !parsed.data) {
         console.error("Invalid export data structure");
         return false;
       }
@@ -182,6 +184,16 @@ export function useLocalAccount() {
       // 7. Theme
       if (data.theme) {
         localStorage.setItem("theme", String(data.theme));
+      }
+
+      // 8. Course Connections (v2+)
+      if (data.courseConnections) {
+        localStorage.setItem("maths_course_connections", data.courseConnections);
+      }
+
+      // 9. QuizRush daily score (v2+)
+      if (data.quizRush) {
+        localStorage.setItem("maths_quizrush", data.quizRush);
       }
 
       return true;

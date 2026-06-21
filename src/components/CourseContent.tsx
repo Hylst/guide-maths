@@ -14,6 +14,8 @@ import { CourseRegistry } from "../courses/CourseRegistry";
 import { InteractiveRegistry } from "./interactive/InteractiveRegistry";
 import MiniQuiz from "./interactive/MiniQuiz";
 import { CourseHeader, CourseContext } from "./SharedUI";
+import SpiralTimeline from "./SpiralTimeline";
+import CourseConnectionForm from "./CourseConnectionForm";
 
 import "katex/dist/katex.min.css";
 
@@ -352,6 +354,14 @@ export default function CourseContent({
             </div>
           </div>
         </motion.div>
+
+        {isCompleted && <SpiralTimeline courseId={course.id} />}
+        {isCompleted && <CourseConnectionForm courseId={course.id} courseTitle={course.title} />}
+        {isCompleted && (
+          <div className="text-center text-xs text-muted-text font-semibold mt-4">
+            🗓️ Révision programmée — visible dans le Tableau de Bord
+          </div>
+        )}
       </div>
     </CourseContext.Provider>
   );

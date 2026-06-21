@@ -569,7 +569,7 @@ export default function Settings({ account, isDarkMode, setIsDarkMode }: Setting
             Gestion des Données Personnelles
           </h2>
           <p className="text-xs text-muted-text font-semibold">
-            Toutes vos données (cours validés, scores aux quiz, badges débloqués, profil et notes) sont stockées localement dans votre navigateur.
+            Toutes vos données (cours validés, scores aux quiz, révisions programmées, badges débloqués, connexions personnelles, scores Quiz Rush, profil, bloc-notes et thème) sont stockées localement dans votre navigateur.
           </p>
         </div>
 

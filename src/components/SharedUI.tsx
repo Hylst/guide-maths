@@ -820,7 +820,7 @@ export const InteractiveChecklist: React.FC<InteractiveChecklistProps> = ({ id, 
           return (
             <motion.label 
               key={idx}
-              className={`flex items-start gap-4 p-5 rounded-2xl cursor-pointer border transition-all outline-none focus-within:ring-2 focus-within:ring-indigo-500 ${isChecked ? 'bg-card border-emerald-200 shadow-sm' : 'bg-muted border-transparent hover:bg-slate-100 hover:border-border'}`}
+              className={`flex items-start gap-4 p-5 rounded-2xl cursor-pointer border transition-all outline-none focus-within:ring-2 focus-within:ring-indigo-500 ${isChecked ? 'bg-card border-emerald-200 shadow-sm' : 'bg-muted border-transparent hover:bg-slate-100 dark:hover:bg-slate-800 hover:border-border'}`}
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
               tabIndex={0}

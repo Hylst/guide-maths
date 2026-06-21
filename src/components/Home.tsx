@@ -14,7 +14,9 @@ import {
   Compass,
   Trophy,
   Activity,
-  ChevronRight
+  ChevronRight,
+  GitBranch,
+  Flame
 } from "lucide-react";
 import AnimatedLogoTitle from "./AnimatedLogoTitle";
 import { Course } from "../types";
@@ -25,11 +27,14 @@ interface HomeProps {
     level: number;
     badges: any[];
     completedCount: number;
+    currentStreak?: number;
+    totalBadges?: number;
   };
   groupedCourses: Record<string, Record<string, Course[]>>;
   progress: Record<string, any>;
   navigate: (path: string) => void;
   handleCourseSelect: (course: Course) => void;
+  onBrowseChapters?: () => void;
 }
 
 export default function Home({
@@ -38,6 +43,7 @@ export default function Home({
   progress,
   navigate,
   handleCourseSelect,
+  onBrowseChapters,
 }: HomeProps) {
   
   // Calculate total courses and completed ones
@@ -126,8 +132,8 @@ export default function Home({
         </div>
         
         <p className="text-muted-text text-base sm:text-lg max-w-2xl font-medium px-4 leading-relaxed">
-          Un guide d'apprentissage des mathématiques interactif, visuel et progressif. 
-          De la manipulation intuitive dès la maternelle jusqu'aux démonstrations avancées du supérieur.
+          Des mathématiques qui s'explorent, se manipulent et se connectent au monde réel.
+          De l'école primaire aux classes préparatoires, une pédagogie spiralaire pour progresser à son rythme.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 pt-4 w-full justify-center px-6 sm:px-0">
@@ -141,14 +147,15 @@ export default function Home({
           </button>
           
           <button
-            onClick={() => {
-              // Open first resource or just scroll/focus user to sidebar on mobile
-              const el = document.querySelector('input[placeholder*="Rechercher"]');
-              if (el) (el as HTMLElement).focus();
-              // Trigger mobile menu if screen is small
-              const btn = document.querySelector('button[aria-label="Ouvrir le menu"]');
-              if (btn) (btn as HTMLElement).click();
-            }}
+            onClick={() => navigate("/graph")}
+            className="px-6 py-3.5 bg-indigo-50 dark:bg-indigo-950/30 hover:bg-indigo-100 dark:hover:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 font-extrabold rounded-2xl text-sm transition-all active:scale-95 border border-indigo-200 dark:border-indigo-800/50 flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <GitBranch className="w-4.5 h-4.5 text-indigo-500" />
+            Carte Conceptuelle
+          </button>
+
+          <button
+            onClick={() => onBrowseChapters?.()}
             className="px-6 py-3.5 bg-muted hover:bg-border-strong text-foreground font-extrabold rounded-2xl text-sm transition-all active:scale-95 border border-border-strong flex items-center justify-center gap-2 cursor-pointer"
           >
             <BookOpen className="w-4.5 h-4.5 text-primary" />
@@ -177,11 +184,54 @@ export default function Home({
         <div className="bg-card p-4 rounded-2xl border border-border-strong text-center shadow-sm">
           <div className="text-2xs text-muted-text font-bold uppercase tracking-wider">Niveau</div>
           <div className="text-xl sm:text-2xl font-extrabold text-primary mt-1">Niv. {stats.level}</div>
+          {stats.currentStreak && stats.currentStreak > 0 && (
+            <div className="text-4xs font-bold text-amber-500 flex items-center justify-center gap-1 mt-1">
+              <Flame className="w-3 h-3" /> {stats.currentStreak} jour{stats.currentStreak > 1 ? 's' : ''}
+            </div>
+          )}
         </div>
 
         <div className="bg-card p-4 rounded-2xl border border-border-strong text-center shadow-sm">
           <div className="text-2xs text-muted-text font-bold uppercase tracking-wider">Badges</div>
-          <div className="text-xl sm:text-2xl font-extrabold text-amber-500 mt-1">🏅 {stats.badges.length} / 10</div>
+          <div className="text-xl sm:text-2xl font-extrabold text-amber-500 mt-1">🏅 {stats.badges.length} / {stats.totalBadges || 16}</div>
+        </div>
+      </motion.div>
+
+      {/* 3 Pillars pédagogiques */}
+      <motion.div
+        variants={itemVariants}
+        className="grid grid-cols-1 md:grid-cols-3 gap-4"
+      >
+        <div className="bg-card p-5 rounded-2xl border border-border-strong shadow-sm space-y-2.5">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl">🎮</span>
+            <h4 className="text-sm font-extrabold text-foreground">Apprentissage Interactif</h4>
+          </div>
+          <p className="text-2xs text-muted-text leading-relaxed font-medium">
+            Simulateurs 3D, graphes dynamiques qui réagissent en temps réel, algorithmique visuelle. 
+            Tu ne subis pas les formules — tu les <strong>manipules</strong> pour les comprendre.
+          </p>
+        </div>
+
+        <div className="bg-card p-5 rounded-2xl border border-border-strong shadow-sm space-y-2.5">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl">🌍</span>
+            <h4 className="text-sm font-extrabold text-foreground">Ancrage dans le Réel</h4>
+          </div>
+          <p className="text-2xs text-muted-text leading-relaxed font-medium">
+            Chaque notion relie la théorie à l'histoire, la physique ou l'économie. 
+            De l'orbite lunaire de Laplace à la croissance exponentielle en finance, les maths <strong>prennent vie</strong>.
+          </p>
+        </div>
+
+        <div className="bg-card p-5 rounded-2xl border border-border-strong shadow-sm space-y-2.5">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl">🌀</span>
+            <h4 className="text-sm font-extrabold text-foreground">Pédagogie Spiralaire</h4>
+          </div>
+          <p className="text-2xs text-muted-text leading-relaxed font-medium">
+            Les concepts ne sont pas cloisonnés en chapitres étanques : ils <strong>évoluent</strong> du primaire au supérieur. Le graphe conceptuel (126 nœuds) et le Mode Parcours adapté te guident dans cette progression.
+          </p>
         </div>
       </motion.div>
 
@@ -208,6 +258,10 @@ export default function Home({
               <p>
                 Étant moi-même porteur d'un profil neuroatypique (<strong>TDAH & dys</strong>), j'ai cherché à structurer ce guide pour limiter la surcharge cognitive : 
                 des modules découpés, des visuels colorés et des laboratoires dynamiques pour manipuler directement les objets mathématiques.
+              </p>
+              <p>
+                La structure spiralaire du guide — chaque notion naît au primaire, s'épaissit au collège, se formalise au lycée et s'approfondit dans le supérieur — 
+                est née de cette volonté de <strong>respecter le rythme d'apprentissage</strong> plutôt que de plaquer un catalogue linéaire.
               </p>
             </div>
           </div>
@@ -251,15 +305,15 @@ export default function Home({
             <Compass className="w-5 h-5 text-indigo-500" />
             Comment Fonctionne l'Applet ?
           </h3>
-          <p className="text-xs text-muted-text font-semibold">Une expérience d'étude en 4 temps, entièrement passive de calculs complexes</p>
+          <p className="text-xs text-muted-text font-semibold">Une expérience d'étude en 5 temps, de la découverte à la maîtrise</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-card p-5 rounded-2xl border border-border-strong shadow-sm space-y-3">
             <div className="w-9 h-9 rounded-xl bg-indigo-500/10 flex items-center justify-center text-primary font-black text-sm">1</div>
-            <h4 className="text-sm font-bold text-foreground">Choix du Chapitre</h4>
+            <h4 className="text-sm font-bold text-foreground">Navigation Spiralaire</h4>
             <p className="text-2xs text-muted-text leading-normal font-medium">
-              Explore le menu latéral classé par niveaux. Filtre instantanément via la barre de recherche.
+              Explore le menu latéral classé par niveaux, ou suis le fil rouge du <strong>Mode Parcours</strong> qui te suggère le prochain chapitre à étudier selon tes acquis.
             </p>
           </div>
 
@@ -283,7 +337,7 @@ export default function Home({
             <div className="w-9 h-9 rounded-xl bg-indigo-500/10 flex items-center justify-center text-primary font-black text-sm">4</div>
             <h4 className="text-sm font-bold text-foreground">XP & Récompenses</h4>
             <p className="text-2xs text-muted-text leading-normal font-medium">
-              Gagne de l'XP (+15 par cours validé), franchis les niveaux et débloque des badges d'honneur.
+              Gagne de l'XP (+15 par cours validé), franchis les niveaux et débloque des badges d'honneur. Le <strong>Tableau de Bord</strong> suit ta progression et te guide vers la suite du parcours.
             </p>
           </div>
         </div>
@@ -352,6 +406,57 @@ export default function Home({
             );
           })}
         </div>
+      </motion.div>
+
+      {/* Recent Completed Courses */}
+      <motion.div variants={itemVariants} className="space-y-6">
+        {React.useMemo(() => {
+          const completedEntries = Object.entries(progress)
+            .filter(([_, p]) => p.completed && p.completedAt)
+            .sort(([, a], [, b]) => new Date(b.completedAt!).getTime() - new Date(a.completedAt!).getTime())
+            .slice(0, 5);
+
+          if (completedEntries.length === 0) return null;
+
+          // Build lookup from groupedCourses
+          const courseLookup: Record<string, Course> = {};
+          Object.values(groupedCourses).forEach(subLevelsObj => {
+            Object.values(subLevelsObj).forEach(coursesInSubLevel => {
+              coursesInSubLevel.forEach(c => { courseLookup[c.id] = c; });
+            });
+          });
+
+          const recent = completedEntries.map(([id]) => courseLookup[id]).filter(Boolean);
+
+          if (recent.length === 0) return null;
+
+          return (
+            <div className="space-y-4">
+              <div className="text-center sm:text-left space-y-1">
+                <h3 className="text-xl font-extrabold text-foreground tracking-tight flex items-center justify-center sm:justify-start gap-2">
+                  <Activity className="w-5 h-5 text-emerald-500" />
+                  Dernières Révisions
+                </h3>
+                <p className="text-xs text-muted-text font-semibold">Reprends là où tu t'es arrêté</p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {recent.map(course => (
+                  <button
+                    key={course.id}
+                    onClick={() => handleCourseSelect(course)}
+                    className="bg-card p-4 rounded-2xl border border-border-strong text-left transition-all hover:border-primary/30 hover:shadow-sm flex items-center gap-3"
+                  >
+                    <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
+                    <div className="min-w-0">
+                      <div className="text-sm font-bold text-foreground truncate">{course.title}</div>
+                      <div className="text-3xs text-muted-text font-semibold">{course.level} • {course.subLevel}</div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          );
+        }, [progress, groupedCourses])}
       </motion.div>
 
       {/* Sovereignty, Security & Offline card */}

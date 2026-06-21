@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Trophy, 
@@ -19,11 +19,19 @@ import {
   Percent,
   Lock,
   Unlock,
-  Save
+  Save,
+  Compass,
+  ArrowRight,
+  Heart,
+  Zap
 } from 'lucide-react';
 import { Course } from '../types';
 import { CourseProgress } from '../hooks/useProgress';
 import { useLocalAccount } from '../hooks/useLocalAccount';
+import JourneyMap from './JourneyMap';
+import StreakCalendar from './StreakCalendar';
+import InterLevelReview from './InterLevelReview';
+import QuizRush from './QuizRush';
 
 interface DashboardProps {
   stats: {
@@ -40,11 +48,15 @@ interface DashboardProps {
     currentStreak: number;
     weeklyActivity: { dayLabel: string; active: boolean; dateStr: string }[];
     xpHistory: { date: string; xp: number; rawDate: string }[];
+    reviewCount: number;
   };
   groupedCourses: Record<string, Record<string, Course[]>>;
   progress: Record<string, CourseProgress>;
   subLevelOrder: string[];
   account: ReturnType<typeof useLocalAccount>;
+  suggestedCourse?: { courseId: string; shortTitle: string; slug: string; readiness: number; reason: string } | null;
+  markReviewed: (courseId: string) => void;
+  handleCourseSelect?: (course: Course) => void;
 }
 
 const subLevelLabels: Record<string, string> = {
@@ -95,7 +107,7 @@ const subLevelLabels: Record<string, string> = {
   Communes: "Ressources communes",
 };
 
-export default function Dashboard({ stats, groupedCourses, progress, subLevelOrder, account }: DashboardProps) {
+export default function Dashboard({ stats, groupedCourses, progress, subLevelOrder, account, suggestedCourse, markReviewed, handleCourseSelect }: DashboardProps) {
   const { 
     xp, 
     level, 
@@ -119,6 +131,12 @@ export default function Dashboard({ stats, groupedCourses, progress, subLevelOrd
   const [dashboardNotesSaved, setDashboardNotesSaved] = useState(true);
   const [dashPasswordInput, setDashPasswordInput] = useState("");
   const [dashPasswordError, setDashPasswordError] = useState(false);
+  const [activeMode, setActiveMode] = useState<'review' | 'quizrush' | null>(null);
+
+  const completedCourseIds = useMemo(() =>
+    Object.entries(progress).filter(([, p]) => p.completed).map(([id]) => id),
+    [progress]
+  );
 
   React.useEffect(() => {
     setDashboardNotes(notes);
@@ -435,6 +453,90 @@ export default function Dashboard({ stats, groupedCourses, progress, subLevelOrd
 
       </div>
 
+      {/* Quick Actions */}
+      {!activeMode && (
+        <div className="flex flex-wrap gap-3">
+          <button
+            onClick={() => setActiveMode('review')}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-card border border-border-strong hover:bg-muted/50 transition-all text-sm font-bold text-foreground active:scale-95"
+          >
+            <Brain className="w-4 h-4 text-purple-500" />
+            🎯 Révision Inter-Niveaux
+            {completedCourseIds.length > 0 && (
+              <span className="text-2xs text-muted-text font-semibold">({completedCourseIds.length} cours)</span>
+            )}
+          </button>
+          <button
+            onClick={() => setActiveMode('quizrush')}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-card border border-border-strong hover:bg-muted/50 transition-all text-sm font-bold text-foreground active:scale-95"
+          >
+            <Zap className="w-4 h-4 text-amber-500" />
+            ⚡ Quiz Rush
+          </button>
+        </div>
+      )}
+
+      {activeMode === 'review' ? (
+        <InterLevelReview
+          completedCourseIds={completedCourseIds}
+          onComplete={() => setActiveMode(null)}
+          onClose={() => setActiveMode(null)}
+        />
+      ) : activeMode === 'quizrush' ? (
+        <QuizRush
+          completedCourseIds={completedCourseIds}
+          onComplete={() => setActiveMode(null)}
+          onClose={() => setActiveMode(null)}
+        />
+      ) : (
+        <>
+          {/* What was here before — all the existing sections */}
+          {/* Suggested Course Card — "Continuer ma Spirale" */}
+      {suggestedCourse && handleCourseSelect && (
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+        >
+          <button
+            onClick={() => {
+              const course: Course = { id: suggestedCourse.courseId, title: suggestedCourse.shortTitle, level: "Post_Bac", content: "" };
+              handleCourseSelect(course);
+            }}
+            className="w-full bg-gradient-to-r from-indigo-500/5 via-purple-500/5 to-pink-500/5 hover:from-indigo-500/10 hover:via-purple-500/10 hover:to-pink-500/10 border border-indigo-200/40 dark:border-indigo-800/40 p-5 rounded-[2rem] text-left transition-all hover:shadow-md flex items-center gap-4 group"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg shrink-0">
+              <Compass className="w-6 h-6" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider mb-0.5">
+                <Sparkles className="w-3.5 h-3.5" />
+                Continuer ma Spirale
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-base font-extrabold text-foreground truncate">{suggestedCourse.shortTitle}</span>
+                <ArrowRight className="w-4 h-4 text-indigo-500 shrink-0 opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0" />
+              </div>
+              <p className="text-xs text-muted-text font-semibold mt-0.5">{suggestedCourse.reason}</p>
+            </div>
+            {suggestedCourse.readiness > 0 && (
+              <div className="hidden sm:flex flex-col items-center shrink-0">
+                <div className="relative w-12 h-12">
+                  <svg className="w-12 h-12 -rotate-90" viewBox="0 0 36 36">
+                    <circle cx="18" cy="18" r="15.5" fill="none" stroke="currentColor" strokeWidth="3" className="text-muted" />
+                    <circle cx="18" cy="18" r="15.5" fill="none" stroke="currentColor" strokeWidth="3" strokeDasharray={`${Math.min(suggestedCourse.readiness, 1) * 97.4} 97.4`} className="text-indigo-500" />
+                  </svg>
+                  <span className="absolute inset-0 flex items-center justify-center text-xs font-black text-indigo-600 dark:text-indigo-400">
+                    {Math.round(suggestedCourse.readiness * 100)}%
+                  </span>
+                </div>
+                <span className="text-[9px] text-muted-text font-bold mt-1">Prêt</span>
+              </div>
+            )}
+          </button>
+        </motion.div>
+      )}
+
       {/* Dynamic Graph Section: XP Progression History */}
       <motion.div
         initial={{ opacity: 0, y: 15 }}
@@ -612,6 +714,22 @@ export default function Dashboard({ stats, groupedCourses, progress, subLevelOrd
 
       </motion.div>
 
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15 }}
+      >
+        <JourneyMap progress={progress} />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+      >
+        <StreakCalendar progress={progress} currentStreak={stats.currentStreak} />
+      </motion.div>
+
       {/* Interactive Quiz Advanced Stats panel */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         
@@ -705,6 +823,90 @@ export default function Dashboard({ stats, groupedCourses, progress, subLevelOrd
         </motion.div>
 
       </div>
+
+      {/* Révisions à faire */}
+      {stats.reviewCount > 0 && (() => {
+        const dueIds = Object.entries(progress)
+          .filter(([, p]) => p.completed && p.nextReview && new Date(p.nextReview) <= new Date())
+          .map(([id]) => id);
+        if (dueIds.length === 0) return null;
+        return (
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25 }}
+            className="space-y-4"
+          >
+            <h3 className="text-xl font-extrabold text-foreground flex items-center gap-2">
+              <Calendar className="w-5 h-5 text-amber-500" /> Révisions à faire
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {dueIds.slice(0, 12).map(courseId => {
+                const title = courseId.split('/').pop()?.replace('.md', '').replace(/\d+_/g, '') || courseId;
+                return (
+                  <div
+                    key={courseId}
+                    className="bg-card p-4 rounded-2xl border border-amber-200 dark:border-amber-800/40 shadow-sm space-y-2"
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <h4 className="text-sm font-bold text-foreground leading-tight">{title}</h4>
+                      <span className="shrink-0 px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 text-2xs font-extrabold">
+                        À réviser
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => markReviewed(courseId)}
+                      className="w-full flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-900/20 dark:hover:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 font-extrabold text-xs transition-all active:scale-95"
+                    >
+                      <Check className="w-3.5 h-3.5" /> Révisé
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+            {dueIds.length > 12 && (
+              <p className="text-xs text-muted-text font-semibold text-center">+{dueIds.length - 12} autres révisions</p>
+            )}
+          </motion.div>
+        );
+      })()}
+
+      {/* Connexions Personnelles */}
+      {(() => {
+        const raw = localStorage.getItem('maths_course_connections');
+        if (!raw) return null;
+        let connections: { courseId: string; courseTitle: string; context: string; createdAt: string }[] = [];
+        try { connections = JSON.parse(raw); } catch { return null; }
+        if (connections.length === 0) return null;
+        return (
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="space-y-4"
+          >
+            <h3 className="text-xl font-extrabold text-foreground flex items-center gap-2">
+              <Heart className="w-5 h-5 text-rose-500" /> Mes Connexions Personnelles
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {connections.map((conn, idx) => (
+                <div
+                  key={`${conn.courseId}-${idx}`}
+                  className="bg-card p-4 rounded-2xl border border-rose-100 dark:border-rose-900/30 shadow-sm space-y-1.5"
+                >
+                  <div className="text-3xs font-bold text-rose-500 uppercase tracking-wider truncate">{conn.courseTitle}</div>
+                  <p className="text-xs text-foreground font-medium leading-relaxed">
+                    "{conn.context}"
+                  </p>
+                  <div className="text-3xs text-muted-text font-semibold">
+                    {new Date(conn.createdAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        );
+      })()}
 
       {/* Badges Collection Column */}
       <motion.div
@@ -831,6 +1033,9 @@ export default function Dashboard({ stats, groupedCourses, progress, subLevelOrd
           })}
         </div>
       </motion.div>
+
+        </>
+      )}
 
     </div>
   );

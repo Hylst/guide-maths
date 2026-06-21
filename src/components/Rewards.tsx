@@ -25,11 +25,13 @@ import {
   playFailureSound, 
   playTapSound 
 } from '../utils/sound';
+import { MathContainer } from './MathContainer';
 
 interface RewardsProps {
   stats: {
     xp: number;
     level: number;
+    levelTitle: string;
     xpForNextLevel: number;
     xpForCurrentLevel: number;
     badges: { id: string; name: string; threshold: number; icon: string; description: string }[];
@@ -39,6 +41,7 @@ interface RewardsProps {
     avgQuizScore: number;
     currentStreak: number;
     weeklyActivity: { dayLabel: string; active: boolean; dateStr: string }[];
+    totalBadges: number;
   };
 }
 
@@ -48,7 +51,7 @@ interface BadgeInfo {
   name: string;
   description: string;
   icon: string;
-  category: 'Progression' | 'Mathématicien' | 'Exploit';
+  category: 'Progression' | 'Mathématicien' | 'Exploit' | 'Régularité' | 'Exploration';
   hint: string;
 }
 
@@ -132,6 +135,103 @@ const ALL_BADGES_INFO: BadgeInfo[] = [
     icon: '🌌',
     category: 'Exploit',
     hint: 'Maintenir un cycle de 3 jours d\'étude'
+  },
+  // Domain-based badges
+  {
+    id: 'maitre_nombres',
+    name: 'Maître des Nombres',
+    description: 'Validé 3 cours du domaine Nombres (arithmétique, fractions, suites financières).',
+    icon: '🔢',
+    category: 'Progression',
+    hint: 'Compléter 3 cours du domaine Nombres'
+  },
+  {
+    id: 'genie_algebre',
+    name: 'Génie de l\'Algèbre',
+    description: 'Validé 3 cours du domaine Algèbre (structures, matrices, espaces vectoriels).',
+    icon: '🧮',
+    category: 'Progression',
+    hint: 'Compléter 3 cours du domaine Algèbre'
+  },
+  {
+    id: 'analyste',
+    name: 'Analyste',
+    description: 'Validé 3 cours du domaine Analyse (limites, dérivées, intégrales, équa. diff.).',
+    icon: '📈',
+    category: 'Progression',
+    hint: 'Compléter 3 cours du domaine Analyse'
+  },
+  {
+    id: 'geometre',
+    name: 'Géomètre',
+    description: 'Validé 3 cours du domaine Géométrie (trigonométrie, géométrie plane/3D, complexes).',
+    icon: '🔷',
+    category: 'Progression',
+    hint: 'Compléter 3 cours du domaine Géométrie'
+  },
+  {
+    id: 'probabiliste',
+    name: 'Probabiliste',
+    description: 'Validé 3 cours du domaine Probabilités (statistiques, probas, chaînes de Markov).',
+    icon: '🎲',
+    category: 'Progression',
+    hint: 'Compléter 3 cours du domaine Probabilités'
+  },
+  {
+    id: 'alchimiste_algo',
+    name: 'Alchimiste du Code',
+    description: 'Validé 2 cours du domaine Algorithmique (Scratch, Python, tris, optimisation).',
+    icon: '💻',
+    category: 'Progression',
+    hint: 'Compléter 2 cours du domaine Algorithmique'
+  },
+  {
+    id: 'regulier',
+    name: 'Régulier',
+    description: 'Maintiens une série d\'apprentissage de 7 jours consécutifs.',
+    icon: '📅',
+    category: 'Régularité',
+    hint: 'Atteindre 7 jours de série'
+  },
+  {
+    id: 'assidu',
+    name: 'Assidu',
+    description: 'Atteins une série de 14 jours consécutifs sans interruption.',
+    icon: '🔥',
+    category: 'Régularité',
+    hint: 'Atteindre 14 jours de série'
+  },
+  {
+    id: 'revisuer',
+    name: 'Réviseur',
+    description: 'Effectue 10 révisions programmées.',
+    icon: '🔄',
+    category: 'Régularité',
+    hint: 'Effectuer 10 révisions'
+  },
+  {
+    id: 'relecteur',
+    name: 'Relecteur',
+    description: 'Effectue 25 révisions programmées, la mémoire est en marche !',
+    icon: '📖',
+    category: 'Régularité',
+    hint: 'Effectuer 25 révisions'
+  },
+  {
+    id: 'explorateur',
+    name: 'Explorateur',
+    description: 'Étudie des cours dans tous les niveaux : Maternelle, Primaire, Collège, Lycée et Post-Bac.',
+    icon: '🌍',
+    category: 'Exploration',
+    hint: 'Étudier dans les 5 niveaux'
+  },
+  {
+    id: 'collectionneur',
+    name: 'Collectionneur',
+    description: 'Débloque 5 badges de domaine différents.',
+    icon: '🏆',
+    category: 'Exploration',
+    hint: 'Débloquer 5 badges domaine'
   }
 ];
 
@@ -404,7 +504,7 @@ export default function Rewards({ stats }: RewardsProps) {
       {/* Barre de Progression Visuelle */}
       <div className="bg-card border border-border-strong p-6 rounded-3xl shadow-sm relative overflow-hidden">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 text-sm font-extrabold">
-          <span className="text-muted-text">Niveau {stats.level} • Professeur Certifié</span>
+          <span className="text-muted-text">Niveau {stats.level} • {stats.levelTitle}</span>
           <span className="text-indigo-600 dark:text-indigo-400 font-black">{xpInCurrentLevel} / {xpNeededForNext} XP ({Math.round(progressPercent)}%)</span>
         </div>
         <div className="h-4.5 bg-muted rounded-full overflow-hidden p-0.5 border border-border-strong/50">
@@ -608,10 +708,11 @@ export default function Rewards({ stats }: RewardsProps) {
                     {MATH_QUOTES[currentQuoteIndex].desc}
                   </p>
                   
-                  {/* Utilisation de la syntaxe LaTeX brute isolée en dehors de JSX pour respecter scrupuleusement AGENTS.md */}
-                  <div className="p-3.5 bg-background border border-border-strong rounded-xl text-center font-mono text-sm text-indigo-600 dark:text-indigo-400 select-none">
-                    Formule : {MATH_QUOTES[currentQuoteIndex].fact}
-                  </div>
+                  <MathContainer>
+                    <div className="p-3.5 bg-background border border-border-strong rounded-xl text-center text-sm text-indigo-600 dark:text-indigo-400 select-none">
+                      {MATH_QUOTES[currentQuoteIndex].fact}
+                    </div>
+                  </MathContainer>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -755,7 +856,7 @@ export default function Rewards({ stats }: RewardsProps) {
               </div>
               <div>
                 <h3 className="text-lg font-extrabold text-foreground tracking-tight">Insignes Millénaires</h3>
-                <p className="text-xs text-muted-text font-semibold">Ta collection de médailles scientifiques ({stats.badges.length} / {ALL_BADGES_INFO.length})</p>
+                <p className="text-xs text-muted-text font-semibold">Ta collection de médailles scientifiques ({stats.badges.length} / {stats.totalBadges || ALL_BADGES_INFO.length})</p>
               </div>
             </div>
 

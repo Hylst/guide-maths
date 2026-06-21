@@ -21,7 +21,8 @@ import {
   Trophy, 
   Activity,
   Network,
-  Settings 
+  Settings,
+  Compass
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import AnimatedLogoTitle from "./AnimatedLogoTitle";
@@ -159,6 +160,7 @@ interface SidebarProps {
   setIsInfoOpen: (val: boolean) => void;
   setIsOnboardingOpen: (val: boolean) => void;
   subLevelOrder: string[];
+  suggestedCourse?: { courseId: string; shortTitle: string; slug: string; readiness: number; reason: string } | null;
 }
 
 export default function Sidebar({
@@ -187,6 +189,7 @@ export default function Sidebar({
   setIsInfoOpen,
   setIsOnboardingOpen,
   subLevelOrder,
+  suggestedCourse,
 }: SidebarProps) {
   const [expandedLevels, setExpandedLevels] = useState<Record<string, boolean>>({});
   const [expandedSubLevels, setExpandedSubLevels] = useState<Record<string, boolean>>({});
@@ -286,8 +289,13 @@ export default function Sidebar({
           >
             <LayoutDashboard className="w-5 h-5" />
             Tableau de Bord
+            {stats.reviewCount > 0 && (
+              <span className="ml-auto px-1.5 py-0.5 rounded-full bg-amber-500 text-white text-2xs font-extrabold leading-none">
+                {stats.reviewCount}
+              </span>
+            )}
             <div
-              className={`ml-auto px-2 py-0.5 rounded-full text-xs font-bold ${
+              className={`px-2 py-0.5 rounded-full text-xs font-bold ${
                 isDashboard ? "bg-white/20" : "bg-primary/10 text-primary"
               }`}
             >
@@ -357,7 +365,7 @@ export default function Sidebar({
                 isRewards ? "bg-white/20 text-white" : "bg-amber-100 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400"
               }`}
             >
-              🏅 {stats.badges.length} / 10
+              🏅 {stats.badges.length} / {stats.totalBadges || 16}
             </div>
           </button>
         </div>
@@ -394,6 +402,29 @@ export default function Sidebar({
             )}
           </button>
         </div>
+
+        {/* Suggested Course — "Ma Spirale" quick-access */}
+        {suggestedCourse && (
+          <div className="px-4 pt-2 bg-sidebar select-none">
+            <button
+              onClick={() => {
+                const course: Course = { id: suggestedCourse.courseId, title: suggestedCourse.shortTitle, level: "Post_Bac", content: "" };
+                handleCourseSelect(course);
+                setIsMobileMenuOpen(false);
+              }}
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all bg-gradient-to-r from-indigo-500/5 to-purple-500/5 hover:from-indigo-500/10 hover:to-purple-500/10 border border-indigo-200/30 dark:border-indigo-800/30 text-left"
+            >
+              <div className="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-950/50 flex items-center justify-center shrink-0">
+                <Compass className="w-4 h-4 text-indigo-500" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="text-xs font-extrabold text-indigo-600 dark:text-indigo-400 truncate">{suggestedCourse.shortTitle}</div>
+                <div className="text-3xs text-muted-text font-semibold">{suggestedCourse.reason}</div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-indigo-400 shrink-0" />
+            </button>
+          </div>
+        )}
 
         <div className="px-4 py-4 border-b border-sidebar-border bg-sidebar">
           <div className="relative">
