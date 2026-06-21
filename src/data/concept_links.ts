@@ -185,6 +185,11 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Esp. Vectoriels & Rang",
     dependencies: ["/Cours_Math/04_Post_Bac/02_Algebre_Lineaire.md", "/Cours_Math/04_Post_Bac/Algebre_L1_L2/02_Structures_Algebriques.md"]
   },
+  "/Cours_Math/04_Post_Bac/CPGE/02_CPGE_02_Polynomes.md": {
+    domain: "algebra",
+    shortTitle: "Polynômes (CPGE)",
+    dependencies: ["/Cours_Math/04_Post_Bac/CPGE/01_CPGE_01_Structures_Algebriques.md"]
+  },
 
   // --- ANALYSE & FONCTIONS ---
   "/Cours_Math/02_College/3eme/03_Notion_de_Fonction.md": {
@@ -291,6 +296,11 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     domain: "analysis",
     shortTitle: "Fonctions Pl. Var.",
     dependencies: ["/Cours_Math/04_Post_Bac/15_Analyse_L1_Derivabilite_DL.md", "/Cours_Math/04_Post_Bac/09_Calcul_Differentiel_Optimisation.md"]
+  },
+  "/Cours_Math/04_Post_Bac/CPGE/03_CPGE_03_Series_De_Fourier.md": {
+    domain: "analysis",
+    shortTitle: "Séries de Fourier",
+    dependencies: ["/Cours_Math/04_Post_Bac/03_Series_Numeriques.md", "/Cours_Math/04_Post_Bac/CPGE/02_CPGE_02_Polynomes.md"]
   },
 
   // --- PROBABILITÉS & STATISTIQUES ---
