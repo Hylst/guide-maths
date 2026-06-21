@@ -128,6 +128,11 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Arithmétique Supérieure",
     dependencies: ["/Cours_Math/04_Post_Bac/CPGE/01_CPGE_01_Structures_Algebriques.md"]
   },
+  "/Cours_Math/04_Post_Bac/12_CPGE_ECG_Algebre_Financiere.md": {
+    domain: "numbers",
+    shortTitle: "Algèbre Financière ECG",
+    dependencies: ["/Cours_Math/03_Lycee/Terminale/05_Suites_et_Recurrence.md"]
+  },
 
   // --- ALGÈBRE & ÉQUATIONS ---
   "/Cours_Math/02_College/5eme/11_Calcul_Litteral.md": {
@@ -311,6 +316,16 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     domain: "analysis",
     shortTitle: "Optimisation (BL)",
     dependencies: ["/Cours_Math/04_Post_Bac/09_Calcul_Differentiel_Optimisation.md"]
+  },
+  "/Cours_Math/04_Post_Bac/19_CPGE_ECG_Suites_et_Series_Economie.md": {
+    domain: "analysis",
+    shortTitle: "Suites & Séries Éco ECG",
+    dependencies: ["/Cours_Math/04_Post_Bac/12_CPGE_ECG_Algebre_Financiere.md", "/Cours_Math/04_Post_Bac/03_Series_Numeriques.md"]
+  },
+  "/Cours_Math/04_Post_Bac/21_CPGE_ECG_Optimisation_Sous_Contrainte.md": {
+    domain: "analysis",
+    shortTitle: "Optimisation ECG",
+    dependencies: ["/Cours_Math/04_Post_Bac/09_Calcul_Differentiel_Optimisation.md", "/Cours_Math/04_Post_Bac/19_CPGE_ECG_Suites_et_Series_Economie.md"]
   },
 
   // --- PROBABILITÉS & STATISTIQUES ---
