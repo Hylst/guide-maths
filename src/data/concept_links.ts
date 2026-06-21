@@ -210,6 +210,11 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Algèbre Linéaire (BL)",
     dependencies: ["/Cours_Math/04_Post_Bac/02_Algebre_Lineaire.md"]
   },
+  "/Cours_Math/04_Post_Bac/23_Ingenieur_Matrices_et_Elements_Finis.md": {
+    domain: "algebra",
+    shortTitle: "Éléments Finis Ingé",
+    dependencies: ["/Cours_Math/04_Post_Bac/02_Algebre_Lineaire.md", "/Cours_Math/04_Post_Bac/22_Ingenieur_Transformee_de_Laplace.md"]
+  },
 
   // --- ANALYSE & FONCTIONS ---
   "/Cours_Math/02_College/3eme/03_Notion_de_Fonction.md": {
@@ -356,6 +361,21 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     domain: "analysis",
     shortTitle: "Fourier BTS Ind",
     dependencies: ["/Cours_Math/04_Post_Bac/BTS_Industriel/02_Resonance.md"]
+  },
+  "/Cours_Math/04_Post_Bac/13_Ingenieur_Methodes_Numeriques.md": {
+    domain: "analysis",
+    shortTitle: "Méthodes Numériques",
+    dependencies: ["/Cours_Math/04_Post_Bac/09_Calcul_Differentiel_Optimisation.md"]
+  },
+  "/Cours_Math/04_Post_Bac/22_Ingenieur_Transformee_de_Laplace.md": {
+    domain: "analysis",
+    shortTitle: "Transf. Laplace Ingé",
+    dependencies: ["/Cours_Math/04_Post_Bac/04_Equations_Differentielles.md"]
+  },
+  "/Cours_Math/04_Post_Bac/27_Ingenieur_Analyse_de_Fourier_et_Signal.md": {
+    domain: "analysis",
+    shortTitle: "Fourier & Signal Ingé",
+    dependencies: ["/Cours_Math/04_Post_Bac/CPGE/03_CPGE_03_Series_De_Fourier.md"]
   },
 
   // --- PROBABILITÉS & STATISTIQUES ---
