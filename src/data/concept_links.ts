@@ -123,6 +123,11 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Complexes Post-Bac",
     dependencies: ["/Cours_Math/03_Lycee/Terminale_Expertes/01_Nombres_Complexes_Approfondis.md"]
   },
+  "/Cours_Math/04_Post_Bac/Algebre_L1_L2/01_Arithmetique_Superieure.md": {
+    domain: "numbers",
+    shortTitle: "Arithmétique Supérieure",
+    dependencies: ["/Cours_Math/04_Post_Bac/CPGE/01_CPGE_01_Structures_Algebriques.md"]
+  },
 
   // --- ALGÈBRE & ÉQUATIONS ---
   "/Cours_Math/02_College/5eme/11_Calcul_Litteral.md": {
@@ -169,6 +174,16 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     domain: "algebra",
     shortTitle: "Espaces Euclidiens",
     dependencies: ["/Cours_Math/04_Post_Bac/02_Algebre_Lineaire.md"]
+  },
+  "/Cours_Math/04_Post_Bac/Algebre_L1_L2/02_Structures_Algebriques.md": {
+    domain: "algebra",
+    shortTitle: "Structures Algébriques L2",
+    dependencies: ["/Cours_Math/04_Post_Bac/Algebre_L1_L2/01_Arithmetique_Superieure.md"]
+  },
+  "/Cours_Math/04_Post_Bac/Algebre_L1_L2/03_Espaces_Vectoriels_Rang.md": {
+    domain: "algebra",
+    shortTitle: "Esp. Vectoriels & Rang",
+    dependencies: ["/Cours_Math/04_Post_Bac/02_Algebre_Lineaire.md", "/Cours_Math/04_Post_Bac/Algebre_L1_L2/02_Structures_Algebriques.md"]
   },
 
   // --- ANALYSE & FONCTIONS ---
