@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, createContext, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, CheckCircle2, AlertCircle, Info, BookOpen, BrainCircuit, Lightbulb, Check, X, Target, ShieldQuestion, Clock, BarChart } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { MathComponent } from './MathComponent';
+import { Course } from '../types';
+import { CONCEPT_METADATA } from '../data/concept_links';
+import coursesIndex from '../data/courses_index.json';
+
+export const CourseContext = createContext<Course | null>(null);
 
 interface BentoGridProps {
   id?: string;
@@ -87,68 +93,154 @@ interface CourseHeaderProps {
 
 export const CourseHeader: React.FC<CourseHeaderProps> = ({ 
   id, acronym, title, subtitle, duration, level, prerequisites, objectives 
-}) => (
-  <div id={id} className="mb-12">
-    <motion.div 
-      initial={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
-      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="bg-slate-900 dark:bg-slate-950 text-white p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-2xl shadow-indigo-500/10 mb-8 relative overflow-hidden"
-    >
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-transparent pointer-events-none" />
-      <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none transform scale-150 translate-x-1/4 -translate-y-1/4">
-        <BookOpen size={240} />
-      </div>
-      
-      <div className="relative z-10">
-        <div className="flex items-center gap-3 mb-6">
-          <span className="px-4 py-1.5 bg-card/10 backdrop-blur-md text-white border border-white/20 font-mono text-xs rounded-full font-bold tracking-widest uppercase shadow-inner">
-            {acronym}
-          </span>
-          {duration && (
-            <span className="text-slate-300 text-xs font-bold uppercase tracking-widest flex items-center gap-1.5 border border-slate-700/50 rounded-full px-4 py-1.5 bg-slate-800/50 shadow-inner">
-              <Clock size={14} /> {duration}
+}) => {
+  const currentCourse = useContext(CourseContext);
+
+  // Find pedigree links if currentCourse is available
+  const parents: { id: string; title: string; slug: string; level: string }[] = [];
+  const successors: { id: string; title: string; slug: string; level: string }[] = [];
+
+  if (currentCourse) {
+    const metadata = CONCEPT_METADATA[currentCourse.id];
+    if (metadata) {
+      // 1. Resolve prerequisites (parents)
+      const depIds = metadata.dependencies || [];
+      depIds.forEach(depId => {
+        const found = coursesIndex.find(c => c.id === depId);
+        if (found) {
+          const shortT = CONCEPT_METADATA[depId]?.shortTitle || found.title.replace(/Chapitre \d+ : /, "").slice(0, 20);
+          parents.push({
+            id: depId,
+            title: shortT,
+            slug: depId.replace("/Cours_Math/", "").replace(".md", ""),
+            level: found.level === "Post_Bac" ? "Post-Bac" : found.level
+          });
+        }
+      });
+
+      // 2. Resolve successors (children)
+      Object.entries(CONCEPT_METADATA).forEach(([childId, childMeta]) => {
+        if (childMeta.dependencies && childMeta.dependencies.includes(currentCourse.id)) {
+          const found = coursesIndex.find(c => c.id === childId);
+          if (found) {
+            const shortT = childMeta.shortTitle;
+            successors.push({
+              id: childId,
+              title: shortT,
+              slug: childId.replace("/Cours_Math/", "").replace(".md", ""),
+              level: found.level === "Post_Bac" ? "Post-Bac" : found.level
+            });
+          }
+        }
+      });
+    }
+  }
+
+  const hasPedigree = parents.length > 0 || successors.length > 0;
+
+  return (
+    <div id={id} className="mb-12">
+      <motion.div 
+        initial={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
+        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="bg-slate-900 dark:bg-slate-950 text-white p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-2xl shadow-indigo-500/10 mb-8 relative overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-transparent pointer-events-none" />
+        <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none transform scale-150 translate-x-1/4 -translate-y-1/4">
+          <BookOpen size={240} />
+        </div>
+        
+        <div className="relative z-10">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="px-4 py-1.5 bg-card/10 backdrop-blur-md text-white border border-white/20 font-mono text-xs rounded-full font-bold tracking-widest uppercase shadow-inner">
+              {acronym}
             </span>
+            {duration && (
+              <span className="text-slate-300 text-xs font-bold uppercase tracking-widest flex items-center gap-1.5 border border-slate-700/50 rounded-full px-4 py-1.5 bg-slate-800/50 shadow-inner">
+                <Clock size={14} /> {duration}
+              </span>
+            )}
+          </div>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-5 leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-300">
+            {title}
+          </h1>
+          {subtitle && (
+            <p className="text-lg md:text-xl text-slate-400 font-medium max-w-3xl leading-relaxed">
+              {subtitle}
+            </p>
+          )}
+
+          {/* Pedigree section */}
+          {hasPedigree && (
+            <div className="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center gap-x-8 gap-y-4 text-xs select-none no-print">
+              {parents.length > 0 && (
+                <div className="flex items-center gap-2">
+                  <span className="text-slate-400 font-bold uppercase tracking-wider">🌱 Prend racine dans :</span>
+                  <div className="flex flex-wrap gap-2">
+                    {parents.map(p => (
+                      <Link
+                        key={p.id}
+                        to={`/cours/${p.slug}`}
+                        className="px-2.5 py-1 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white font-semibold transition-all hover:scale-[1.02] flex items-center gap-1"
+                      >
+                        <span>{p.title}</span>
+                        <span className="text-[9px] opacity-60 font-mono">({p.level})</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {successors.length > 0 && (
+                <div className="flex items-center gap-2">
+                  <span className="text-slate-400 font-bold uppercase tracking-wider">🌸 Fleurira dans :</span>
+                  <div className="flex flex-wrap gap-2">
+                    {successors.map(c => (
+                      <Link
+                        key={c.id}
+                        to={`/cours/${c.slug}`}
+                        className="px-2.5 py-1 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/20 rounded-lg text-indigo-200 font-semibold transition-all hover:scale-[1.02] flex items-center gap-1"
+                      >
+                        <span>{c.title}</span>
+                        <span className="text-[9px] opacity-60 font-mono">({c.level})</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           )}
         </div>
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-5 leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-300">
-          {title}
-        </h1>
-        {subtitle && (
-          <p className="text-lg md:text-xl text-slate-400 font-medium max-w-3xl leading-relaxed">
-            {subtitle}
-          </p>
-        )}
-      </div>
-    </motion.div>
+      </motion.div>
 
-    {(level || prerequisites || objectives) && (
-      <BentoGrid>
-        {level && (
-          <BentoCard title="Niveau" icon={<BarChart className="w-5 h-5" />} color="slate" colSpan={1}>
-            <div className="text-foreground dark:text-slate-100 font-bold text-lg">
-              {level}
-            </div>
-          </BentoCard>
-        )}
-        
-        {prerequisites && (
-          <BentoCard title="Prérequis" icon={<ShieldQuestion className="w-5 h-5" />} color="amber" colSpan={level ? 2 : 3}>
-            <p className="text-amber-900/80 dark:text-amber-100/80 font-medium">
-              {prerequisites.join(' • ')}
-            </p>
-          </BentoCard>
-        )}
+      {(level || prerequisites || objectives) && (
+        <BentoGrid>
+          {level && (
+            <BentoCard title="Niveau" icon={<BarChart className="w-5 h-5" />} color="slate" colSpan={1}>
+              <div className="text-foreground dark:text-slate-100 font-bold text-lg">
+                {level}
+              </div>
+            </BentoCard>
+          )}
+          
+          {prerequisites && (
+            <BentoCard title="Prérequis" icon={<ShieldQuestion className="w-5 h-5" />} color="amber" colSpan={level ? 2 : 3}>
+              <p className="text-amber-900/80 dark:text-amber-100/80 font-medium">
+                {prerequisites.join(' • ')}
+              </p>
+            </BentoCard>
+          )}
 
-        {objectives && (
-          <BentoCard title="Objectifs pédagogiques" icon={<Target className="w-5 h-5" />} color="indigo" colSpan={3}>
-            <ObjectiveList items={objectives} />
-          </BentoCard>
-        )}
-      </BentoGrid>
-    )}
-  </div>
-);
+          {objectives && (
+            <BentoCard title="Objectifs pédagogiques" icon={<Target className="w-5 h-5" />} color="indigo" colSpan={3}>
+              <ObjectiveList items={objectives} />
+            </BentoCard>
+          )}
+        </BentoGrid>
+      )}
+    </div>
+  );
+};
 
 interface SectionProps {
   id?: string;
