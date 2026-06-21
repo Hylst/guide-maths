@@ -1,147 +1,204 @@
-# Structure de la Plateforme Éducative (Structure)
+# Structure de la Plateforme Éducative (structure.md)
 
-Cet Applet est conçu comme un parcours modulaire, progressif et spiralaire, allant des jalons élémentaires de la découverte arithmétique de l'école primaire jusqu'aux concepts hautement abstraits et modélisés de l'enseignement supérieur (CPGE, Licence, BUT).
-
-Il s'organise autour d'un plan d'études fluide et dynamique, structuré en grandes thématiques académiques et cycles scolaires réglementaires.
-
----
-
-## 🧭 Philosophie de la Taxonomie et Expérience Utilisateur
-
-1. **Exploration Linéaire Structurée** : L'étudiant peut parcourir les leçons d'un cycle donné dans l'ordre pédagogique recommandé par les programmes officiels.
-2. **Consultation Ciblée par Prérequis** : Chaque fiche de cours indique explicitement les connaissances requises en amont. Si l'élève possède déjà ces prérequis, il s'immerge directement dans les modules interactifs supérieurs sans frustration.
-3. **Répartition de l'effort cognitif** : Chaque notion est immédiatement accompagnée de rétroactions interactives d'auto-évaluation en direct (Quiz, Flashcards, Exercices pas à pas, FAQ).
-4. **Apprentissage Éco-Responsable** : L'XP cumulée et l'historique d'apprentissage de l'étudiant sont gérés en local (`localStorage`) de façon totalement privée, sans requêtes réseau superflues.
+> Document de référence sur l'organisation des fichiers, la taxonomie des cours et les conventions de nommage.
+> À lire avant toute création ou déplacement de fichier.
 
 ---
 
-## 📂 Organisation Détaillée des Dossiers
+## 🧭 Philosophie de la Taxonomie
 
-### 1. Bibliothèque des Cours (`/src/courses/`)
-
-Les chapitres d'étude sont rédigés en React TSX et segmentés par cohortes d'apprentissage :
-
-* **`Primaire/`** (CP, CE1, CE2, CM1, CM2 - Cycles 2 & 3) : Notions visuelles de comptage, premières tables opératoires, géométrie plane élémentaire et fractions de partage.
-* **`College/`** (6ème, 5ème, 4ème, 3ème - Cycle 3 & 4) : Introduction de la variable littérale, démonstrations rigoureuses et ateliers géométriques.
-  * *Récemment terminés* :
-    * `Course_College_6eme_09_Espace_Volumes.tsx` (Empilement 3D isométrique de cubes unitaires de $1\text{ cm}^3$ et formules associés).
-    * `Course_College_6eme_10_Gestion_Donnees.tsx` (Tableaux croisés à double entrée, diagrammes de données en bâtons SVG interactifs, diagrammes circulaires à rapporteur virtuel).
-    * `Course_College_6eme_11_Algorithmique_Scratch.tsx` (Simulateur d'interprétation de briques de code Scratch, direction du regard, stylo à encre et structures de boucles « Répéter »).
-* **`Lycee_General/`** (Seconde, Première, Terminale) : Maîtrise de l'analyse réelle (dérivabilité, limites de suites, primitives, intégration), exponantielle, trigonométrie et nombres complexes.
-* **`Superieur/`** (CPGE B/L, BUT GEII, Classes Préparatoires, Sup Bio, Universités) :
-  * *Modélisations avancées* : Systèmes dynamiques d'équations differentielles, réduction d'endomorphismes matriciels, transformées de Laplace complexes.
+1. **Progression spiralaire** : Chaque notion est réintroduite à un niveau de complexité supérieur (ex: probabilités 4e → 1re → BTS → Licence).
+2. **Double format** : Les cours existent soit en TSX (interactifs), soit en Markdown (statiques). Les deux coexistent et s'affichent dans la même vue.
+3. **Séparation stricte UI / Contenu** : Aucun style, aucun lien de navigation n'est écrit dans les fiches de cours. Tout passe par `SharedUI.tsx` et `concept_links.ts`.
 
 ---
 
-## 🏗️ Spécifications d'un Chapitre `TSX` Conforme
+## 📂 Arborescence Complète du Projet
 
-Chaque fichier de cours sous `/src/courses/` est un composant fonctionnel TypeScript exporté par défaut, prenant deux props obligatoires :
-* `onValidateCourse: () => void` : Déclencheur de l'acquisition d'XP et de validation du cours.
-* `isCompleted: boolean` : État indiquant si l'élève a déjà maîtrisé et validé ce chapitre spécifique.
-
-### Anatomie du Composant d'Apprentissage
-
-```tsx
-import React, { useState } from 'react';
-import { 
-  CourseHeader, Section, Flashcard, Quiz, InteractiveChecklist, 
-  InteractiveExercise, InfoBlock, AccordionFAQ, TipBanner, FormulaBox
-} from '../../components/SharedUI';
-import { MathComponent } from "../../components/MathComponent";
-import { ... } from 'lucide-react';
-
-const Course_Template: React.FC<{
-  onValidateCourse: () => void;
-  isCompleted: boolean;
-}> = ({ onValidateCourse, isCompleted }) => {
-  return (
-    <div className="max-w-5xl mx-auto pb-16">
-      {/* 1. Entête Officiel de la Fiche */}
-      <CourseHeader 
-        acronym="MATH-LEVEL-ID"
-        title="Titre du Chapitre"
-        subtitle="Accroche concrète et métaphorique de la notion"
-        duration="45 min"
-        level="Cohorte visée"
-        prerequisites={["Notion Déjà Revue 1", "Notion Déjà Revue 2"]}
-        objectives={["Objectif d'évaluation 1", "Objectif de savoir-faire 2"]}
-      />
-
-      {/* 2. Introduction et Ancrage */}
-      <Section title="🌟 Introduction" icon="🚀" color="slate">
-        <p>Texte introductif de cadrage...</p>
-      </Section>
-
-      {/* 3. Laboratoire Interactif SVG */}
-      <Section title="🛠️ Le Laboratoire" icon="Activity" color="indigo">
-        {/* Composant interactif local à l'aide de states (useState) */}
-      </Section>
-
-      {/* 4. Corps de Leçon avec Blocs Spécialisés */}
-      <Section title="1. Contenu de cours" icon="Book" color="blue">
-        <FormulaBox title="Formule Clé" math="E = mc^2" />
-        
-        <InfoBlock type="reminder" title="Rappel de cours">
-          Rappel mathématique...
-        </InfoBlock>
-        
-        <TipBanner title="Astuce Méthodologique" type="success">
-          Contenu d'astuce d'excellence...
-        </TipBanner>
-      </Section>
-
-      {/* 5. Exercices résolus pas à pas */}
-      <Section title="✍️ Exercices Résolus" icon="Layers" color="amber">
-        <InteractiveExercise 
-          title="Exercice classique de rédaction"
-          question="..."
-          steps={["Étape 1 : Hypothèses", "Étape 2 : Démonstration", "Étape 3 : Conclusion"]}
-        />
-      </Section>
-
-      {/* 6. Flashcards, FAQ et Évaluations */}
-      <Section title="🧠 Flashcards de mémorisation" icon="RefreshCw" color="emerald">
-        <Flashcard front="Question ?" back="Réponse éclair !" />
-      </Section>
-
-      <Section title="❓ FAQ" icon="HelpCircle" color="slate">
-        <AccordionFAQ items={[{ question: "Pourquoi... ?", answer: "Parce que..." }]} />
-      </Section>
-
-      <Section title="🎯 Épreuve Finale" icon="Award" color="rose">
-        <Quiz questions={[{ question: "Q1", options: ["O1", "O2"], correctAnswer: 0, explanation: "..." }]} />
-        <InteractiveChecklist items={["Savoir-faire 1", "Savoir-faire 2"]} />
-      </Section>
-
-      {/* 7. Bouton de Validation */}
-      {!isCompleted && (
-        <div className="flex justify-center mt-8">
-          <button onClick={onValidateCourse} className="bg-emerald-600 hover:bg-emerald-700 text-white ...">
-            Valider le Chapitre (+40 XP)
-          </button>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default Course_Template;
+```
+guide-mathématiques-interactif/
+│
+├── 📄 README.md              # Présentation publique
+├── 📄 readme-dev.md          # Architecture technique (ce que lit un dev)
+├── 📄 continue.md            # Point d'entrée rapide pour un agent IA
+├── 📄 rodo.md                # Feuille de route priorisée
+├── 📄 structure.md           # CE FICHIER — taxonomie et conventions
+├── 📄 bible.md               # Règles de style et workflow stricts
+├── 📄 AGENTS.md              # Règles spécifiques pour agents IA
+├── 📄 contexte_dev.md        # État des lieux technique courant
+├── 📄 enrich_cours_rules.md  # Règles pour enrichir les cours TSX
+├── 📄 changelog.md           # Historique des versions
+├── 📄 features.md            # Fonctionnalités actuelles et à venir
+├── 📄 about.md               # Description pédagogique du projet
+├── 📄 programme_officiel_maths_france.md  # Référentiel officiel MEN
+│
+├── 📦 package.json           # Dépendances npm
+├── 📦 vite.config.ts         # Config Vite (PWA, static copy, alias)
+├── 📦 tsconfig.json          # TypeScript strict mode
+├── 📦 index.html             # Shell HTML (KaTeX CSS importé ici)
+│
+├── 📁 src/                   # CODE SOURCE
+│   ├── main.tsx
+│   ├── App.tsx
+│   ├── index.css             # Tailwind CSS v4
+│   │
+│   ├── components/           # Composants React réutilisables
+│   │   ├── SharedUI.tsx      # ★ BIBLIOTHÈQUE UI CENTRALE
+│   │   ├── MathComponent.tsx # Rendu KaTeX inline
+│   │   ├── Sidebar.tsx       # Menu hiérarchique + recherche
+│   │   ├── CourseContent.tsx # Orchestrateur rendu cours (TSX + MD)
+│   │   ├── ConceptGraph.tsx  # Graphe SVG interactif
+│   │   ├── Dashboard.tsx     # Tableau de bord élève
+│   │   ├── Rewards.tsx       # Gamification (badges, mini-jeux)
+│   │   └── Settings.tsx      # Compte local et préférences
+│   │
+│   ├── courses/              # Composants TSX des cours enrichis
+│   │   ├── CourseRegistry.tsx  # Registre lazy-loaded
+│   │   ├── Primaire/          # CP → CM2
+│   │   ├── Maternelle/        # PS, MS, GS
+│   │   ├── College/           # 6e → 3e
+│   │   ├── Lycee_General/     # 2de → Tle
+│   │   └── Superieur/         # Post-Bac
+│   │
+│   ├── data/
+│   │   ├── concept_links.ts    # ★ GRAPHE PÉDAGOGIQUE CENTRALISÉ
+│   │   └── courses_index.json  # ★ INDEX AUTO-GÉNÉRÉ (ne pas éditer)
+│   │
+│   ├── hooks/
+│   │   ├── useProgress.ts      # XP, badges, streaks
+│   │   ├── useLocalAccount.ts  # Profil local
+│   │   └── useCourses.ts       # Fetch Markdown asynchrone
+│   │
+│   └── utils/
+│       ├── search.ts           # Dictionnaire sémantique
+│       └── sound.ts            # Synthèse sonore native
+│
+├── 📁 Cours_Math/             # FICHES MARKDOWN STATIQUES
+│   ├── 01_Maternelle/
+│   │   ├── PS/               # Petite Section
+│   │   ├── MS/               # Moyenne Section
+│   │   └── GS/               # Grande Section
+│   │
+│   ├── 02_College/
+│   │   ├── 6eme/             # 11 fiches
+│   │   ├── 5eme/             # 14 fiches
+│   │   ├── 4eme/             # 13 fiches
+│   │   └── 3eme/             # 11 fiches
+│   │
+│   ├── 03_Lycee/
+│   │   ├── Seconde/          # 8 fiches (+ Professionnel ×3, Technologique ×3)
+│   │   ├── Premiere/         # 8 fiches
+│   │   ├── Terminale/        # 11 fiches
+│   │   ├── Terminale_Complementaires/  # 3 fiches
+│   │   └── Terminale_Expertes/         # 3 fiches
+│   │
+│   └── 04_Post_Bac/          # 79 fiches — organisées par filière
+│       ├── Algebre_L1_L2/    # 3 fiches (groupes, anneaux, EV)
+│       ├── BTS/              # 4 fiches (graphes, stats, signal, Boole)
+│       ├── BTS_CG/           # 3 fiches (finance, stats, proba)
+│       ├── BTS_Industriel/   # 3 fiches (vibrations, résonance, Fourier)
+│       ├── BTS_Tertiaire/    # 3 fiches (suites, échantillonnage, simplexe)
+│       ├── BUT/              # 4 fiches (tronc commun)
+│       ├── BUT_GEA/          # 3 fiches (finance, RO, stats)
+│       ├── BUT_GEII/         # 3 fiches (impédance, Z, Laplace)
+│       ├── BUT_Industriel/   # 3 fiches (MSP, plans, DAO)
+│       ├── BUT_Tertiaire/    # 3 fiches (PERT, files, décision)
+│       ├── CPGE/             # 3 fiches (structures algé., poly, Fourier)
+│       ├── CPGE_BL/          # via Sup_CPGE/
+│       ├── CPGE_ECG/         # 3 fiches numér. racine (12, 19, 21)
+│       ├── Ingenieur_IA_Data/ # 3 fiches (vectoriel, gradient, deep learning)
+│       ├── Sup_CPGE/         # 3 fiches (proba BL, algè BL, optim BL)
+│       ├── Sup_Universite/   # 15 fiches (licence maths, MIASHS, bio, éco, finance)
+│       └── [XX_*.md]         # ~18 fiches numérotées tronc commun Post-Bac
+│
+├── 📁 scripts/               # Scripts Node / tsx
+│   ├── generate_index.ts     # Régénère courses_index.json
+│   ├── check_completeness.js # Audit cours TSX incomplets
+│   ├── check_dependencies.js # Audit graphe (dépendances pendantes)
+│   └── find_missing_links.js # Cours sans entrée dans concept_links.ts
+│
+└── 📁 public/                # Assets statiques
+    ├── icons/                # Icônes PWA
+    └── manifest.webmanifest  # Généré par vite-plugin-pwa
 ```
 
 ---
 
-## 🎨 Contraintes de Typages et Couleurs (Ressources `SharedUI`)
+## 🏷️ Conventions de Nommage
 
-Pour préserver l'intégrité esthétique globale et se conformer impérativement à la directive `AGENTS.md`, les développeurs et agents IA doivent manipuler les composants partagés en respectant la charte graphique :
+### Fichiers Markdown (`Cours_Math/`)
+```
+XX_Nom_Du_Cours.md
+│   │
+│   └── Nom en PascalCase séparé par underscores (pas d'accents dans le nom de fichier)
+└── Numéro d'ordre à 2 chiffres (01, 02…)
+```
+Exemples : `01_Theoreme_Pythagore.md`, `02_BTS_02_Statistiques_Inferentielles.md`
 
-1. **`color` disponible dans l'élément `<Section>`** :
-   * Autorisé : `"slate" | "indigo" | "emerald" | "amber" | "rose" | "blue" | "purple"`
-   * ❌ *Interdit* (causera des écarts de contraste ou cassera l'affichage) : `"red"`, `"green"`, `"teal"`, `"sky"`, `"yellow"`.
+### Composants TSX (`src/courses/`)
+```
+Course_[Niveau]_[SousNiveau]_[NomCours].tsx
+```
+Exemples : `Course_College_3eme_01_Thales.tsx`, `Course_Lycee_Terminale_04_Logarithme.tsx`
 
-2. **`type` disponible dans `<InfoBlock>`** :
-   * Autorisé : `"info" | "warning" | "definition" | "funfact" | "reminder"`
-   * ❌ *Interdit* : `"success"`, `"error"`.
+### IDs dans `concept_links.ts`
+L'ID est le **chemin absolu depuis la racine du projet** (slash initial) :
+```
+/Cours_Math/04_Post_Bac/BTS/01_BTS_01_Graphes_et_Reseaux.md
+```
+Il correspond exactement au champ `id` dans `courses_index.json`.
 
-3. **`type` disponible dans `<TipBanner>`** :
-   * Autorisé : `"info" | "warning" | "success"`
-   * ❌ *Interdit* : `"error"`, `"reminder"`.
+---
+
+## 🔢 Comptage des Cours (juin 2026)
+
+| Niveau | Sous-niveaux | Fiches MD | Composants TSX |
+|---|---|---|---|
+| Maternelle | PS, MS, GS | 11 | ~0 |
+| Primaire | CP→CM2 | 32 | ~32 |
+| Collège | 6e→3e | 49 | ~49 |
+| Lycée général | 2de→Tle (+compl. +exp.) | 36 | ~36 |
+| Lycée pro/techno | Professionnel, Techno | 6 | ~6 |
+| Post-Bac | 20+ filières | 79 | ~20 |
+| **TOTAL** | | **215** | **~142** |
+
+> ⚠️ Le nombre de composants TSX (142) < nombre de fiches MD (215) car les cours Post-Bac récents n'ont pas encore leur version TSX interactive.
+
+---
+
+## 📐 Anatomie d'une Entrée dans `concept_links.ts`
+
+```typescript
+// Syntaxe type
+"/Cours_Math/[dossier]/[fichier].md": {
+  domain: "numbers" | "algebra" | "analysis" | "geometry" | "probability" | "algorithms" | "general",
+  shortTitle: "Titre court (< 25 car.)",
+  dependencies: [
+    "/Cours_Math/[dossier]/[prerequis].md"  // Doit exister comme clé dans ce même objet !
+  ],
+  offsetY?: number,  // Ajustement visuel optionnel pour le graphe SVG
+  offsetX?: number,
+},
+```
+
+### Domaines et leur signification
+
+| `domain` | Thème | Couleur affichée |
+|---|---|---|
+| `numbers` | Nombres & Arithmétique | Emerald |
+| `algebra` | Algèbre & Équations | Amber |
+| `analysis` | Analyse & Fonctions | Blue |
+| `geometry` | Géométrie & Vecteurs | Rose |
+| `probability` | Probabilités & Statistiques | Purple |
+| `algorithms` | Algorithmique & Logique | Indigo |
+| `general` | Général / Transversal | Slate |
+
+---
+
+## ⚠️ Points de Vigilance (anti-régression)
+
+1. **Ne jamais modifier `courses_index.json` à la main** — c'est un fichier généré.
+2. **Ne jamais supprimer une clé de `concept_links.ts`** sans vérifier qu'elle n'est pas référencée en `dependencies` d'un autre cours.
+3. **Les IDs sont sensibles à la casse et aux underscores** — copier-coller depuis l'index plutôt que retaper.
+4. **Un cours Markdown peut exister sans entrée dans `concept_links.ts`** — ce n'est pas une erreur, juste l'absence du fil d'Ariane.
+5. **Un ID dans `concept_links.ts` DOIT exister dans `courses_index.json`** — vérifier avant tout ajout.
