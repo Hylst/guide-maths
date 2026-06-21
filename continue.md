@@ -21,14 +21,14 @@ La **Phase V5** consiste à **Enrichir et Compléter** les cours avec des module
 Dernières fonctionnalités majeures apportées :
 - **Système de Compte Local & Paramètres** : Sauvegarde locale du profil, bloc-notes, sélection d'avatars de scientifiques célèbres et import/export JSON.
 - **Carte Conceptuelle Interactive (Knowledge Graph)** : Visualisation interactive 2D (SVG zoom/pan) de la spirale d'apprentissage et illumination des liens de notions.
-- **Fil d'Ariane Pédagogique (Concept Pedigree)** (En cours) : Raccourcis de navigation dynamique (Prend racine dans / Fleurira dans) intégrés globalement via un `CourseContext`.
+- **Fil d'Ariane Pédagogique (Concept Pedigree)** (Terminé) : Raccourcis de navigation dynamique (🌱 Prend racine dans / 🌸 Fleurira dans) intégrés globalement via un `CourseContext` et résolus depuis `concept_links.ts`.
 
 ## 4. Prochaines Étapes Précises (Audit des Fichiers Manquants)
 L'exécution de la commande de diagnostic `npx tsx scripts/check_completeness.js` révèle qu'il ne reste plus que **21 fichiers incomplets sur 142 cours répertoriés** !
 Voici l'état des priorités pour la suite de l'enrichissement :
-1. Finaliser le **Fil d'Ariane Pédagogique (Concept Pedigree)**.
-2. Continuer l'enrichissement des modules spécialisés BTS (Ch. 1, 2, 3) : Graphes et Réseaux, Statistiques Inférentielles, Traitement du Signal.
-3. Continuer l'enrichissement CPGE (Ch. 1, 2, 3) : Structures Algébriques, Polynômes, Séries de Fourier.
-4. Maternelle Grande Section : Quantités, Formes et Grandeurs, Repères Spatiaux.
+1. Continuer l'enrichissement des modules spécialisés BTS (Ch. 1, 2, 3) : Graphes et Réseaux, Statistiques Inférentielles, Traitement du Signal.
+2. Continuer l'enrichissement CPGE (Ch. 1, 2, 3) : Structures Algébriques, Polynômes, Séries de Fourier.
+3. Maternelle Grande Section : Quantités, Formes et Grandeurs, Repères Spatiaux.
+4. Compléter le registre `concept_links.ts` avec les cours Post-Bac manquants (BUT Industriel, Ingénieur IA/Data).
 
 **👉 POUR LA MARCHE À SUIVRE (WORKFLOW) EXACTE, RÉFÉREZ-VOUS AU FICHIER `bible.md`.**
