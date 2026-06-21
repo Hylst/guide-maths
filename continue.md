@@ -18,17 +18,17 @@ L'application est une **App autonome React Vite TSX** (ses pages de cours sont s
 L'Applet a été intégralement converti du Markdown au TSX (Phase V4 terminée).
 La **Phase V5** consiste à **Enrichir et Compléter** les cours avec des modules d'apprentissage interactifs avancés et des simulations visuelles sur-mesure (modèles SVG réactifs, balances à fléau algébriques, etc.).
 
-Derniers enrichissements majeurs apportés :
-- **4ème Ch. 1 (Théorème de Pythagore)** : Entièrement enrichi avec le Laboratoire de Pythagore (déformations de triangles et calcul d'aires de carrés).
-- **4ème Ch. 2 (Équations du Premier Degré)** : Entièrement enrichi avec le Simulateur Algébrique de balance à fléaux.
-- **4ème Ch. 9 (Translations et Rotations)** : Entièrement enrichi avec le Laboratoire des Déplacements Isométriques (vecteurs et angles trigonométriques).
+Dernières fonctionnalités majeures apportées :
+- **Système de Compte Local & Paramètres** : Sauvegarde locale du profil, bloc-notes, sélection d'avatars de scientifiques célèbres et import/export JSON.
+- **Carte Conceptuelle Interactive (Knowledge Graph)** : Visualisation interactive 2D (SVG zoom/pan) de la spirale d'apprentissage et illumination des liens de notions.
+- **Fil d'Ariane Pédagogique (Concept Pedigree)** (En cours) : Raccourcis de navigation dynamique (Prend racine dans / Fleurira dans) intégrés globalement via un `CourseContext`.
 
 ## 4. Prochaines Étapes Précises (Audit des Fichiers Manquants)
 L'exécution de la commande de diagnostic `npx tsx scripts/check_completeness.js` révèle qu'il ne reste plus que **21 fichiers incomplets sur 142 cours répertoriés** !
 Voici l'état des priorités pour la suite de l'enrichissement :
-1. **Modules Spécialisés BTS (Ch. 1, 2, 3)** : Graphes et Réseaux, Statistiques Inférentielles, Traitement du Signal.
-2. **CPGE (Ch. 1, 2, 3)** : Structures Algébriques, Polynômes, Séries de Fourier.
-3. **Lycée Professionnel / Techno** : Proportionnalité Métier, Contrôle Qualité, Géométrie et Usinage.
-4. **Maternelle Grande Section** : Quantités (Ch. 1), Formes et Grandeurs (Ch. 2), Repères Spatiaux (Ch. 3).
+1. Finaliser le **Fil d'Ariane Pédagogique (Concept Pedigree)**.
+2. Continuer l'enrichissement des modules spécialisés BTS (Ch. 1, 2, 3) : Graphes et Réseaux, Statistiques Inférentielles, Traitement du Signal.
+3. Continuer l'enrichissement CPGE (Ch. 1, 2, 3) : Structures Algébriques, Polynômes, Séries de Fourier.
+4. Maternelle Grande Section : Quantités, Formes et Grandeurs, Repères Spatiaux.
 
 **👉 POUR LA MARCHE À SUIVRE (WORKFLOW) EXACTE, RÉFÉREZ-VOUS AU FICHIER `bible.md`.**

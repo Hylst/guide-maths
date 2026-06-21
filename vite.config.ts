@@ -8,7 +8,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, '.', '');
   return {
-    base: '/guide-maths/',
+    base: '/guide_maths/',
     plugins: [
       react(), 
       tailwindcss(),
@@ -23,6 +23,9 @@ export default defineConfig(({mode}) => {
       VitePWA({
         registerType: 'autoUpdate',
         includeAssets: ['favicon.svg', 'robots.txt', 'apple-touch-icon.png'],
+        workbox: {
+          maximumFileSizeToCacheInBytes: 3000000
+        },
         manifest: {
           name: 'Guide Mathématiques Interactif',
           short_name: 'Guide Maths',
@@ -30,8 +33,8 @@ export default defineConfig(({mode}) => {
           theme_color: '#4f46e5',
           background_color: '#f8fafc',
           display: 'standalone',
-          start_url: '/guide-maths/',
-          scope: '/guide-maths/',
+          start_url: '/guide_maths/',
+          scope: '/guide_maths/',
           icons: [
             {
               src: 'favicon.svg',

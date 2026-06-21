@@ -19,13 +19,12 @@ L'application est un **Applet React full-client (SPA)** s'exécutant dans une bo
 ## 🎯 État Actuel du Projet & Couverture
 
 L'ensemble du catalogue compte **142 cours unitaires** du CP au Post-Bac :
-- **Conversion V4 (Terminée)** : Tous les cours sont des fichiers `.tsx` à chargement dynamique via le registre général `src/courses/CourseRegistry.tsx`.
+- **Conversion V4 (Terminée)** : Tous les cours sont intégrés à l'application.
 - **Enrichissement Interactif V5 (En Cours)** :
-  - **Couverture Actuelle** : ~85.2% des cours sont 100% complets (121 cours sur 142 sont riches et riches en composants `SharedUI`).
-  - **Enrichissements Récents Élite** :
-    - *Collège 4ème - Ch. 1 (Théorème de Pythagore)* : Introduction d'une plaque de déformation géométrique interactive en SVG.
-    - *Collège 4ème - Ch. 2 (Équations du Premier Degré)* : Balance d'équilibrage à fléau interactive pour l'apprentissage haptique de l'algèbre.
-    - *Collège 4ème - Ch. 9 (Translations et Rotations)* : Simulateur d'isométries et de transformation analytique de points autour d'un pôle d'ancrage.
+  - **Couverture Actuelle** : ~85.2% des cours sont complets (riches en composants `SharedUI`).
+  - **Système de Compte Local & Paramètres** (`useLocalAccount.ts`, `Settings.tsx`) : Bloc-notes sécurisé par mot de passe en session, choix parmi 16 avatars personnalisés, sélection du thème, import/export de la progression au format JSON.
+  - **Carte Conceptuelle Interactive (Knowledge Graph)** (`ConceptGraph.tsx`, route `/graph`) : Visualisation des cours sous forme de nœuds sur une grille bidimensionnelle thématique/temporelle, avec illumination de la lignée d'une notion (parents/enfants) au survol.
+  - **Fil d'Ariane Pédagogique (Concept Pedigree)** : Système dynamique intégré dans `<CourseHeader />` exploitant un `CourseContext` et le registre centralisé `src/data/concept_links.ts` pour afficher et lier les cours prérequis ("Prend racine dans") et successeurs ("Fleurira dans").
 
 ---
 

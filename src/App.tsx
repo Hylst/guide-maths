@@ -17,11 +17,19 @@ import {
   Calculator,
   Sigma,
   PanelLeftOpen,
+  Sun,
+  Moon,
+  X,
+  Menu,
 } from "lucide-react";
 
 import CourseContent from "./components/CourseContent";
 import Sidebar from "./components/Sidebar";
+import Home from "./components/Home";
 import { normalizeString, getCourseKeywords } from "./utils/search";
+import Settings from "./components/Settings";
+import { useLocalAccount } from "./hooks/useLocalAccount";
+import ConceptGraph from "./components/ConceptGraph";
 
 export default function App() {
   const {
@@ -33,6 +41,7 @@ export default function App() {
   } = useCourses();
   const { progress, validateCourse, saveQuizScore, getProgress, stats } =
     useProgress();
+  const account = useLocalAccount();
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -121,7 +130,7 @@ export default function App() {
         setSelectedCourse(course);
         loadCourseContent(course.id);
       }
-    } else if (path === "/" || path === "/dashboard" || path === "/rewards") {
+    } else if (path === "/" || path === "" || path === "/dashboard" || path === "/rewards" || path === "/settings" || path === "/graph") {
       setSelectedCourse(null);
     }
   }, [location.pathname, courses]);
@@ -183,7 +192,9 @@ export default function App() {
   const isLoadingCurrentCourse = loadingCourseId === selectedCourse?.id;
   const isDashboard = location.pathname === "/dashboard";
   const isRewards = location.pathname === "/rewards";
-  const isGlossaireSelected = selectedCourse?.id === "/Cours_Math/05_Ressources/Glossaire.md" && !isDashboard && !isRewards;
+  const isSettings = location.pathname === "/settings";
+  const isGraph = location.pathname === "/graph";
+  const isGlossaireSelected = selectedCourse?.id === "/Cours_Math/05_Ressources/Glossaire.md" && !isDashboard && !isRewards && !isSettings && !isGraph;
 
   const subLevelOrder = [
     "PS",
@@ -300,6 +311,8 @@ export default function App() {
         selectedCourse={selectedCourse}
         isDashboard={isDashboard}
         isRewards={isRewards}
+        isSettings={isSettings}
+        isGraph={isGraph}
         isGlossaireSelected={isGlossaireSelected}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
@@ -308,6 +321,7 @@ export default function App() {
         groupedCourses={groupedCourses}
         getProgress={getProgress}
         stats={stats}
+        account={account}
         isMobileMenuOpen={isMobileMenuOpen}
         setIsMobileMenuOpen={setIsMobileMenuOpen}
         isSidebarCollapsed={isSidebarCollapsed}
@@ -322,17 +336,27 @@ export default function App() {
       />
 
       {/* Main Content */}
-      <div className={`flex-1 overflow-y-auto bg-background transition-all duration-300 relative ${isSidebarCollapsed ? "pt-24 px-4 md:px-12" : "pt-16 md:pt-6 px-4 md:px-8"}`}>
-        {/* Toggle Sidebar Button for Desktop when Collapsed */}
+      <div className={`flex-1 overflow-y-auto bg-background transition-all duration-300 relative ${isSidebarCollapsed ? "pt-24 px-4 md:px-12" : "pt-20 md:pt-8 px-4 md:px-8"}`}>
+        {/* Toggle Sidebar & Theme Button for Desktop when Collapsed */}
         {isSidebarCollapsed && (
-          <button
-            onClick={() => setIsSidebarCollapsed(false)}
-            className="hidden md:flex fixed top-5 left-5 z-40 p-3 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-xl text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-all active:scale-95 shadow-lg shadow-indigo-500/5 cursor-pointer animate-in fade-in slide-in-from-left-2 duration-300"
-            title="Afficher le menu"
-            aria-label="Afficher le menu"
-          >
-            <PanelLeftOpen className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-          </button>
+          <div className="hidden md:flex fixed top-5 left-5 z-40 gap-2">
+            <button
+              onClick={() => setIsSidebarCollapsed(false)}
+              className="p-3 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-xl text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-all active:scale-95 shadow-lg shadow-indigo-500/5 cursor-pointer animate-in fade-in slide-in-from-left-2 duration-300"
+              title="Afficher le menu"
+              aria-label="Afficher le menu"
+            >
+              <PanelLeftOpen className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+            </button>
+            <button
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className="p-3 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-xl text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-all active:scale-95 shadow-lg shadow-indigo-500/5 cursor-pointer animate-in fade-in slide-in-from-left-2 duration-300"
+              title="Basculer le thème"
+              aria-label="Basculer le thème"
+            >
+              {isDarkMode ? <Sun className="w-5 h-5 text-amber-500" /> : <Moon className="w-5 h-5 text-indigo-600" />}
+            </button>
+          </div>
         )}
 
         <AnimatePresence mode="wait">
@@ -345,7 +369,7 @@ export default function App() {
               transition={{ duration: 0.3 }}
               className="p-4 md:p-8"
             >
-              <Dashboard stats={stats} groupedCourses={groupedCourses} progress={progress} subLevelOrder={subLevelOrder} />
+              <Dashboard stats={stats} groupedCourses={groupedCourses} progress={progress} subLevelOrder={subLevelOrder} account={account} />
             </motion.div>
           ) : isRewards ? (
             <motion.div
@@ -357,6 +381,33 @@ export default function App() {
               className="p-4 md:p-8"
             >
               <Rewards stats={stats} />
+            </motion.div>
+          ) : isSettings ? (
+            <motion.div
+              key="settings"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="p-4 md:p-8"
+            >
+              <Settings account={account} isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+            </motion.div>
+          ) : isGraph ? (
+            <motion.div
+              key="graph"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="p-4 md:p-8"
+            >
+              <ConceptGraph
+                courses={courses}
+                progress={progress}
+                navigate={navigate}
+                handleCourseSelect={handleCourseSelect}
+              />
             </motion.div>
           ) : selectedCourse ? (
             <motion.div
@@ -380,23 +431,20 @@ export default function App() {
             </motion.div>
           ) : (
             <motion.div
-              key="empty-state"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
+              key="home"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.3 }}
-              className="flex flex-col items-center justify-center h-full text-muted-text-subtle p-8 text-center"
+              className="p-2 sm:p-4 md:p-8"
             >
-              <div className="w-24 h-24 bg-card rounded-3xl shadow-sm border border-border-strong flex items-center justify-center mb-6">
-                <BookOpen className="w-12 h-12 text-primary opacity-50" />
-              </div>
-              <h2 className="text-2xl font-bold text-foreground mb-2 tracking-tight">
-                Sélectionnez un cours
-              </h2>
-              <p className="text-muted-text max-w-md">
-                Choisissez un chapitre dans le menu de gauche pour commencer
-                votre apprentissage interactif des mathématiques.
-              </p>
+              <Home 
+                stats={stats} 
+                groupedCourses={groupedCourses} 
+                progress={progress} 
+                navigate={navigate} 
+                handleCourseSelect={handleCourseSelect}
+              />
             </motion.div>
           )}
         </AnimatePresence>

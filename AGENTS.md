@@ -46,3 +46,9 @@ Si tu crées ou modifies un code, le build échouera de lui-même. C'est normal.
 - `Cannot find name 'AM'` => Tu as oublié d'encadrer de guillemets `\frac{AM}{5}` => Devient `{"\\frac{AM}{5}"}`.
 - `Type '"error"' is not assignable to type...` => Remplacer par `"warning"`.
 - `Unexpected token` avec `{` => Encadre ton bloc mathématique avec `{" ... "}`.
+
+## 4. Liaisons de Cours & Fils d'Ariane Pédagogiques
+Les liens de parenté (prérequis) et de descendance (notions suivantes) ne sont **jamais** écrits en dur dans les pages de cours.
+- Tout nouveau cours ou modification de liens doit être déclaré centralement dans [concept_links.ts](file:///d:/0CODE/AntiGravity/guide-math%C3%A9matiques-interactif/src/data/concept_links.ts).
+- Les cours doivent être enveloppés dans un `CourseContext.Provider` (dans `CourseContent.tsx`) pour que le composant partagé `<CourseHeader>` résolve dynamiquement les métadonnées et affiche les raccourcis de navigation 🌱 et 🌸.
+- Ne pas modifier le composant `<CourseHeader>` individuellement dans les 142 fichiers de cours TSX. Toute modification globale de l'en-tête de cours doit être effectuée uniquement dans [SharedUI.tsx](file:///d:/0CODE/AntiGravity/guide-math%C3%A9matiques-interactif/src/components/SharedUI.tsx).

@@ -147,7 +147,9 @@ export function useCourses() {
     setLoadingCourseId(courseId);
     try {
       // Fetch the markdown file directly since it's served as a static asset...
-      const cachedCourseId = `${courseId}?t=${new Date().getTime()}`; // Avoid caching issues during dev
+      const basePath = import.meta.env.BASE_URL || '/';
+      const cleanCourseId = courseId.startsWith('/') ? courseId.slice(1) : courseId;
+      const cachedCourseId = `${basePath}${basePath.endsWith('/') ? '' : '/'}${cleanCourseId}?t=${new Date().getTime()}`;
       const response = await fetch(cachedCourseId);
       
       if (!response.ok) {

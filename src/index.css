@@ -209,6 +209,29 @@ details[open] > summary::before {
   transform: rotateY(180deg);
 }
 
+/* Responsive enhancements for math formulas & markdown tables */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  padding: 8px 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.katex {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* Ensure markdown tables scroll on mobile instead of overflowing the page width */
+.prose table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 /* Removed hardcoded color CSS overrides as they are fixed in components natively */
 
 

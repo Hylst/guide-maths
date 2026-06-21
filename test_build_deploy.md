@@ -1,12 +1,12 @@
 # 🚀 Guide de Test, de Compilation et de Déploiement (test_build_deploy.md)
 
-Ce guide explique étape par étape comment tester l'application localement sur Windows, la compiler pour la production, et la déployer sur votre nom de domaine `hylst.fr` sous le sous-dossier `/guide-maths/` (URL finale : `https://hylst.fr/guide-maths/`).
+Ce guide explique étape par étape comment tester l'application localement sur Windows, la compiler pour la production, et la déployer sur votre nom de domaine `hylst.fr` sous le sous-dossier `/guide_maths/` (URL finale : `https://hylst.fr/guide_maths/`).
 
 ---
 
 ## 💻 1. Test en Local (Windows)
 
-Puisque le projet est configuré avec un chemin de base `/guide-maths/`, l'application en développement sera servie sous ce sous-dossier.
+Puisque le projet est configuré avec un chemin de base `/guide_maths/`, l'application en développement sera servie sous ce sous-dossier.
 
 ### Étapes préliminaires :
 1. Ouvrez votre terminal (PowerShell ou Invite de commandes) dans le dossier du projet : `d:\0CODE\AntiGravity\guide-mathématiques-interactif`.
@@ -22,9 +22,9 @@ Puisque le projet est configuré avec un chemin de base `/guide-maths/`, l'appli
    ```
 4. Ouvrez votre navigateur et accédez à l'URL affichée, typiquement :
    ```
-   http://localhost:3000/guide-maths/
+   http://localhost:5173/guide_maths/
    ```
-   *Note : Si vous essayez d'accéder à `http://localhost:3000/` sans le sous-dossier, vous obtiendrez une page vide ou une erreur 404, ce qui est normal.*
+   *Note : Si vous essayez d'accéder à `http://localhost:5173/` sans le sous-dossier, vous obtiendrez une page vide ou une erreur 404, ce qui est normal.*
 
 ---
 
@@ -46,22 +46,27 @@ Avant de déployer, vous devez compiler l'application pour générer des fichier
 
 Sur un hébergement mutualisé, vous déposez simplement vos fichiers statiques via FTP.
 
-### Configuration du Routage Single Page App (SPA) :
-Étant donné que l'application gère son routage côté client (React Router), si un utilisateur rafraîchit la page sur `https://hylst.fr/guide-maths/cours/02_College/3eme/01_Theoreme_Thales`, le serveur de l'hébergeur cherchera un dossier physique à cet emplacement et renverra une erreur **404**. Il faut donc rediriger toutes les requêtes vers le fichier `index.html`.
+### Configuration du Routage Single Page App (SPA) et Gestion du Slash de fin :
+Étant donné que l'application gère son routage côté client (React Router), si un utilisateur rafraîchit la page sur un sous-dossier ou accède directement à l'URL sans slash final (`https://hylst.fr/guide_maths`), il faut s'assurer que le serveur redirige correctement et serve `index.html`.
 
 ### Procédure de déploiement :
 1. Connectez-vous à votre client FTP (FileZilla par exemple) ou au gestionnaire de fichiers cPanel.
-2. Créez un dossier nommé `guide-maths` à la racine publique de votre site (généralement dans le dossier `public_html/` ou `www/`).
-3. Téléversez l'intégralité du contenu du dossier local `dist/` dans ce dossier distant `guide-maths/`.
-4. Créez un fichier nommé **`.htaccess`** directement à l'intérieur du dossier distant `guide-maths/` et collez-y le code suivant :
+2. Créez un dossier nommé `guide_maths` à la racine publique de votre site (généralement dans le dossier `public_html/` ou `www/`).
+3. Téléversez l'intégralité du contenu du dossier local `dist/` dans ce dossier distant `guide_maths/`.
+4. Créez un fichier nommé **`.htaccess`** directement à l'intérieur du dossier distant `guide_maths/` et collez-y le code suivant :
    ```apache
    <IfModule mod_rewrite.c>
      RewriteEngine On
-     RewriteBase /guide-maths/
+     RewriteBase /guide_maths/
+     
+     # Rediriger /guide_maths sans slash vers /guide_maths/ avec slash
+     RewriteCond %{REQUEST_URI} ^/guide_maths$
+     RewriteRule ^(.*)$ /guide_maths/ [R=301,L]
+     
      RewriteRule ^index\.html$ - [L]
      RewriteCond %{REQUEST_FILENAME} !-f
      RewriteCond %{REQUEST_FILENAME} !-d
-     RewriteRule . /guide-maths/index.html [L]
+     RewriteRule . /guide_maths/index.html [L]
    </IfModule>
    ```
 
@@ -81,21 +86,28 @@ Dans les paramètres de l'application sur Coolify, configurez comme suit :
 * **Build Command** : `npm run build`
 * **Output Directory** : `dist`
 * **Base Directory** : `/`
-* **Domains** : Entrez `https://hylst.fr/guide-maths/` (Coolify gérera automatiquement le certificat SSL Let's Encrypt et le reverse proxy).
+* **Domains** : Entrez `https://hylst.fr/guide_maths/` (Coolify gérera automatiquement le certificat SSL Let's Encrypt et le reverse proxy).
 
 ### Étape 3 : Configuration du Routage Nginx (SPA) dans Coolify
-Pour éviter les erreurs 404 lors du rafraîchissement des pages, configurez Nginx pour rediriger vers `index.html`.
-Dans l'onglet **Configuration** de votre application Coolify, recherchez la section **Custom Nginx Configuration** (Configuration Nginx personnalisée) et assurez-vous d'avoir la règle `try_files` suivante :
+Pour s'assurer que l'application soit accessible aussi bien avec que sans le slash de fin (`https://hylst.fr/guide_maths` et `https://hylst.fr/guide_maths/`), et pour éviter les erreurs 404 lors du rafraîchissement des pages, configurez Nginx.
+
+Dans l'onglet **Configuration** de votre application Coolify, recherchez la section **Custom Nginx Configuration** (Configuration Nginx personnalisée) et utilisez la configuration suivante :
 
 ```nginx
 server {
     listen 80;
     server_name localhost;
 
-    location /guide-maths/ {
+    # Rediriger l'URL sans slash final vers la version canonique avec slash
+    location = /guide_maths {
+        return 301 $scheme://$http_host/guide_maths/;
+    }
+
+    # Servir l'application sur le chemin avec slash
+    location /guide_maths/ {
         alias /usr/share/nginx/html/;
         index index.html;
-        try_files $uri $uri/ /guide-maths/index.html;
+        try_files $uri $uri/ /guide_maths/index.html;
     }
 
     # Fallback par défaut si nécessaire
@@ -106,4 +118,4 @@ server {
     }
 }
 ```
-*Note : Selon la façon dont Coolify monte le dossier statique, la configuration par défaut avec `try_files $uri $uri/ /index.html;` dans le bloc `location /` suffit généralement si le domaine pointe directement sur le conteneur.*
+Cette configuration Nginx assure une redirection propre en code HTTP 301, ce qui permet à l'application React et au routeur de s'initialiser correctement avec le bon contexte d'URL.

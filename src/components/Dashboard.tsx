@@ -16,10 +16,14 @@ import {
   Brain,
   Calendar,
   Check,
-  Percent
+  Percent,
+  Lock,
+  Unlock,
+  Save
 } from 'lucide-react';
 import { Course } from '../types';
 import { CourseProgress } from '../hooks/useProgress';
+import { useLocalAccount } from '../hooks/useLocalAccount';
 
 interface DashboardProps {
   stats: {
@@ -40,6 +44,7 @@ interface DashboardProps {
   groupedCourses: Record<string, Record<string, Course[]>>;
   progress: Record<string, CourseProgress>;
   subLevelOrder: string[];
+  account: ReturnType<typeof useLocalAccount>;
 }
 
 const subLevelLabels: Record<string, string> = {
@@ -90,7 +95,7 @@ const subLevelLabels: Record<string, string> = {
   Communes: "Ressources communes",
 };
 
-export default function Dashboard({ stats, groupedCourses, progress, subLevelOrder }: DashboardProps) {
+export default function Dashboard({ stats, groupedCourses, progress, subLevelOrder, account }: DashboardProps) {
   const { 
     xp, 
     level, 
@@ -106,7 +111,29 @@ export default function Dashboard({ stats, groupedCourses, progress, subLevelOrd
     xpHistory
   } = stats;
 
+  const { profile, getActiveAvatar, notes, saveNotes, isNotepadUnlocked, unlockNotepad } = account;
+
   const [hoveredPoint, setHoveredPoint] = useState<number | null>(null);
+
+  const [dashboardNotes, setDashboardNotes] = useState(notes);
+  const [dashboardNotesSaved, setDashboardNotesSaved] = useState(true);
+  const [dashPasswordInput, setDashPasswordInput] = useState("");
+  const [dashPasswordError, setDashPasswordError] = useState(false);
+
+  React.useEffect(() => {
+    setDashboardNotes(notes);
+    setDashboardNotesSaved(true);
+  }, [notes]);
+
+  const handleNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDashboardNotes(e.target.value);
+    setDashboardNotesSaved(false);
+  };
+
+  const handleSaveNotes = () => {
+    saveNotes(dashboardNotes);
+    setDashboardNotesSaved(true);
+  };
 
   const progressToNextLevel = ((xp - xpForCurrentLevel) / (Math.max(xpForNextLevel - xpForCurrentLevel, 15))) * 100;
 
@@ -161,15 +188,30 @@ export default function Dashboard({ stats, groupedCourses, progress, subLevelOrd
         className="relative bg-card p-6 rounded-3xl border border-border-strong overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm"
       >
         <div className="absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-primary/5 via-primary/0 to-transparent pointer-events-none" />
-        <div className="space-y-2 text-center md:text-left">
-          <h1 className="text-3xl font-extrabold text-foreground tracking-tight flex items-center justify-center md:justify-start gap-2">
-            Ton Espace d'Apprentissage <Sparkles className="w-6 h-6 text-primary animate-pulse" />
-          </h1>
-          <p className="text-muted-text text-base max-w-xl font-medium">
-            {getMotivationalMessage()}
-          </p>
+        <div className="flex flex-col md:flex-row items-center gap-5 text-center md:text-left w-full md:w-auto">
+          {profile.pseudo && (
+            <div
+              className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl shadow-md border-2 border-white dark:border-slate-800 shrink-0 select-none"
+              style={{ background: getActiveAvatar().bgGradient }}
+            >
+              {getActiveAvatar().emoji}
+            </div>
+          )}
+          <div className="space-y-2">
+            <h1 className="text-3xl font-extrabold text-foreground tracking-tight flex items-center justify-center md:justify-start gap-2">
+              {profile.pseudo ? `Bonjour, ${profile.pseudo} !` : "Ton Espace d'Apprentissage"} <Sparkles className="w-6 h-6 text-primary animate-pulse" />
+            </h1>
+            <p className="text-muted-text text-sm md:text-base font-medium">
+              {profile.studyLevel && (
+                <span className="text-indigo-600 dark:text-indigo-400 font-bold mr-1.5">
+                  [{profile.studyLevel === "Post_Bac" ? "Supérieur" : profile.studyLevel === "Lycee" ? "Lycée" : profile.studyLevel === "College" ? "Collège" : profile.studyLevel}]
+                </span>
+              )}
+              {getMotivationalMessage()}
+            </p>
+          </div>
         </div>
-        <div className="flex items-center gap-4 bg-primary-light dark:bg-muted p-4 rounded-2xl border border-primary/10">
+        <div className="flex items-center gap-4 bg-primary-light dark:bg-muted p-4 rounded-2xl border border-primary/10 shrink-0">
           <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
             <Trophy className="w-6 h-6 text-primary" />
           </div>
@@ -180,8 +222,8 @@ export default function Dashboard({ stats, groupedCourses, progress, subLevelOrd
         </div>
       </motion.div>
 
-      {/* Hero row: Level, Streak & Weekly Calendar */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Hero row: Level, Streak, Weekly Calendar & Notepad */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Level Status Card with Circular progress */}
         <motion.div
@@ -308,6 +350,87 @@ export default function Dashboard({ stats, groupedCourses, progress, subLevelOrd
               })}
             </div>
           </div>
+        </motion.div>
+
+        {/* Notepad Dashboard Card */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.985 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2 }}
+          className="bg-card p-6 rounded-[2rem] shadow-sm border border-border-strong relative flex flex-col justify-between overflow-hidden gap-4"
+        >
+          <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-500" />
+          
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-extrabold text-foreground flex items-center gap-2">
+              <BookOpen className="w-5 h-5 text-indigo-500" />
+              Bloc-notes Rapide
+            </h3>
+            {isNotepadUnlocked && !dashboardNotesSaved && (
+              <span className="text-[10px] font-bold text-amber-500 animate-pulse">Non sauvé</span>
+            )}
+            {isNotepadUnlocked && dashboardNotesSaved && (
+              <span className="text-[10px] font-bold text-emerald-500">Enregistré ✓</span>
+            )}
+          </div>
+
+          {!isNotepadUnlocked ? (
+            <div className="flex-1 flex flex-col items-center justify-center py-4 space-y-3">
+              <Lock className="w-8 h-8 text-rose-500 animate-bounce" />
+              <p className="text-xs text-muted-text text-center font-semibold">Le bloc-notes est verrouillé.</p>
+              <form 
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const ok = unlockNotepad(dashPasswordInput);
+                  if (ok) {
+                    setDashPasswordInput("");
+                    setDashPasswordError(false);
+                  } else {
+                    setDashPasswordError(true);
+                    setTimeout(() => setDashPasswordError(false), 2000);
+                  }
+                }}
+                className="w-full flex gap-1.5"
+              >
+                <input
+                  type="password"
+                  placeholder="Saisir..."
+                  value={dashPasswordInput}
+                  onChange={(e) => setDashPasswordInput(e.target.value)}
+                  className={`flex-1 px-3 py-1.5 bg-muted text-foreground border text-xs rounded-xl outline-none transition-all ${
+                    dashPasswordError ? "border-rose-500 ring-1 ring-rose-200" : "border-transparent focus:bg-card focus:border-primary focus:ring-1 focus:ring-primary"
+                  }`}
+                />
+                <button
+                  type="submit"
+                  className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs transition-all cursor-pointer"
+                >
+                  Déverr.
+                </button>
+              </form>
+            </div>
+          ) : (
+            <div className="flex-1 flex flex-col gap-2">
+              <textarea
+                value={dashboardNotes}
+                onChange={handleNotesChange}
+                placeholder="Prenez des notes rapides ou écrivez des formules ici..."
+                className="w-full h-24 p-3 bg-muted text-foreground rounded-2xl text-xs outline-none resize-none font-medium transition-all focus:bg-card focus:ring-2 focus:ring-primary-light"
+              />
+              <button
+                onClick={handleSaveNotes}
+                disabled={dashboardNotesSaved}
+                className={`w-full py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                  dashboardNotesSaved 
+                    ? "bg-muted text-muted-text cursor-default" 
+                    : "bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm"
+                }`}
+              >
+                <Save className="w-3.5 h-3.5" />
+                Enregistrer les notes
+              </button>
+            </div>
+          )}
         </motion.div>
 
       </div>

@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="800" height="200">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0e1a;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1"/>
+    </linearGradient>
+
+    <!-- Sigma gold gradient -->
+    <linearGradient id="sigmaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fcd34d;stop-opacity:1"/>
+      <stop offset="50%" style="stop-color:#f59e0b;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1"/>
+    </linearGradient>
+
+    <!-- Title gradient (white to light blue) -->
+    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1"/>
+      <stop offset="60%" style="stop-color:#e0e7ff;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#93c5fd;stop-opacity:1"/>
+    </linearGradient>
+
+    <!-- Shimmer gradient for animation -->
+    <linearGradient id="shimmer" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0"/>
+      <stop offset="40%" style="stop-color:#ffffff;stop-opacity:0.15"/>
+      <stop offset="60%" style="stop-color:#ffffff;stop-opacity:0.4"/>
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0"/>
+      <animateTransform attributeName="gradientTransform" type="translate"
+        from="-1 0" to="2 0" dur="3s" repeatCount="indefinite"/>
+    </linearGradient>
+
+    <!-- Glow filter for sigma -->
+    <filter id="sigmaGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur1"/>
+      <feGaussianBlur stdDeviation="8" result="blur2" in="SourceGraphic"/>
+      <feMerge>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Subtle drop shadow for text -->
+    <filter id="textShadow" x="-5%" y="-5%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#6366f1" flood-opacity="0.5"/>
+    </filter>
+
+    <!-- Clip path for shimmer -->
+    <clipPath id="titleClip">
+      <rect x="180" y="30" width="580" height="100"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="200" rx="16" fill="url(#bgGrad)"/>
+
+  <!-- Decorative border -->
+  <rect width="800" height="200" rx="16" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-opacity="0.25"/>
+
+  <!-- Subtle math symbols in background -->
+  <text x="680" y="60"  font-family="serif" font-size="40" fill="#4f46e5" opacity="0.08">∫</text>
+  <text x="720" y="140" font-family="serif" font-size="30" fill="#4f46e5" opacity="0.07">π</text>
+  <text x="740" y="90"  font-family="serif" font-size="28" fill="#4f46e5" opacity="0.06">∞</text>
+  <text x="30"  y="170" font-family="serif" font-size="35" fill="#f59e0b" opacity="0.05">∇</text>
+  <text x="660" y="180" font-family="serif" font-size="22" fill="#4f46e5" opacity="0.06">Σ</text>
+  <text x="50"  y="55"  font-family="serif" font-size="20" fill="#f59e0b" opacity="0.05">∂</text>
+
+  <!-- Decorative horizontal line -->
+  <line x1="170" y1="100" x2="780" y2="100" stroke="#4f46e5" stroke-width="0.5" stroke-opacity="0.2"/>
+
+  <!-- ═══ SIGMA ICON ═══ -->
+  <!-- Glow halo -->
+  <g transform="translate(30, 20) scale(1.4)">
+    <path d="M15 8 H65 V20 L42 40 L65 60 V72 H15 V60 H45 L28 40 L45 20 H15 Z"
+          fill="#f59e0b" opacity="0.12" filter="url(#sigmaGlow)"/>
+  </g>
+
+  <!-- Background circle for sigma -->
+  <circle cx="100" cy="100" r="72" fill="#0f172a" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.3">
+    <animate attributeName="r" values="72;74;72" dur="4s" repeatCount="indefinite" calcMode="ease"/>
+  </circle>
+  <circle cx="100" cy="100" r="78" fill="none" stroke="#f59e0b" stroke-width="0.5" stroke-opacity="0.1">
+    <animate attributeName="r" values="78;76;78" dur="4s" repeatCount="indefinite" calcMode="ease"/>
+  </circle>
+
+  <!-- Sigma symbol -->
+  <g transform="translate(100, 100)">
+    <!-- Animated glow pulse -->
+    <path d="M-40 -42 H40 V-28 L12 0 L40 28 V42 H-40 V28 H24 L0 0 L24 -28 H-40 Z"
+          fill="#f59e0b" opacity="0.1" filter="url(#sigmaGlow)">
+      <animate attributeName="opacity" values="0.1;0.2;0.1" dur="2.5s" repeatCount="indefinite"/>
+    </path>
+    <!-- Main sigma -->
+    <path d="M-40 -42 H40 V-28 L12 0 L40 28 V42 H-40 V28 H24 L0 0 L24 -28 H-40 Z"
+          fill="url(#sigmaGrad)" filter="url(#sigmaGlow)">
+      <animate attributeName="opacity" values="1;0.85;1" dur="3s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <!-- ═══ TITLE TEXT ═══ -->
+  <!-- "Guide" -->
+  <text x="185" y="80" font-family="'Segoe UI', 'Arial', sans-serif" font-size="28"
+        font-weight="300" fill="#93c5fd" letter-spacing="6" opacity="0">
+    GUIDE
+    <animate attributeName="opacity" values="0;1" dur="0.6s" begin="0.3s" fill="freeze"/>
+    <animateTransform attributeName="transform" type="translate"
+      from="0 -10" to="0 0" dur="0.6s" begin="0.3s" fill="freeze" additive="sum"/>
+  </text>
+
+  <!-- "Mathématiques" -->
+  <text x="185" y="132" font-family="'Segoe UI', 'Arial', sans-serif" font-size="52"
+        font-weight="700" fill="url(#titleGrad)" filter="url(#textShadow)" opacity="0">
+    Mathématiques
+    <animate attributeName="opacity" values="0;1" dur="0.8s" begin="0.6s" fill="freeze"/>
+    <animateTransform attributeName="transform" type="translate"
+      from="0 15" to="0 0" dur="0.8s" begin="0.6s" fill="freeze" additive="sum"/>
+  </text>
+
+  <!-- Shimmer overlay on title -->
+  <rect x="185" y="90" width="560" height="60" fill="url(#shimmer)" clip-path="url(#titleClip)" rx="4"/>
+
+  <!-- "Interactif & Progressif" subtitle -->
+  <text x="185" y="165" font-family="'Segoe UI', 'Arial', sans-serif" font-size="16"
+        font-weight="400" fill="#6366f1" letter-spacing="3" opacity="0">
+    INTERACTIF &amp; PROGRESSIF
+    <animate attributeName="opacity" values="0;0.8" dur="0.6s" begin="1.1s" fill="freeze"/>
+    <animateTransform attributeName="transform" type="translate"
+      from="0 8" to="0 0" dur="0.6s" begin="1.1s" fill="freeze" additive="sum"/>
+  </text>
+
+  <!-- "Hylst" branding (bottom right) -->
+  <text x="750" y="188" font-family="'Segoe UI', 'Arial', sans-serif" font-size="13"
+        font-weight="600" fill="#f59e0b" text-anchor="end" opacity="0">
+    by Hylst
+    <animate attributeName="opacity" values="0;0.6" dur="0.5s" begin="1.4s" fill="freeze"/>
+  </text>
+
+  <!-- Decorative bottom accent line -->
+  <line x1="185" y1="172" x2="0" y2="172" stroke="#6366f1" stroke-width="1.5" stroke-opacity="0" x2="185">
+    <animate attributeName="x2" values="185;680" dur="0.8s" begin="0.8s" fill="freeze" calcMode="ease"/>
+    <animate attributeName="stroke-opacity" values="0;0.4" dur="0.3s" begin="0.8s" fill="freeze"/>
+  </line>
+</svg>

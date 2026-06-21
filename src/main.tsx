@@ -6,7 +6,7 @@ import './index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter basename="/guide-maths">
+    <BrowserRouter basename="/guide_maths">
       <App />
     </BrowserRouter>
   </StrictMode>,

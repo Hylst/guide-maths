@@ -19,10 +19,14 @@ import {
   Info, 
   PanelLeftClose, 
   Trophy, 
-  Activity 
+  Activity,
+  Network,
+  Settings 
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import AnimatedLogoTitle from "./AnimatedLogoTitle";
 import { Course } from "../types";
+import { useLocalAccount } from "../hooks/useLocalAccount";
 
 const POST_BAC_CATEGORY_CONFIG = [
   {
@@ -133,6 +137,8 @@ interface SidebarProps {
   selectedCourse: Course | null;
   isDashboard: boolean;
   isRewards: boolean;
+  isSettings: boolean;
+  isGraph: boolean;
   isGlossaireSelected: boolean;
   searchQuery: string;
   setSearchQuery: (val: string) => void;
@@ -141,6 +147,7 @@ interface SidebarProps {
   groupedCourses: Record<string, Record<string, Course[]>>;
   getProgress: (id: string) => any;
   stats: any;
+  account: ReturnType<typeof useLocalAccount>;
   isMobileMenuOpen: boolean;
   setIsMobileMenuOpen: (val: boolean) => void;
   isSidebarCollapsed: boolean;
@@ -158,6 +165,8 @@ export default function Sidebar({
   selectedCourse,
   isDashboard,
   isRewards,
+  isSettings,
+  isGraph,
   isGlossaireSelected,
   searchQuery,
   setSearchQuery,
@@ -166,6 +175,7 @@ export default function Sidebar({
   groupedCourses,
   getProgress,
   stats,
+  account,
   isMobileMenuOpen,
   setIsMobileMenuOpen,
   isSidebarCollapsed,
@@ -223,23 +233,11 @@ export default function Sidebar({
       <div className="w-80 flex flex-col h-full shrink-0">
         <div className="p-6 border-b border-sidebar-border flex items-center justify-between cursor-pointer">
           <div
-            className="flex items-center space-x-3"
+            className="flex items-center cursor-pointer select-none"
             onClick={() => navigate("/")}
+            title="Accueil - Guide Mathématiques"
           >
-            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-md">
-              <Sigma
-                className="w-6 h-6 text-primary-foreground"
-                aria-hidden="true"
-              />
-            </div>
-            <div className="flex-1 min-w-0">
-              <h1 className="text-lg xl:text-xl font-bold text-foreground tracking-tight truncate">
-                Guide Mathématiques
-              </h1>
-              <p className="text-[10px] xl:text-xs text-primary font-semibold uppercase tracking-wider mt-0.5 truncate">
-                Standardisé & Interactif
-              </p>
-            </div>
+            <AnimatedLogoTitle size="sm" showSubtitle={false} />
           </div>
           <div className="flex items-center gap-1.5 shrink-0" onClick={(e) => e.stopPropagation()}>
             <button
@@ -298,6 +296,28 @@ export default function Sidebar({
           </button>
         </div>
 
+        {/* Concept Graph Button */}
+        <div className="px-4 pt-2 bg-sidebar select-none">
+          <button
+            onClick={() => navigate("/graph")}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all ${
+              isGraph
+                ? "bg-primary text-white shadow-md"
+                : "bg-muted/50 text-foreground hover:bg-muted"
+            }`}
+          >
+            <Network className="w-5 h-5" />
+            Carte Conceptuelle
+            <div
+              className={`ml-auto px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider ${
+                isGraph ? "bg-white/20 text-white" : "bg-primary/10 text-primary"
+              }`}
+            >
+              Réseau
+            </div>
+          </button>
+        </div>
+
         {/* Glossaire Button */}
         <div className="px-4 pt-2 bg-sidebar select-none">
           <button
@@ -339,6 +359,39 @@ export default function Sidebar({
             >
               🏅 {stats.badges.length} / 10
             </div>
+          </button>
+        </div>
+
+        {/* Settings Button */}
+        <div className="px-4 pt-2 bg-sidebar select-none">
+          <button
+            onClick={() => navigate("/settings")}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all ${
+              isSettings
+                ? "bg-indigo-600 text-white shadow-md shadow-indigo-500/10"
+                : "bg-muted/50 text-foreground hover:bg-muted"
+            }`}
+          >
+            <Settings className={`w-5 h-5 ${isSettings ? "text-white" : "text-indigo-500"}`} />
+            Paramètres & Profil
+            {account.profile.pseudo ? (
+              <div
+                className={`ml-auto px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider truncate max-w-[100px] flex items-center gap-1 ${
+                  isSettings ? "bg-white/20 text-white" : "bg-indigo-100 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400"
+                }`}
+              >
+                <span>{account.getActiveAvatar().emoji}</span>
+                <span className="truncate">{account.profile.pseudo}</span>
+              </div>
+            ) : (
+              <div
+                className={`ml-auto px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider ${
+                  isSettings ? "bg-white/20 text-white" : "bg-indigo-100 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400"
+                }`}
+              >
+                Config.
+              </div>
+            )}
           </button>
         </div>
 
