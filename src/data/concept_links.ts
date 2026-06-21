@@ -220,6 +220,16 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Éléments Finis Ingé",
     dependencies: ["/Cours_Math/04_Post_Bac/02_Algebre_Lineaire.md", "/Cours_Math/04_Post_Bac/22_Ingenieur_Transformee_de_Laplace.md"]
   },
+  "/Cours_Math/04_Post_Bac/Sup_Universite/Course_Licence_Maths_Groupes.md": {
+    domain: "algebra",
+    shortTitle: "Groupes (Licence)",
+    dependencies: ["/Cours_Math/04_Post_Bac/Algebre_L1_L2/02_Structures_Algebriques.md"]
+  },
+  "/Cours_Math/04_Post_Bac/Sup_Universite/Course_Licence_Maths_AlgebreBilinea.md": {
+    domain: "algebra",
+    shortTitle: "Algèbre Bilinéaire",
+    dependencies: ["/Cours_Math/04_Post_Bac/05_Espaces_Euclidiens.md"]
+  },
 
   // --- ANALYSE & FONCTIONS ---
   "/Cours_Math/02_College/3eme/03_Notion_de_Fonction.md": {
@@ -397,6 +407,31 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Laplace & Asservis GEII",
     dependencies: ["/Cours_Math/04_Post_Bac/22_Ingenieur_Transformee_de_Laplace.md"]
   },
+  "/Cours_Math/04_Post_Bac/Sup_Universite/Course_Licence_Maths_TopologieMetric.md": {
+    domain: "analysis",
+    shortTitle: "Topologie Métrique",
+    dependencies: ["/Cours_Math/04_Post_Bac/08_Topologie.md"]
+  },
+  "/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Bio_LotkaVolterra.md": {
+    domain: "analysis",
+    shortTitle: "Lotka-Volterra",
+    dependencies: ["/Cours_Math/04_Post_Bac/04_Equations_Differentielles.md"]
+  },
+  "/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Bio_MichaelisMenten.md": {
+    domain: "analysis",
+    shortTitle: "Michaelis-Menten",
+    dependencies: ["/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Bio_LotkaVolterra.md"]
+  },
+  "/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Eco_Solow.md": {
+    domain: "analysis",
+    shortTitle: "Modèle de Solow",
+    dependencies: ["/Cours_Math/04_Post_Bac/21_CPGE_ECG_Optimisation_Sous_Contrainte.md"]
+  },
+  "/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Eco_Optimisation.md": {
+    domain: "analysis",
+    shortTitle: "Optimisation Éco",
+    dependencies: ["/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Eco_Solow.md"]
+  },
 
   // --- PROBABILITÉS & STATISTIQUES ---
   "/Cours_Math/02_College/4eme/08_Statistiques.md": {
@@ -524,6 +559,36 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Files d'Attente BUT",
     dependencies: ["/Cours_Math/04_Post_Bac/07_Probabilites_Discretes.md"]
   },
+  "/Cours_Math/04_Post_Bac/Sup_Universite/Course_Licence_MIASHS_Regression.md": {
+    domain: "probability",
+    shortTitle: "Régression MIASHS",
+    dependencies: ["/Cours_Math/04_Post_Bac/24_BUT_SD_Regression_Lineaire_Simple.md"]
+  },
+  "/Cours_Math/04_Post_Bac/Sup_Universite/Course_Licence_MIASHS_MarkovChain.md": {
+    domain: "probability",
+    shortTitle: "Chaînes Markov MIASHS",
+    dependencies: ["/Cours_Math/04_Post_Bac/10_Calcul_Stochastique.md"]
+  },
+  "/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Bio_Epidemio.md": {
+    domain: "probability",
+    shortTitle: "SIR Épidémiologie",
+    dependencies: ["/Cours_Math/04_Post_Bac/17_Probabilites_Continues.md"]
+  },
+  "/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Finance_BlackScholes.md": {
+    domain: "probability",
+    shortTitle: "Black-Scholes",
+    dependencies: ["/Cours_Math/04_Post_Bac/10_Calcul_Stochastique.md"]
+  },
+  "/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Finance_Markowitz.md": {
+    domain: "probability",
+    shortTitle: "Markowitz",
+    dependencies: ["/Cours_Math/04_Post_Bac/18_Probabilites_Vecteurs_Aleatoires.md"]
+  },
+  "/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Finance_CoxRoss.md": {
+    domain: "probability",
+    shortTitle: "Cox-Ross-Rubinstein",
+    dependencies: ["/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Finance_BlackScholes.md"]
+  },
 
   // --- ALGORITHMIQUE & LOGIQUE ---
   "/Cours_Math/02_College/4eme/05_Algorithmique_Scratch.md": {
@@ -575,6 +640,16 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     domain: "algorithms",
     shortTitle: "Théorie Décision BUT",
     dependencies: ["/Cours_Math/04_Post_Bac/BUT_Tertiaire/01_Ordonnancement_PERT.md"]
+  },
+  "/Cours_Math/04_Post_Bac/Sup_Universite/Course_Licence_MIASHS_Jeux.md": {
+    domain: "algorithms",
+    shortTitle: "Théorie Jeux MIASHS",
+    dependencies: ["/Cours_Math/04_Post_Bac/21_CPGE_ECG_Optimisation_Sous_Contrainte.md"]
+  },
+  "/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Eco_GameTheory.md": {
+    domain: "algorithms",
+    shortTitle: "Duopoles & Jeux Éco",
+    dependencies: ["/Cours_Math/04_Post_Bac/Sup_Universite/Course_Licence_MIASHS_Jeux.md"]
   }
 };
 
