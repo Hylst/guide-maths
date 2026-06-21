@@ -165,6 +165,11 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Structures Algébriques",
     dependencies: ["/Cours_Math/04_Post_Bac/02_Algebre_Lineaire.md"]
   },
+  "/Cours_Math/04_Post_Bac/05_Espaces_Euclidiens.md": {
+    domain: "algebra",
+    shortTitle: "Espaces Euclidiens",
+    dependencies: ["/Cours_Math/04_Post_Bac/02_Algebre_Lineaire.md"]
+  },
 
   // --- ANALYSE & FONCTIONS ---
   "/Cours_Math/02_College/3eme/03_Notion_de_Fonction.md": {
@@ -252,6 +257,26 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Équations Diff L2",
     dependencies: ["/Cours_Math/03_Lycee/Terminale/08_Equations_Differentielles.md", "/Cours_Math/04_Post_Bac/09_Calcul_Differentiel_Optimisation.md"]
   },
+  "/Cours_Math/04_Post_Bac/14_Analyse_L1_Limites_Continuite.md": {
+    domain: "analysis",
+    shortTitle: "Limites & Continuité (L1)",
+    dependencies: ["/Cours_Math/03_Lycee/Terminale/01_Limites_et_Continuite.md"]
+  },
+  "/Cours_Math/04_Post_Bac/15_Analyse_L1_Derivabilite_DL.md": {
+    domain: "analysis",
+    shortTitle: "Dérivabilité & DL",
+    dependencies: ["/Cours_Math/04_Post_Bac/14_Analyse_L1_Limites_Continuite.md"]
+  },
+  "/Cours_Math/04_Post_Bac/25_Analyse_L1_Suites_Numeriques_Reelles.md": {
+    domain: "analysis",
+    shortTitle: "Suites Réelles (L1)",
+    dependencies: ["/Cours_Math/03_Lycee/Terminale/05_Suites_et_Recurrence.md"]
+  },
+  "/Cours_Math/04_Post_Bac/16_Analyse_L2_Fonctions_Plusieurs_Variables.md": {
+    domain: "analysis",
+    shortTitle: "Fonctions Pl. Var.",
+    dependencies: ["/Cours_Math/04_Post_Bac/15_Analyse_L1_Derivabilite_DL.md", "/Cours_Math/04_Post_Bac/09_Calcul_Differentiel_Optimisation.md"]
+  },
 
   // --- PROBABILITÉS & STATISTIQUES ---
   "/Cours_Math/02_College/4eme/08_Statistiques.md": {
@@ -308,6 +333,26 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     domain: "probability",
     shortTitle: "Plans d'Expériences",
     dependencies: ["/Cours_Math/04_Post_Bac/BUT_Industriel/01_MSP.md"]
+  },
+  "/Cours_Math/04_Post_Bac/07_Probabilites_Discretes.md": {
+    domain: "probability",
+    shortTitle: "Probabilités Discrètes",
+    dependencies: ["/Cours_Math/03_Lycee/Terminale/07_Loi_Binomiale_et_Loi_des_Grands_Nombres.md"]
+  },
+  "/Cours_Math/04_Post_Bac/17_Probabilites_Continues.md": {
+    domain: "probability",
+    shortTitle: "Probabilités Continues",
+    dependencies: ["/Cours_Math/04_Post_Bac/07_Probabilites_Discretes.md", "/Cours_Math/04_Post_Bac/06_Integration_et_Primitives.md"]
+  },
+  "/Cours_Math/04_Post_Bac/18_Probabilites_Vecteurs_Aleatoires.md": {
+    domain: "probability",
+    shortTitle: "Vecteurs Aléatoires",
+    dependencies: ["/Cours_Math/04_Post_Bac/17_Probabilites_Continues.md"]
+  },
+  "/Cours_Math/04_Post_Bac/10_Calcul_Stochastique.md": {
+    domain: "probability",
+    shortTitle: "Calcul Stochastique",
+    dependencies: ["/Cours_Math/04_Post_Bac/18_Probabilites_Vecteurs_Aleatoires.md"]
   },
 
   // --- ALGORITHMIQUE & LOGIQUE ---
