@@ -61,9 +61,14 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Géométrie Espace (Tle)",
     dependencies: ["/Cours_Math/03_Lycee/Premiere/06_Produit_Scalaire_et_Geometrie.md"]
   },
-  "/Cours_Math/04_Post_Bac/BUT_Industriel/03_Transformations_CAD-DHT.md": {
+  "/Cours_Math/04_Post_Bac/BUT_Industriel/03_Transformations_CAD.md": {
     domain: "geometry",
     shortTitle: "DAO & Matrices 3D",
+    dependencies: ["/Cours_Math/03_Lycee/Terminale/02_Geometrie_dans_l_Espace.md"]
+  },
+  "/Cours_Math/04_Post_Bac/Ingenieur_IA_Data/01_Analyse_Vectorielle_Operateurs.md": {
+    domain: "geometry",
+    shortTitle: "Analyse Vectorielle",
     dependencies: ["/Cours_Math/03_Lycee/Terminale/02_Geometrie_dans_l_Espace.md"]
   },
 
@@ -113,10 +118,10 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Arithmétique Spé",
     dependencies: ["/Cours_Math/02_College/3eme/04_Arithmetique.md"]
   },
-  "/Cours_Math/04_Post_Bac/Algebre_L1_L2/01_Arithmetique_Superieure.md": {
+  "/Cours_Math/04_Post_Bac/01_Nombres_Complexes.md": {
     domain: "numbers",
-    shortTitle: "Arithmétique & Crypto",
-    dependencies: ["/Cours_Math/03_Lycee/Terminale_Expertes/02_Arithmetique.md"]
+    shortTitle: "Complexes Post-Bac",
+    dependencies: ["/Cours_Math/03_Lycee/Terminale_Expertes/01_Nombres_Complexes_Approfondis.md"]
   },
 
   // --- ALGÈBRE & ÉQUATIONS ---
@@ -150,15 +155,15 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Matrices & Graphes",
     dependencies: ["/Cours_Math/03_Lycee/Premiere/03_Second_Degre.md"]
   },
-  "/Cours_Math/04_Post_Bac/Algebre_L1_L2/03_Espaces_Vectoriels_Rang.md": {
+  "/Cours_Math/04_Post_Bac/02_Algebre_Lineaire.md": {
     domain: "algebra",
-    shortTitle: "Espaces Vectoriels",
+    shortTitle: "Algèbre Linéaire",
     dependencies: ["/Cours_Math/03_Lycee/Terminale_Expertes/03_Matrices_et_Graphes.md", "/Cours_Math/03_Lycee/Seconde/02_Vecteurs_du_Plan.md"]
   },
-  "/Cours_Math/04_Post_Bac/Algebre_L1_L2/02_Structures_Algebriques.md": {
+  "/Cours_Math/04_Post_Bac/CPGE/01_CPGE_01_Structures_Algebriques.md": {
     domain: "algebra",
     shortTitle: "Structures Algébriques",
-    dependencies: ["/Cours_Math/04_Post_Bac/Algebre_L1_L2/03_Espaces_Vectoriels_Rang.md"]
+    dependencies: ["/Cours_Math/04_Post_Bac/02_Algebre_Lineaire.md"]
   },
 
   // --- ANALYSE & FONCTIONS ---
@@ -222,35 +227,30 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Équations Diff (Tle)",
     dependencies: ["/Cours_Math/03_Lycee/Premiere/04_Fonction_Exponentielle.md"]
   },
-  "/Cours_Math/04_Post_Bac/14_Analyse_L1_Limites_Continuite.md": {
+  "/Cours_Math/04_Post_Bac/03_Series_Numeriques.md": {
     domain: "analysis",
-    shortTitle: "Limites L1",
+    shortTitle: "Séries Numériques",
     dependencies: ["/Cours_Math/03_Lycee/Terminale/01_Limites_et_Continuite.md"]
   },
-  "/Cours_Math/04_Post_Bac/25_Analyse_L1_Suites_Numeriques_Reelles.md": {
+  "/Cours_Math/04_Post_Bac/08_Topologie.md": {
     domain: "analysis",
-    shortTitle: "Suites L1",
-    dependencies: ["/Cours_Math/03_Lycee/Terminale/05_Suites_et_Recurrence.md"]
+    shortTitle: "Topologie",
+    dependencies: ["/Cours_Math/04_Post_Bac/03_Series_Numeriques.md"]
   },
-  "/Cours_Math/04_Post_Bac/15_Analyse_L1_Derivabilite_DL.md": {
+  "/Cours_Math/04_Post_Bac/09_Calcul_Differentiel_Optimisation.md": {
     domain: "analysis",
-    shortTitle: "Dérivabilité & DL",
-    dependencies: ["/Cours_Math/04_Post_Bac/14_Analyse_L1_Limites_Continuite.md"]
+    shortTitle: "Calcul Différentiel",
+    dependencies: ["/Cours_Math/04_Post_Bac/08_Topologie.md"]
   },
   "/Cours_Math/04_Post_Bac/06_Integration_et_Primitives.md": {
     domain: "analysis",
     shortTitle: "Intégration L1",
     dependencies: ["/Cours_Math/03_Lycee/Terminale/09_Primitives_et_Calcul_Integral.md"]
   },
-  "/Cours_Math/04_Post_Bac/03_Series_Numeriques.md": {
-    domain: "analysis",
-    shortTitle: "Séries Numériques",
-    dependencies: ["/Cours_Math/04_Post_Bac/25_Analyse_L1_Suites_Numeriques_Reelles.md"]
-  },
   "/Cours_Math/04_Post_Bac/04_Equations_Differentielles.md": {
     domain: "analysis",
     shortTitle: "Équations Diff L2",
-    dependencies: ["/Cours_Math/03_Lycee/Terminale/08_Equations_Differentielles.md", "/Cours_Math/04_Post_Bac/15_Analyse_L1_Derivabilite_DL.md"]
+    dependencies: ["/Cours_Math/03_Lycee/Terminale/08_Equations_Differentielles.md", "/Cours_Math/04_Post_Bac/09_Calcul_Differentiel_Optimisation.md"]
   },
 
   // --- PROBABILITÉS & STATISTIQUES ---
@@ -299,6 +299,16 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Stats Inférentielles",
     dependencies: ["/Cours_Math/03_Lycee/Terminale/11_Probabilites_et_Lois_Continues.md"]
   },
+  "/Cours_Math/04_Post_Bac/BUT_Industriel/01_MSP.md": {
+    domain: "probability",
+    shortTitle: "Maîtrise Statistique",
+    dependencies: ["/Cours_Math/04_Post_Bac/BTS/02_BTS_02_Statistiques_Inferentielles.md"]
+  },
+  "/Cours_Math/04_Post_Bac/BUT_Industriel/02_Plans_Experiences.md": {
+    domain: "probability",
+    shortTitle: "Plans d'Expériences",
+    dependencies: ["/Cours_Math/04_Post_Bac/BUT_Industriel/01_MSP.md"]
+  },
 
   // --- ALGORITHMIQUE & LOGIQUE ---
   "/Cours_Math/02_College/4eme/05_Algorithmique_Scratch.md": {
@@ -321,15 +331,15 @@ export const CONCEPT_METADATA: Record<string, CourseNodeMetadata> = {
     shortTitle: "Graphes & Réseaux",
     dependencies: ["/Cours_Math/02_College/3eme/06_Algorithmique_Scratch.md"]
   },
-  "/Cours_Math/04_Post_Bac/Ingenieur_IA_Data/01_Descente_Gradient.md": {
+  "/Cours_Math/04_Post_Bac/Ingenieur_IA_Data/02_Optimisation_Descente_Gradient.md": {
     domain: "algorithms",
     shortTitle: "Descente de Gradient",
-    dependencies: ["/Cours_Math/04_Post_Bac/15_Analyse_L1_Derivabilite_DL.md"]
+    dependencies: ["/Cours_Math/04_Post_Bac/09_Calcul_Differentiel_Optimisation.md"]
   },
-  "/Cours_Math/04_Post_Bac/Ingenieur_IA_Data/02_Deep_Learning_Intro.md": {
+  "/Cours_Math/04_Post_Bac/Ingenieur_IA_Data/03_Fondements_Deep_Learning_Retropropagation.md": {
     domain: "algorithms",
     shortTitle: "Réseaux Neurones",
-    dependencies: ["/Cours_Math/04_Post_Bac/Ingenieur_IA_Data/01_Descente_Gradient.md", "/Cours_Math/04_Post_Bac/Algebre_L1_L2/03_Espaces_Vectoriels_Rang.md"]
+    dependencies: ["/Cours_Math/04_Post_Bac/Ingenieur_IA_Data/02_Optimisation_Descente_Gradient.md", "/Cours_Math/04_Post_Bac/02_Algebre_Lineaire.md"]
   }
 };
 
