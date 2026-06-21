@@ -726,5 +726,118 @@ Chaque terme contiendra sa définition rigoureuse, sa transcription historique e
 ### 4. Indicateurs d'Achèvement et Systémique (Gains d'XP)
 * [ ] **Validation des Fiches Glossaires** : Chaque consultation complète ou réussite d'une interactive-sandbox de glossaire accordera $+5\text{ XP}$ unique pour motiver la curiosité des étudiants et s'assurer de leur complétude théorique.
 
+---
+
+## 🔗 PRIORITÉ PARALLÈLE — Complétion du Graphe Pédagogique (`concept_links.ts`)
+
+> **Contexte** : Le fil d'Ariane ("🌱 Prend racine dans / 🌸 Fleurira dans") est affiché dans chaque `<CourseHeader>` grâce au fichier central `src/data/concept_links.ts`. En juin 2026, **64 cours sur 215 ont un nœud dans le graphe**. Il reste **62 cours Post-Bac à intégrer**, répartis en 9 lots.
+>
+> **Règle absolue** : N'ajouter que des IDs qui existent dans `courses_index.json`. Vérifier après chaque lot avec `node scripts/check_dependencies.js` (doit afficher 0 dépendance pendante).
+
+### 🔍 Scripts de Diagnostic Graphe
+```bash
+node scripts/check_dependencies.js      # 0 dangling dep requis
+node scripts/find_missing_links.js      # liste les IDs sans nœud dans le graphe
+npm run lint                            # 0 erreur TS après chaque édition
+```
+
+### Lot A — Analyse L1/L2 (Tronc Commun Post-Bac)
+- [ ] `/Cours_Math/04_Post_Bac/14_Analyse_L1_Limites_Continuite.md` → domain: analysis, deps: `03_Lycee/Terminale/01_Limites_et_Continuite.md`
+- [ ] `/Cours_Math/04_Post_Bac/15_Analyse_L1_Derivabilite_DL.md` → domain: analysis, deps: `14_Analyse_L1_Limites_Continuite.md`
+- [ ] `/Cours_Math/04_Post_Bac/25_Analyse_L1_Suites_Numeriques_Reelles.md` → domain: analysis, deps: `03_Lycee/Terminale/05_Suites_et_Recurrence.md`
+- [ ] `/Cours_Math/04_Post_Bac/16_Analyse_L2_Fonctions_Plusieurs_Variables.md` → domain: analysis, deps: `15_...DL.md` + `09_Calcul_Differentiel_Optimisation.md`
+- [ ] `/Cours_Math/04_Post_Bac/05_Espaces_Euclidiens.md` → domain: algebra, deps: `02_Algebre_Lineaire.md`
+- [ ] `/Cours_Math/04_Post_Bac/07_Probabilites_Discretes.md` → domain: probability, deps: `03_Lycee/Terminale/07_Loi_Binomiale_et_Loi_des_Grands_Nombres.md`
+- [ ] `/Cours_Math/04_Post_Bac/17_Probabilites_Continues.md` → domain: probability, deps: `07_Probabilites_Discretes.md` + `06_Integration_et_Primitives.md`
+- [ ] `/Cours_Math/04_Post_Bac/18_Probabilites_Vecteurs_Aleatoires.md` → domain: probability, deps: `17_Probabilites_Continues.md`
+- [ ] `/Cours_Math/04_Post_Bac/10_Calcul_Stochastique.md` → domain: probability, deps: `18_Probabilites_Vecteurs_Aleatoires.md`
+
+### Lot B — Algèbre L1/L2
+- [ ] `/Cours_Math/04_Post_Bac/Algebre_L1_L2/01_Arithmetique_Superieure.md` → domain: numbers, deps: `CPGE/01_CPGE_01_Structures_Algebriques.md`
+- [ ] `/Cours_Math/04_Post_Bac/Algebre_L1_L2/02_Structures_Algebriques.md` → domain: algebra, deps: `Algebre_L1_L2/01_Arithmetique_Superieure.md`
+- [ ] `/Cours_Math/04_Post_Bac/Algebre_L1_L2/03_Espaces_Vectoriels_Rang.md` → domain: algebra, deps: `02_Algebre_Lineaire.md` + `Algebre_L1_L2/02_Structures_Algebriques.md`
+
+### Lot C — CPGE (MP/PC/PSI)
+- [ ] `/Cours_Math/04_Post_Bac/CPGE/02_CPGE_02_Polynomes.md` → domain: algebra, deps: `CPGE/01_CPGE_01_Structures_Algebriques.md`
+- [ ] `/Cours_Math/04_Post_Bac/CPGE/03_CPGE_03_Series_De_Fourier.md` → domain: analysis, deps: `03_Series_Numeriques.md` + `CPGE/02_CPGE_02_Polynomes.md`
+
+### Lot D — Sup_CPGE (Classe BL)
+- [ ] `/Cours_Math/04_Post_Bac/Sup_CPGE/Course_CPGE_BL_Proba.md` → domain: probability, deps: `07_Probabilites_Discretes.md`
+- [ ] `/Cours_Math/04_Post_Bac/Sup_CPGE/Course_CPGE_BL_AlgebreLineaire.md` → domain: algebra, deps: `02_Algebre_Lineaire.md`
+- [ ] `/Cours_Math/04_Post_Bac/Sup_CPGE/Course_CPGE_BL_Optimisation.md` → domain: analysis, deps: `09_Calcul_Differentiel_Optimisation.md`
+
+### Lot E — CPGE_ECG (Économique et Commercial)
+- [ ] `/Cours_Math/04_Post_Bac/12_CPGE_ECG_Algebre_Financiere.md` → domain: numbers, deps: `03_Lycee/Terminale/05_Suites_et_Recurrence.md`
+- [ ] `/Cours_Math/04_Post_Bac/19_CPGE_ECG_Suites_et_Series_Economie.md` → domain: analysis, deps: `12_CPGE_ECG_Algebre_Financiere.md` + `03_Series_Numeriques.md`
+- [ ] `/Cours_Math/04_Post_Bac/21_CPGE_ECG_Optimisation_Sous_Contrainte.md` → domain: analysis, deps: `09_Calcul_Differentiel_Optimisation.md` + `19_CPGE_ECG_Suites_et_Series_Economie.md`
+
+### Lot F — BTS (branches complémentaires non encore dans le graphe)
+- [ ] `/Cours_Math/04_Post_Bac/BTS/03_BTS_03_Traitement_Signal.md` → domain: analysis, deps: `BTS_Industriel/03_Fourier.md`
+- [ ] `/Cours_Math/04_Post_Bac/BTS_CG/01_Suites_et_Finance_CG.md` → domain: numbers, deps: `03_Lycee/Terminale/05_Suites_et_Recurrence.md`
+- [ ] `/Cours_Math/04_Post_Bac/BTS_CG/02_Ajustement_Lineaire_Previsions.md` → domain: probability, deps: `BTS/02_BTS_02_Statistiques_Inferentielles.md`
+- [ ] `/Cours_Math/04_Post_Bac/BTS_CG/03_Lois_Probabilites_Gestion.md` → domain: probability, deps: `BTS_CG/01_Suites_et_Finance_CG.md`
+- [ ] `/Cours_Math/04_Post_Bac/BTS_Industriel/01_Vibrations.md` → domain: analysis, deps: `04_Equations_Differentielles.md`
+- [ ] `/Cours_Math/04_Post_Bac/BTS_Industriel/02_Resonance.md` → domain: analysis, deps: `BTS_Industriel/01_Vibrations.md`
+- [ ] `/Cours_Math/04_Post_Bac/BTS_Industriel/03_Fourier.md` → domain: analysis, deps: `BTS_Industriel/02_Resonance.md`
+- [ ] `/Cours_Math/04_Post_Bac/BTS_Tertiaire/01_Suites_Finance.md` → domain: numbers, deps: `03_Lycee/Terminale/05_Suites_et_Recurrence.md`
+- [ ] `/Cours_Math/04_Post_Bac/BTS_Tertiaire/02_Estimation_Echantillonnage.md` → domain: probability, deps: `BTS/02_BTS_02_Statistiques_Inferentielles.md`
+- [ ] `/Cours_Math/04_Post_Bac/BTS_Tertiaire/03_Simplexe_Optimisation.md` → domain: algorithms, deps: `BTS/01_BTS_01_Graphes_et_Reseaux.md`
+
+### Lot G — BUT (Data, GEA, GEII, Tertiaire)
+- [ ] `/Cours_Math/04_Post_Bac/11_BUT_SD_Statistiques_Descriptives.md` → domain: probability, deps: `03_Lycee/Terminale/11_Probabilites_et_Lois_Continues.md`
+- [ ] `/Cours_Math/04_Post_Bac/20_BUT_SD_Statistique_Inference_Estimation.md` → domain: probability, deps: `11_BUT_SD_Statistiques_Descriptives.md`
+- [ ] `/Cours_Math/04_Post_Bac/24_BUT_SD_Regression_Lineaire_Simple.md` → domain: probability, deps: `20_BUT_SD_Statistique_Inference_Estimation.md`
+- [ ] `/Cours_Math/04_Post_Bac/26_BUT_SD_Analyse_en_Composantes_Principales_ACP.md` → domain: probability, deps: `24_BUT_SD_Regression_Lineaire_Simple.md` + `02_Algebre_Lineaire.md`
+- [ ] `/Cours_Math/04_Post_Bac/BUT_GEA/01_Maths_Financieres_Gestion.md` → domain: numbers, deps: `BTS_Tertiaire/01_Suites_Finance.md`
+- [ ] `/Cours_Math/04_Post_Bac/BUT_GEA/02_Recherche_Operationnelle_Simplexe.md` → domain: algorithms, deps: `BTS_Tertiaire/03_Simplexe_Optimisation.md`
+- [ ] `/Cours_Math/04_Post_Bac/BUT_GEA/03_Statistiques_Inference_Tests.md` → domain: probability, deps: `20_BUT_SD_Statistique_Inference_Estimation.md`
+- [ ] `/Cours_Math/04_Post_Bac/BUT_GEII/01_Impedance_Complexe_et_Fourier.md` → domain: analysis, deps: `01_Nombres_Complexes.md` + `BTS_Industriel/03_Fourier.md`
+- [ ] `/Cours_Math/04_Post_Bac/BUT_GEII/02_Transformee_en_Z_et_Filtres.md` → domain: analysis, deps: `BUT_GEII/01_Impedance_Complexe_et_Fourier.md`
+- [ ] `/Cours_Math/04_Post_Bac/BUT_GEII/03_Laplace_et_Systemes_Asservis.md` → domain: analysis, deps: `22_Ingenieur_Transformee_de_Laplace.md`
+- [ ] `/Cours_Math/04_Post_Bac/BUT_Tertiaire/01_Ordonnancement_PERT.md` → domain: algorithms, deps: `BTS/01_BTS_01_Graphes_et_Reseaux.md`
+- [ ] `/Cours_Math/04_Post_Bac/BUT_Tertiaire/02_Files_Attente.md` → domain: probability, deps: `07_Probabilites_Discretes.md`
+- [ ] `/Cours_Math/04_Post_Bac/BUT_Tertiaire/03_Theorie_Decision.md` → domain: algorithms, deps: `BUT_Tertiaire/01_Ordonnancement_PERT.md`
+
+### Lot H — Ingénieur (numérique, Laplace, EF, Fourier)
+- [ ] `/Cours_Math/04_Post_Bac/13_Ingenieur_Methodes_Numeriques.md` → domain: analysis, deps: `09_Calcul_Differentiel_Optimisation.md`
+- [ ] `/Cours_Math/04_Post_Bac/22_Ingenieur_Transformee_de_Laplace.md` → domain: analysis, deps: `04_Equations_Differentielles.md`
+- [ ] `/Cours_Math/04_Post_Bac/23_Ingenieur_Matrices_et_Elements_Finis.md` → domain: algebra, deps: `02_Algebre_Lineaire.md` + `22_Ingenieur_Transformee_de_Laplace.md`
+- [ ] `/Cours_Math/04_Post_Bac/27_Ingenieur_Analyse_de_Fourier_et_Signal.md` → domain: analysis, deps: `CPGE/03_CPGE_03_Series_De_Fourier.md`
+
+### Lot I — Sup_Université (Licences spécialisées)
+- [ ] `/Cours_Math/04_Post_Bac/Sup_Universite/Course_Licence_Maths_Groupes.md` → domain: algebra, deps: `Algebre_L1_L2/02_Structures_Algebriques.md`
+- [ ] `/Cours_Math/04_Post_Bac/Sup_Universite/Course_Licence_Maths_TopologieMetric.md` → domain: analysis, deps: `08_Topologie.md`
+- [ ] `/Cours_Math/04_Post_Bac/Sup_Universite/Course_Licence_Maths_AlgebreBilinea.md` → domain: algebra, deps: `05_Espaces_Euclidiens.md`
+- [ ] `/Cours_Math/04_Post_Bac/Sup_Universite/Course_Licence_MIASHS_Jeux.md` → domain: algorithms, deps: `21_CPGE_ECG_Optimisation_Sous_Contrainte.md`
+- [ ] `/Cours_Math/04_Post_Bac/Sup_Universite/Course_Licence_MIASHS_Regression.md` → domain: probability, deps: `24_BUT_SD_Regression_Lineaire_Simple.md`
+- [ ] `/Cours_Math/04_Post_Bac/Sup_Universite/Course_Licence_MIASHS_MarkovChain.md` → domain: probability, deps: `10_Calcul_Stochastique.md`
+- [ ] `/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Bio_Epidemio.md` → domain: probability, deps: `17_Probabilites_Continues.md`
+- [ ] `/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Bio_LotkaVolterra.md` → domain: analysis, deps: `04_Equations_Differentielles.md`
+- [ ] `/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Bio_MichaelisMenten.md` → domain: analysis, deps: `Sup_Universite/Course_Sup_Bio_LotkaVolterra.md`
+- [ ] `/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Eco_Solow.md` → domain: analysis, deps: `21_CPGE_ECG_Optimisation_Sous_Contrainte.md`
+- [ ] `/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Eco_Optimisation.md` → domain: analysis, deps: `Sup_Universite/Course_Sup_Eco_Solow.md`
+- [ ] `/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Eco_GameTheory.md` → domain: algorithms, deps: `Sup_Universite/Course_Licence_MIASHS_Jeux.md`
+- [ ] `/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Finance_BlackScholes.md` → domain: probability, deps: `10_Calcul_Stochastique.md`
+- [ ] `/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Finance_Markowitz.md` → domain: probability, deps: `18_Probabilites_Vecteurs_Aleatoires.md`
+- [ ] `/Cours_Math/04_Post_Bac/Sup_Universite/Course_Sup_Finance_CoxRoss.md` → domain: probability, deps: `Sup_Universite/Course_Sup_Finance_BlackScholes.md`
+
+### ⚠️ Règles Anti-Régression Graphe
+1. `node scripts/check_dependencies.js` → **0 dépendance pendante** avant tout commit
+2. `npm run lint` → **0 erreur TypeScript**
+3. Jamais d'ID inventé : vérifier dans `courses_index.json` que le chemin existe
+4. Jamais de doublon de clé dans `concept_links.ts`
+5. Si un fichier est ajouté/renommé côté filesystem : relancer `npx tsx scripts/generate_index.ts`
+
+---
+
+## 🎯 PRIORITÉ UX / Fonctionnalités Futures
+- [ ] Filtres dans le menu latéral par domaine (Géométrie, Analyse, Probabilités…)
+- [ ] Mode Révision Express : parcours automatique des flashcards de tous les cours d'un niveau
+- [ ] Partage de progression : export URL avec état encodé (sans serveur)
+- [ ] Accessibilité (a11y) : labels ARIA sur tous les composants interactifs SVG
+- [ ] Thème Clair : corriger les contrastes insuffisants dans les `Section` en mode clair
+- [ ] GitHub Actions : lint + build automatique sur chaque PR
+- [ ] Déploiement en Production : `https://hylst.fr/guide-maths/`
+
 
 

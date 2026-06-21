@@ -1,49 +1,110 @@
 # 📖 BIBLE ET RÈGLES DE L'AGENT IA
 
-Ce document est le guide de survie et la SOP (Standard Operating Procedure) pour tout agent IA travaillant sur ce projet. Tu dois t'y référer à chaque RUN.
+Ce document est le guide de survie et la SOP (Standard Operating Procedure) pour tout agent IA travaillant sur ce projet. Tu dois t'y référer à chaque session.
+
+> **Ordre de lecture recommandé** : `AGENTS.md` (règles de code) → ce fichier (workflow) → `continue.md` (état actuel) → `todo.md` (tâches prioritaires) → `readme-dev.md` (architecture technique).
+
+---
 
 ## 🎯 OBJET DE LA MISSION (Phase V5)
-La majeure partie des cours (fichiers TSX dans `src/courses/`) ont été créés, mais ~60 d'entre eux sont "pauvres". Ils manquent de composants interactifs (`InteractiveExercise`, `Quiz`, `Flashcard`).
-Ton but est de prendre ces fichiers et de les transformer en excellents supports pédagogiques interactifs.
 
-## ⚙️ WORKFLOW OBLIGATOIRE (Action par Action)
-Dès que l'utilisateur te demande d'avancer :
-1. **Audit** : Exécute `npx tsx scripts/check_completeness.js`. 
-2. **Choix** : Prends le premier fichier TSX qui ressort dans la liste.
-3. **Lecture du code source** : Utilise `view_file` pour lire et analyser le composant TSX sélectionné. Cherche où le contenu peut être enrichi ou restructuré avec `SharedUI`.
-4. **Implémentation** : Réécris ou ajoute les sections au cours à l'aide de l'outil `edit_file` / `multi_edit_file`. Rédige les exercices de la plus haute qualité possible de tes connaissances en mathématiques, en ciblant bien le niveau supposé du cours (Primaire, Collège, Lycée, Post-Bac).
-5. **Validation absolue** : Lance toujours `npm run build` (ou `npm run lint`). TS s'assurera qu'il n'y a pas d'erreur de typage avec tes composants ou tes formules LaTeX brisées.
-6. **Bilan** : Confirme la réussite à l'utilisateur, demande l'autorisation de passer au fichier suivant.
+L'application couvre les mathématiques de la Maternelle au Post-Bac (**215 cours**, dont ~142 sous forme de composants TSX interactifs et ~73 sous forme de fiches Markdown).
 
-## 🧩 LES COMPOSANTS UI OBLIGATOIRES
-Tous les imports doivent venir de `../components/SharedUI`. Utilise ces composants aux bons endroits :
+Deux chantiers parallèles sont en cours :
+1. **Enrichissement interactif (V5)** : compléter les cours TSX qui manquent de composants obligatoires (`InteractiveExercise`, `Quiz`, `Flashcard`, blocs `InfoBlock`).
+2. **Graphe Pédagogique** : ajouter les 62 cours Post-Bac manquants dans `src/data/concept_links.ts` pour que leur fil d'Ariane (🌱 / 🌸) s'affiche dans `<CourseHeader>`.
 
-- `<CourseHeader>` : Titre du cours.
-- `<Section>` : Découpage principal du cours.
-- `<InfoBlock>` : Pour les règles, théorèmes, définitions.
-- `<TipBanner>` : Pour les astuces ou les avertissements très courts.
-- `<InteractiveExercise>` : Pour tout le bloc "Exercices".
-- `<Flashcard>` : Pour récapituler en fin de partie ou de cours (Synthèse).
-- `<Quiz>` : Le test de connaissances final du chapitre.
+---
+
+## ⚙️ WORKFLOW OBLIGATOIRE — Enrichissement TSX (Action par Action)
+
+1. **Audit** : Exécute `npx tsx scripts/check_completeness.js` pour obtenir la liste des cours incomplets.
+2. **Choix** : Prends le premier fichier TSX dans la liste (ou celui demandé par l'utilisateur).
+3. **Lecture** : Utilise `view_file` pour lire le composant TSX sélectionné. Identifie ce qui manque (blocs `InfoBlock`, `Quiz`, `Flashcard`, `InteractiveExercise`).
+4. **Implémentation** : Enrichis le cours avec les composants `SharedUI`. Soigne la qualité mathématique selon le niveau (Primaire → Post-Bac). Ne supprime aucune section existante.
+5. **Validation** : Lance `npm run lint` (ou `npm run build`). Corrige toute erreur TypeScript avant de passer à la suite.
+6. **Bilan** : Confirme la réussite, demande l'autorisation de passer au fichier suivant.
+
+## ⚙️ WORKFLOW OBLIGATOIRE — Graphe Pédagogique (concept_links.ts)
+
+1. Vérifier que l'ID du cours existe dans `src/data/courses_index.json` (copier-coller, ne pas retaper).
+2. Ajouter l'entrée dans le bon bloc de domaine dans `concept_links.ts` :
+```typescript
+"/Cours_Math/04_Post_Bac/XX_MonCours.md": {
+  domain: "analysis",       // numbers | algebra | analysis | geometry | probability | algorithms | general
+  shortTitle: "Titre court", // < 25 caractères
+  dependencies: ["/Cours_Math/.../prerequis.md"]  // doit exister comme clé dans ce même objet
+},
+```
+3. `node scripts/check_dependencies.js` → **0 dépendance pendante**
+4. `npm run lint` → **0 erreur TS**
+5. `git add src/data/concept_links.ts && git commit -m "feat: add pedigree lot [X]"`
+
+---
+
+## 🧩 LES COMPOSANTS UI OBLIGATOIRES (imports depuis `../components/SharedUI`)
+
+| Composant | Usage | Obligatoire |
+|---|---|---|
+| `<CourseHeader>` | En-tête avec titre, niveau, durée, objectifs | ✅ |
+| `<Section>` | Découpage principal du cours | ✅ |
+| `<InfoBlock>` | Règles, théorèmes, définitions, faits amusants | ✅ |
+| `<TipBanner>` | Astuces courtes, avertissements méthodologiques | ✅ |
+| `<InteractiveExercise>` | Exercices résolus pas à pas | ✅ |
+| `<Flashcard>` | Récapitulatif rapide recto/verso | ✅ |
+| `<Quiz>` | QCM final avec correction et explication | ✅ |
+| `<AccordionFAQ>` | Questions fréquentes (≥ 3 items) | ✅ |
+| `<InteractiveChecklist>` | Checklist de validation des essentiels | ✅ |
+| `<FormulaBox>` | Mise en valeur d'une formule clé | Recommandé |
+| `<MathComponent math="..." />` | Rendu KaTeX inline sécurisé | Recommandé |
+
+---
 
 ## 🚨 RÈGLES D'OR DU PROJET (FATAL ERRORS À ÉVITER)
 
 ### 1. Danger : Syntaxe LaTeX dans JSX
 L'utilisation d'accolades libres `{ }` dans du texte mathématique à l'intérieur de balises JSX fait planter React et le parseur TSX avec l'erreur `Unexpected Token`.
-❌ **INTERDIT** : `<Flashcard front={<>C'est $\frac{5}{3}$ ?</>} />`
-✅ **À FAIRE** : `<Flashcard front={<>C'est {"$\\frac{5}{3}$"} ?</>} />`
-**Règle** : Dès qu'une formule (`$...$`) est passée comme contenu ou prop JSX, et qu'elle contient des accolades pour LaTeX (ex: `\frac`, `a^{2}`), encadre la chaîne avec des guillemets `{"  "}`.
+```
+❌ INTERDIT : <Flashcard front={<>C'est $\frac{5}{3}$ ?</>} />
+✅ À FAIRE  : <Flashcard front={<>C'est {"$\\frac{5}{3}$"} ?</>} />
+✅ MIEUX    : <Flashcard front={<>C'est <MathComponent math="\\frac{5}{3}" /> ?</>} />
+```
+**Règle** : Dès qu'une formule contient des accolades LaTeX (`\frac`, `a^{2}`, `\text{...}`), encadrer avec `{"  "}` ou utiliser `<MathComponent>`.
 
-### 2. Le Typage Strict : Les Couleurs Tailwind
+### 2. Le Typage Strict : Couleurs des Sections
 Si la couleur que tu donnes n'est pas dans cette liste, le compilateur TypeScript échouera :
 - **Couleurs valides** : `"slate" | "indigo" | "emerald" | "amber" | "rose" | "blue" | "purple"`
 - **Ne jamais utiliser** : `"sky"`, `"red"`, `"green"`, `"orange"`, `"teal"`, etc.
 
 ### 3. Le Typage Strict : InfoBlock et TipBanner
-Les alertes pédagogiques n'acceptent pas de type `error` ou `success` partout.
 - `<InfoBlock>` accepte uniquement : `"info" | "warning" | "definition" | "funfact" | "reminder"`
 - `<TipBanner>` accepte uniquement : `"info" | "warning" | "success"`
-> ⚠️ **Astuce** : Pour indiquer une erreur commune aux élèves, utilise toujours le `type="warning"` (et la couleur `amber`), n'utilise jamais `"error"`.
+> ⚠️ Pour indiquer une erreur courante, utiliser toujours `type="warning"`, jamais `"error"`.
 
 ### 4. Non-Destruction
-N'efface pas les sections de cours existantes, **enrichis-les**. Vérifie toujours les balises de fin et l'état des accolades avant d'écrire le remplacement ! Ne perds pas la structuration du fichier.
+N'efface pas les sections de cours existantes, **enrichis-les**. Vérifie toujours les balises de fin et l'état des accolades avant d'écrire le remplacement.
+
+### 5. Fil d'Ariane — Jamais en Dur dans les Fiches
+Les prérequis et successeurs d'un cours ne s'écrivent **JAMAIS** dans les fichiers TSX individuels. Tout passe par `src/data/concept_links.ts`. Voir section 4 de `AGENTS.md`.
+
+### 6. Git — PowerShell ne supporte pas `&&`
+Sur Windows/PowerShell, ne pas chaîner les commandes avec `&&`. Exécuter séquentiellement :
+```powershell
+git add src/data/concept_links.ts
+git commit -m "feat: ..."
+git push origin main
+```
+
+---
+
+## 📊 ÉTAT DU PROJET (Juin 2026)
+
+| Indicateur | Valeur |
+|---|---|
+| Total cours | 215 (index) / ~142 TSX interactifs |
+| Cours TSX incomplets (audit) | ~21 restants (~85% complets) |
+| Nœuds dans concept_links.ts | 64 / 215 |
+| Cours Post-Bac sans fil d'Ariane | 62 (voir `todo.md`, lots A–I) |
+| Dépendances pendantes | 0 ✅ |
+| Build TypeScript | OK ✅ |
+| Remote Git | `git@github.com:Hylst/guide-maths.git` (branche `main`) |
