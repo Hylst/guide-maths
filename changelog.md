@@ -6,6 +6,15 @@ Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/)
 
 ---
 
+## [V5.4.1] - Mentions légales, contact et polices auto-hébergées - 2026-11-12
+
+### Ajouté
+- Lien « Mentions légales et confidentialité » vers `/mentions-legales.html` (page de la plateforme hylst.fr) en pied de la barre latérale et dans la fenêtre « À propos ».
+
+### Modifié
+- Adresse de contact unique `geoffroy.streit@ik.me` (fenêtre « À propos » et données structurées de `index.html`), reprise à la source du correctif appliqué au build déployé le 12/11.
+- Polices Inter et JetBrains Mono chargées depuis la feuille auto-hébergée de la plateforme (`/assets/fonts/fonts.css`, balise `link` avec `vite-ignore`) au lieu de Google Fonts ; préconnexions Google retirées. Reprise à la source du correctif du 26/10.
+
 ## [V5.4.0] - PWA, Refactorisation modulaire, SEO et identité Hylst - 2026-06-08
 
 ### Ajouté

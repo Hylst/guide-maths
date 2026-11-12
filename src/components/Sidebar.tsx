@@ -22,7 +22,8 @@ import {
   Activity,
   Network,
   Settings,
-  Compass
+  Compass,
+  Scale
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import AnimatedLogoTitle from "./AnimatedLogoTitle";
@@ -921,6 +922,14 @@ export default function Sidebar({
             <Sparkles className="w-3.5 h-3.5 text-amber-500 animate-pulse shrink-0" />
             <span className="truncate">Présentation du Guide</span>
           </button>
+
+          <a
+            href="/mentions-legales.html"
+            className="w-full flex items-center gap-3 px-4 py-2 rounded-xl text-[11px] font-semibold text-muted-text hover:text-foreground hover:bg-muted transition-all text-left"
+          >
+            <Scale className="w-3.5 h-3.5 shrink-0" />
+            <span className="truncate">Mentions légales et confidentialité</span>
+          </a>
         </div>
       </div>
     </nav>

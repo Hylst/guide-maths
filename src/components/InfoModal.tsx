@@ -78,7 +78,7 @@ export default function InfoModal({ isOpen, onClose }: InfoModalProps) {
 
   if (!isOpen) return null;
 
-  const email = "geoffroy.streit@gmail.com";
+  const email = "geoffroy.streit@ik.me";
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(email);
@@ -671,7 +671,13 @@ export default function InfoModal({ isOpen, onClose }: InfoModalProps) {
           </div>
 
           {/* Footer Bar */}
-          <div className="px-6 md:px-8 py-4 bg-muted/20 border-t border-border-strong/40 flex justify-end gap-2.5">
+          <div className="px-6 md:px-8 py-4 bg-muted/20 border-t border-border-strong/40 flex items-center justify-between gap-2.5">
+            <a
+              href="/mentions-legales.html"
+              className="text-2xs font-semibold text-muted-text hover:text-foreground underline underline-offset-2"
+            >
+              Mentions légales et confidentialité
+            </a>
             <button
               onClick={onClose}
               className="py-2.5 px-6 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-slate-100 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-extrabold text-xs cursor-pointer transition-all active:scale-95 shadow-sm"
