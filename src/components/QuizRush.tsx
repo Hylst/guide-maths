@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { parseInteractiveElementsFromMarkdown } from '../hooks/useCourses';
+import { courseFileUrl } from '../utils/courseFile';
 import { Zap, Clock, Trophy } from 'lucide-react';
 
 type QuizQuestion = {
@@ -81,7 +82,7 @@ export default function QuizRush({ completedCourseIds, onComplete, onClose }: Qu
         if (cancelled) return;
         setLoadProgress(Math.round(((i + 1) / candidates.length) * 100));
         try {
-          const resp = await fetch(candidates[i]);
+          const resp = await fetch(courseFileUrl(candidates[i]));
           if (!resp.ok) continue;
           const text = await resp.text();
           const parsed = parseInteractiveElementsFromMarkdown(text);

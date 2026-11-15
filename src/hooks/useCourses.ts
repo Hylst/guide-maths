@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Course, Level } from '../types';
 import coursesIndex from '../data/courses_index.json';
 import { CourseRegistry } from '../courses/CourseRegistry';
+import { courseFileUrl } from '../utils/courseFile';
 
 // Simple frontmatter parser to remove YAML block from content
 function stripFrontmatter(markdown: string): string {
@@ -146,11 +147,8 @@ export function useCourses() {
 
     setLoadingCourseId(courseId);
     try {
-      // Fetch the markdown file directly since it's served as a static asset...
-      const basePath = import.meta.env.BASE_URL || '/';
-      const cleanCourseId = courseId.startsWith('/') ? courseId.slice(1) : courseId;
-      const cachedCourseId = `${basePath}${basePath.endsWith('/') ? '' : '/'}${cleanCourseId}?t=${new Date().getTime()}`;
-      const response = await fetch(cachedCourseId);
+      // Fichier source du cours (publie en .txt en production, voir courseFile.ts)
+      const response = await fetch(`${courseFileUrl(courseId)}?t=${Date.now()}`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

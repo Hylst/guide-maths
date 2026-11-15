@@ -6,6 +6,16 @@ Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/)
 
 ---
 
+## [V5.4.2] - Cours Markdown en production, dépendances corrigées - 2026-11-15
+
+### Corrigé
+- Les 21 cours encore rédigés en Markdown (Post-Bac : algèbre et analyse L1-L2, BTS CG, BUT SD) ne s'ouvraient pas en production : le serveur refuse tous les fichiers `.md` (403). Le build les publie désormais en `.txt` (script `postbuild` `scripts/publish_course_text.mjs`) et l'application les lit via `src/utils/courseFile.ts` ; le serveur de développement continue de servir les `.md`.
+- « Quiz Rush » et la révision inter-niveaux chargeaient les cours sans le préfixe `/guide_maths/` : même utilitaire, les questions des cours terminés sont de nouveau collectées.
+
+### Sécurité
+- `npm audit --omit=dev` : 22 failles (1 critique, 11 hautes) à 0. React Router 7.18.5, Vite 6.4.6, KaTeX 0.18.11 (pollution de prototype, forcé via `overrides` sous `rehype-katex` et `remark-math`), `postcss-selector-parser` 6.1.6 (via `overrides`), tsx 4.23.
+- Retirés car jamais importés : `express`, `better-sqlite3`, `dotenv`, `localforage`, `@types/express` (reliquats du modèle de départ). Outils de build (`vite`, plugins Vite et Tailwind, `gray-matter`) passés en `devDependencies` : l'application publiée est un bundle statique. Restent 7 failles faibles ou modérées dans les outils de développement (`ts-morph`, `workbox-build`), sans correctif compatible.
+
 ## [V5.4.1] - Mentions légales, contact et polices auto-hébergées - 2026-11-12
 
 ### Ajouté
