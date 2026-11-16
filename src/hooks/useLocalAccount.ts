@@ -1,4 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import {
+  NotepadLock,
+  LOCK_KEY,
+  LEGACY_PASSWORD_KEY,
+  cryptoAvailable,
+  createLock,
+  verifyLock,
+  parseLock
+} from "../utils/notepadLock";
 
 export interface UserProfile {
   pseudo: string;
@@ -45,8 +54,10 @@ const DEFAULT_PROFILE: UserProfile = {
 export function useLocalAccount() {
   const [profile, setProfile] = useState<UserProfile>(DEFAULT_PROFILE);
   const [notes, setNotes] = useState<string>("");
-  const [notepadPassword, setNotepadPasswordState] = useState<string>("");
+  const [notepadLock, setNotepadLock] = useState<NotepadLock | null>(null);
   const [isNotepadUnlocked, setIsNotepadUnlocked] = useState<boolean>(true);
+  // Ancien mot de passe en clair, gardé en mémoire seulement le temps de la conversion (ou si WebCrypto manque).
+  const legacyPassword = useRef<string | null>(null);
 
   // Load profile and notes from localStorage on mount
   useEffect(() => {
@@ -64,10 +75,26 @@ export function useLocalAccount() {
       setNotes(savedNotes);
     }
 
-    const savedPassword = localStorage.getItem("maths_app_notepad_password");
-    if (savedPassword) {
-      setNotepadPasswordState(savedPassword);
+    const savedLock = parseLock(localStorage.getItem(LOCK_KEY));
+    const legacy = localStorage.getItem(LEGACY_PASSWORD_KEY);
+    if (savedLock) {
+      setNotepadLock(savedLock);
       setIsNotepadUnlocked(false); // Locked if password exists
+      if (legacy !== null) localStorage.removeItem(LEGACY_PASSWORD_KEY);
+    } else if (legacy) {
+      // Reprise d'un verrou d'avant V5.4.3 : le mot de passe en clair devient une empreinte, puis disparaît.
+      legacyPassword.current = legacy;
+      setIsNotepadUnlocked(false);
+      if (cryptoAvailable()) {
+        createLock(legacy)
+          .then((lock) => {
+            localStorage.setItem(LOCK_KEY, JSON.stringify(lock));
+            localStorage.removeItem(LEGACY_PASSWORD_KEY);
+            legacyPassword.current = null;
+            setNotepadLock(lock);
+          })
+          .catch((e) => console.error("Failed to convert notepad password", e));
+      }
     } else {
       setIsNotepadUnlocked(true); // Open if no password set
     }
@@ -86,28 +113,45 @@ export function useLocalAccount() {
     localStorage.setItem("maths_app_notepad", content);
   };
 
-  const setNotepadPassword = (password: string) => {
-    setNotepadPasswordState(password);
-    localStorage.setItem("maths_app_notepad_password", password);
-    setIsNotepadUnlocked(true); // Mark as unlocked for this session when setting/updating
-  };
-
   const clearNotepadPassword = () => {
-    setNotepadPasswordState("");
-    localStorage.removeItem("maths_app_notepad_password");
+    setNotepadLock(null);
+    legacyPassword.current = null;
+    localStorage.removeItem(LOCK_KEY);
+    localStorage.removeItem(LEGACY_PASSWORD_KEY);
     setIsNotepadUnlocked(true);
   };
 
-  const unlockNotepad = (password: string): boolean => {
-    if (password === notepadPassword) {
-      setIsNotepadUnlocked(true);
+  // Renvoie false si le navigateur ne permet pas de calculer l'empreinte (page hors HTTPS).
+  const setNotepadPassword = async (password: string): Promise<boolean> => {
+    if (!password) {
+      clearNotepadPassword();
       return true;
     }
-    return false;
+    if (!cryptoAvailable()) return false;
+    const lock = await createLock(password);
+    localStorage.setItem(LOCK_KEY, JSON.stringify(lock));
+    localStorage.removeItem(LEGACY_PASSWORD_KEY);
+    legacyPassword.current = null;
+    setNotepadLock(lock);
+    setIsNotepadUnlocked(true); // Mark as unlocked for this session when setting/updating
+    return true;
+  };
+
+  const unlockNotepad = async (password: string): Promise<boolean> => {
+    let ok = false;
+    if (notepadLock) {
+      ok = await verifyLock(password, notepadLock);
+    } else if (legacyPassword.current !== null) {
+      ok = password === legacyPassword.current;
+    } else {
+      ok = true; // aucun verrou
+    }
+    if (ok) setIsNotepadUnlocked(true);
+    return ok;
   };
 
   const lockNotepad = () => {
-    if (notepadPassword) {
+    if (notepadLock || legacyPassword.current) {
       setIsNotepadUnlocked(false);
     }
   };
@@ -119,12 +163,13 @@ export function useLocalAccount() {
   // Export all app data as a JSON string
   const exportData = (): string => {
     const dataObj = {
-      version: 2,
+      version: 3,
       exportedAt: new Date().toISOString(),
       data: {
         profile,
         notepad: notes,
-        notepadPassword,
+        // v3 : empreinte du verrou, jamais le mot de passe
+        notepadLock,
         progress: JSON.parse(localStorage.getItem("maths_app_progress") || "{}"),
         glossaryXp: localStorage.getItem("guide-maths-custom-xp") || "0",
         onboardingCompleted: localStorage.getItem("onboarding-completed") || "false",
@@ -157,12 +202,21 @@ export function useLocalAccount() {
         localStorage.setItem("maths_app_notepad", data.notepad);
       }
 
-      // 3. Notepad Password
-      if (typeof data.notepadPassword === "string") {
-        if (data.notepadPassword) {
-          localStorage.setItem("maths_app_notepad_password", data.notepadPassword);
+      // 3. Notepad lock (v3 : empreinte) ou mot de passe d'une sauvegarde v2, converti au rechargement
+      if (data.notepadLock !== undefined) {
+        const lock = parseLock(data.notepadLock);
+        if (lock) {
+          localStorage.setItem(LOCK_KEY, JSON.stringify(lock));
         } else {
-          localStorage.removeItem("maths_app_notepad_password");
+          localStorage.removeItem(LOCK_KEY);
+        }
+        localStorage.removeItem(LEGACY_PASSWORD_KEY);
+      } else if (typeof data.notepadPassword === "string") {
+        localStorage.removeItem(LOCK_KEY);
+        if (data.notepadPassword) {
+          localStorage.setItem(LEGACY_PASSWORD_KEY, data.notepadPassword);
+        } else {
+          localStorage.removeItem(LEGACY_PASSWORD_KEY);
         }
       }
 
@@ -206,7 +260,7 @@ export function useLocalAccount() {
   return {
     profile,
     notes,
-    notepadPassword,
+    hasNotepadPassword: notepadLock !== null || legacyPassword.current !== null,
     isNotepadUnlocked,
     updateProfile,
     saveNotes,

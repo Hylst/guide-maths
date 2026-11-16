@@ -6,6 +6,14 @@ Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/)
 
 ---
 
+## [V5.4.3] - Mot de passe du bloc-notes : empreinte au lieu du texte en clair - 2026-11-16
+
+### Sécurité
+- Le mot de passe du bloc-notes était stocké en clair dans `localStorage` (`maths_app_notepad_password`) et exporté en clair dans la sauvegarde JSON. Sur `hylst.fr`, toutes les applications partagent la même origine : un script de n'importe laquelle pouvait le lire, et un élève qui réutilise un vrai mot de passe l'exposait. Seule une empreinte PBKDF2-SHA256 salée (210 000 itérations, sel aléatoire de 16 octets, WebCrypto) est désormais conservée, sous `maths_app_notepad_lock` (`src/utils/notepadLock.ts`).
+- Reprise transparente : un ancien mot de passe en clair est converti en empreinte au premier chargement, puis supprimé du stockage ; le même mot de passe continue de déverrouiller le bloc-notes.
+- Sauvegarde : format v3, qui exporte l'empreinte (`notepadLock`) et jamais le mot de passe ; une sauvegarde v2 (mot de passe en clair) reste importable et son mot de passe est converti au rechargement.
+- Le formulaire de protection précise que les notes restent stockées sans chiffrement (verrou d'accès sur l'appareil) et déconseille un mot de passe utilisé ailleurs. Hors HTTPS (WebCrypto indisponible), la création d'un mot de passe est refusée avec un message.
+
 ## [V5.4.2] - Cours Markdown en production, dépendances corrigées - 2026-11-15
 
 ### Corrigé

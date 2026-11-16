@@ -397,9 +397,9 @@ export default function Dashboard({ stats, groupedCourses, progress, subLevelOrd
               <Lock className="w-8 h-8 text-rose-500 animate-bounce" />
               <p className="text-xs text-muted-text text-center font-semibold">Le bloc-notes est verrouillé.</p>
               <form 
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                   e.preventDefault();
-                  const ok = unlockNotepad(dashPasswordInput);
+                  const ok = await unlockNotepad(dashPasswordInput);
                   if (ok) {
                     setDashPasswordInput("");
                     setDashPasswordError(false);

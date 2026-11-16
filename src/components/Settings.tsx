@@ -39,7 +39,7 @@ export default function Settings({ account, isDarkMode, setIsDarkMode }: Setting
   const {
     profile,
     notes,
-    notepadPassword,
+    hasNotepadPassword,
     isNotepadUnlocked,
     updateProfile,
     saveNotes,
@@ -119,9 +119,9 @@ export default function Settings({ account, isDarkMode, setIsDarkMode }: Setting
   };
 
   // Unlock notepad
-  const handleUnlockNotepad = (e: React.FormEvent) => {
+  const handleUnlockNotepad = async (e: React.FormEvent) => {
     e.preventDefault();
-    const success = unlockNotepad(passwordInput);
+    const success = await unlockNotepad(passwordInput);
     if (success) {
       setPasswordInput("");
       setPasswordError(false);
@@ -134,7 +134,7 @@ export default function Settings({ account, isDarkMode, setIsDarkMode }: Setting
   };
 
   // Configure new password for notepad
-  const handleCreatePassword = (e: React.FormEvent) => {
+  const handleCreatePassword = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newPassword) {
       setNewPasswordError("Le mot de passe ne peut pas être vide.");
@@ -144,7 +144,11 @@ export default function Settings({ account, isDarkMode, setIsDarkMode }: Setting
       setNewPasswordError("Les mots de passe ne correspondent pas.");
       return;
     }
-    setNotepadPassword(newPassword);
+    const saved = await setNotepadPassword(newPassword);
+    if (!saved) {
+      setNewPasswordError("Protection indisponible : ce navigateur ne permet pas le calcul sécurisé hors connexion HTTPS.");
+      return;
+    }
     setNewPassword("");
     setConfirmPassword("");
     setNewPasswordError("");
@@ -457,7 +461,7 @@ export default function Settings({ account, isDarkMode, setIsDarkMode }: Setting
 
                 {/* Password Setting Accordion / Controls */}
                 <div className="pt-4 border-t border-border mt-2">
-                  {!notepadPassword ? (
+                  {!hasNotepadPassword ? (
                     <div>
                       {!isSettingPassword ? (
                         <button
@@ -510,6 +514,11 @@ export default function Settings({ account, isDarkMode, setIsDarkMode }: Setting
                             className="w-full px-3 py-1.5 bg-card text-foreground border border-border-strong focus:border-primary focus:ring-1 focus:ring-primary rounded-lg text-xs outline-none transition-all"
                             required
                           />
+                          <p className="text-[10px] text-muted-text leading-snug">
+                            Verrou d'accès sur cet appareil : le mot de passe n'est pas conservé (seule une empreinte l'est),
+                            mais les notes restent stockées sans chiffrement dans le navigateur. N'utilisez pas un mot de passe
+                            qui sert ailleurs.
+                          </p>
                           {newPasswordError && (
                             <p className="text-[10px] text-rose-500 font-bold">{newPasswordError}</p>
                           )}
@@ -536,7 +545,7 @@ export default function Settings({ account, isDarkMode, setIsDarkMode }: Setting
                         onClick={() => {
                           setIsSettingPassword(true);
                           // Clear so it behaves as setting new pass
-                          setNotepadPassword("");
+                          clearNotepadPassword();
                         }}
                         className="py-2 px-3 bg-muted hover:bg-border-strong text-muted-text hover:text-foreground font-bold rounded-xl text-xs transition-all flex items-center justify-center gap-1 cursor-pointer"
                       >
