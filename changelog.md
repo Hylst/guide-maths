@@ -6,6 +6,10 @@ Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/)
 
 ---
 
+## [Maintenance] - 2026-11-17
+
+- Licence : GNU AGPL v3 ou ultérieure (fichier `LICENSE`, section Licence du README). Aucune licence n'était déclarée. Rien ne change dans le build publié.
+
 ## [V5.4.3] - Mot de passe du bloc-notes : empreinte au lieu du texte en clair - 2026-11-16
 
 ### Sécurité

@@ -123,3 +123,7 @@ npm run build
 npx tsx scripts/check_completeness.js
 ```
 *Affiche un récapitulatif détaillé de l'état d'intégrité de la rédaction des cours du projet.*
+
+## Licence
+
+Code et contenus rédigés sous **GNU Affero General Public License v3 (ou ultérieure)** : voir [LICENSE](LICENSE). Copyright (C) 2026 Geoffroy Streit (Hylst). Les polices, bibliothèques, images et autres éléments tiers gardent leurs propres licences.
