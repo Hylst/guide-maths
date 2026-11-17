@@ -9,7 +9,7 @@ Ce guide explique étape par étape comment tester l'application localement sur 
 Puisque le projet est configuré avec un chemin de base `/guide_maths/`, l'application en développement sera servie sous ce sous-dossier.
 
 ### Étapes préliminaires :
-1. Ouvrez votre terminal (PowerShell ou Invite de commandes) dans le dossier du projet : `d:\0CODE\AntiGravity\guide-mathématiques-interactif`.
+1. Ouvrez votre terminal (PowerShell ou Invite de commandes) dans le dossier du projet : `D:\0CODE\0FINAL\edu\guide_maths`.
 2. Installez les paquets (si ce n'est pas déjà fait) :
    ```bash
    npm install

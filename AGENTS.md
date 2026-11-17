@@ -70,9 +70,9 @@ Si tu crées ou modifies un code, le build échouera de lui-même. C'est normal.
 
 Les liens de parenté (prérequis) et de descendance (notions suivantes) ne sont **jamais** écrits en dur dans les pages de cours.
 
-- Tout nouveau cours ou modification de liens doit être déclaré centralement dans [`concept_links.ts`](file:///d:/0CODE/AntiGravity/guide-mathématiques-interactif/src/data/concept_links.ts).
+- Tout nouveau cours ou modification de liens doit être déclaré centralement dans [`concept_links.ts`](src/data/concept_links.ts).
 - Les cours doivent être enveloppés dans un `CourseContext.Provider` (dans `CourseContent.tsx`) pour que le composant partagé `<CourseHeader>` résolve dynamiquement les métadonnées et affiche les raccourcis de navigation 🌱 et 🌸.
-- Ne pas modifier le composant `<CourseHeader>` individuellement dans les fichiers de cours TSX. Toute modification globale de l'en-tête doit être faite uniquement dans [`SharedUI.tsx`](file:///d:/0CODE/AntiGravity/guide-mathématiques-interactif/src/components/SharedUI.tsx).
+- Ne pas modifier le composant `<CourseHeader>` individuellement dans les fichiers de cours TSX. Toute modification globale de l'en-tête doit être faite uniquement dans [`SharedUI.tsx`](src/components/SharedUI.tsx).
 
 **Workflow pour ajouter un cours au graphe :**
 1. Vérifier que l'ID existe dans `src/data/courses_index.json`

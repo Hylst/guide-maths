@@ -134,7 +134,7 @@ export default Course_NiveauXX;
 
 ## 🔗 Fil d'Ariane Pédagogique — Rappel
 
-Les dépendances amont ("Prend racine dans 🌱") et aval ("Fleurira dans 🌸") ne doivent **jamais** être écrites en dur dans les fichiers Markdown ou TSX des cours. Elles sont automatiquement résolues et injectées dans le composant `<CourseHeader>` grâce aux liaisons déclarées centralement dans le registre [`concept_links.ts`](file:///d:/0CODE/AntiGravity/guide-mathématiques-interactif/src/data/concept_links.ts).
+Les dépendances amont ("Prend racine dans 🌱") et aval ("Fleurira dans 🌸") ne doivent **jamais** être écrites en dur dans les fichiers Markdown ou TSX des cours. Elles sont automatiquement résolues et injectées dans le composant `<CourseHeader>` grâce aux liaisons déclarées centralement dans le registre [`concept_links.ts`](src/data/concept_links.ts).
 
 **Pour lier un nouveau cours ou modifier des prérequis** : éditer uniquement ce registre. Voir `AGENTS.md` section 4 et `todo.md` section "Graphe Pédagogique" pour les 62 cours en attente.
 

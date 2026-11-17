@@ -16,7 +16,7 @@
 ## 📂 Arborescence Complète du Projet
 
 ```
-guide-mathématiques-interactif/
+guide_maths/
 │
 ├── 📄 README.md              # Présentation publique
 ├── 📄 readme-dev.md          # Architecture technique (ce que lit un dev)
