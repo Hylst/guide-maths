@@ -26,7 +26,9 @@ const AnimatedLogoTitle: React.FC<AnimatedLogoTitleProps> = ({
   className = '',
 }) => {
   const s = sizes[size];
-  const totalWidth = s.sigma * 14;
+  // Largeur du viewBox calee sur le contenu dessine (sigma + titre + sous-titre) :
+  // avec sigma * 14, la zone vide a droite poussait le dessin hors du centre.
+  const totalWidth = s.sigma * 5.9;
   const totalHeight = s.sigma * 2.6;
   const sigmaX = s.sigma * 1.1;
   const sigmaY = totalHeight / 2;
@@ -41,7 +43,7 @@ const AnimatedLogoTitle: React.FC<AnimatedLogoTitleProps> = ({
       className={className}
       role="img"
       aria-label="Guide Mathématiques - Logo animé"
-      style={{ overflow: 'visible' }}
+      style={{ overflow: 'visible', maxWidth: '100%', height: 'auto' }}
     >
       <defs>
         <linearGradient id="alg-sigmaGrad" x1="0%" y1="0%" x2="100%" y2="100%">

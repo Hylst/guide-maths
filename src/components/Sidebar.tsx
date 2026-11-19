@@ -278,6 +278,11 @@ export default function Sidebar({
           </div>
         </div>
 
+        {/* Zone de navigation : elle se comprime (avec son propre defilement)
+            quand la fenetre est basse, pour laisser a la liste des cours une
+            hauteur minimale utilisable (etroite : 32 px sur un ecran de 864 px). */}
+        <div className="shrink min-h-0 overflow-y-auto overscroll-contain">
+
         {/* Dashboard Button */}
         <div className="px-4 pt-4 bg-sidebar select-none">
           <button
@@ -426,8 +431,9 @@ export default function Sidebar({
             </button>
           </div>
         )}
+        </div>
 
-        <div className="px-4 py-4 border-b border-sidebar-border bg-sidebar">
+        <div className="px-4 py-4 border-b border-sidebar-border bg-sidebar shrink-0">
           <div className="relative">
             <Search
               className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-text-subtle"
@@ -444,7 +450,7 @@ export default function Sidebar({
           </div>
         </div>
 
-        <div className="p-4 flex-1 overflow-y-auto bg-sidebar">
+        <div className="p-4 flex-1 min-h-[220px] overflow-y-auto bg-sidebar">
           {filteredCourses.length === 0 ? (
             <div className="text-center text-muted-text py-8 text-sm">
               Aucun cours trouvé pour "{searchQuery}"

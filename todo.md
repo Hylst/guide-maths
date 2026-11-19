@@ -13,6 +13,7 @@ Ce fichier sert de suivi pour l'enrichissement de tous les cours selon les règl
 - [x] **Sécurité (V5.4.3, 16/11/2026)** : le mot de passe du bloc-notes n'est plus conservé qu'en empreinte PBKDF2-SHA256 salée (`src/utils/notepadLock.ts`), ancienne valeur en clair convertie puis supprimée, sauvegarde v3 sans mot de passe. Détail dans `changelog.md`.
 - [x] **Sauvegarde v4 (V5.4.4, 19/11/2026)** : les six clés oubliées par l'export (flashcards personnelles, boîtes de révision, coffres, XP de révision, préférences d'accueil, cours terminé) sont exportées et réimportées ; mentions légales en lien absolu vers le portail, préalable à la publication sur `edu.hylst.fr`.
 - [x] **Progression (V5.4.5, 19/11/2026)** : plus d'écriture d'une progression vide au chargement (risque théorique de progression effacée par une interruption, non reproduit).
+- [x] **Mise en page (V5.4.6, 19/11/2026)** : titre d'accueil recentré (viewBox calé sur le dessin) et liste des cours qui garde 220 px sur une fenêtre basse (864 px), la zone de navigation se comprimant la première.
 - [ ] **Progression, instances multiples** : chaque cours interactif crée sa propre instance de `useProgress` ; l'instance de `App` ne relit pas une validation faite par un cours et peut la réécrire avec un état périmé à sa prochaine sauvegarde. À traiter par un état partagé (contexte) plutôt qu'une instance par composant.
 
 ## Liste des cours

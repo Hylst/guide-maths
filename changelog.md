@@ -6,6 +6,12 @@ Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/)
 
 ---
 
+## [V5.4.6] - Mise en page des fenêtres basses - 2026-11-19
+
+### Corrigé
+- Titre d'accueil : le `viewBox` du logo animé (`sigma * 14`) réservait 60 % de largeur vide à droite, ce qui décalait le dessin hors du centre et le faisait passer sous le menu latéral sur une fenêtre de 1536 px de large (écran 1080p à 125 %). La largeur est calée sur le contenu dessiné (`sigma * 5,9`) et l'image se réduit si la place manque (`max-width: 100 %`).
+- Menu latéral : sur une fenêtre basse (864 px de haut), les six boutons de navigation, la recherche et le pied de page occupaient 852 px et la liste des cours tombait à 32 px de haut. La zone de navigation se comprime et défile désormais la première, la recherche et le pied de page restent fixes, et la liste des cours conserve 220 px. Sur une fenêtre assez haute, rien ne change.
+
 ## [V5.4.5] - Progression jamais effacée au chargement - 2026-11-19
 
 ### Corrigé
