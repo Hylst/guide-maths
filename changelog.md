@@ -9,7 +9,7 @@ Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/)
 ## [V5.4.5] - Progression jamais effacée au chargement - 2026-11-19
 
 ### Corrigé
-- Au chargement, `useProgress` écrivait d'abord une progression vide (`{}`) dans `maths_app_progress`, puis la valeur relue, environ 90 ms plus tard. Une page fermée ou rechargée entre les deux, par exemple par le rechargement automatique du service worker à son installation ou à une mise à jour, effaçait toute la progression. L'état initial est désormais lu de façon synchrone : la première écriture reprend la valeur enregistrée. Constaté en production le 19/11 par un test de navigateur instrumenté.
+- Au chargement, `useProgress` écrivait d'abord une progression vide (`{}`) dans `maths_app_progress`, puis la valeur relue, une fraction de seconde plus tard (écriture observée en production le 19/11 par un test de navigateur instrumenté). Une interruption entre les deux écritures aurait laissé la progression vide ; 41 chargements interrompus à des instants différents n'ont produit aucune perte, le risque reste donc théorique. L'état initial est désormais lu de façon synchrone : la première écriture reprend la valeur enregistrée.
 
 ## [V5.4.4] - Sauvegarde complete et liens vers le portail - 2026-11-19
 
