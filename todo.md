@@ -11,6 +11,7 @@ Ce fichier sert de suivi pour l'enrichissement de tous les cours selon les règl
 - [x] **Documentation et Déploiement** : Création de `readme-dev.md` et `test_build_deploy.md` pour le déploiement sur VPS Coolify ou hébergement mutualisé.
 - [x] **Déploiement en Production** : en ligne sur `https://hylst.fr/guide_maths/` (dossier `guide_maths/` du hub, build d'un clone LF propre) ; V5.4.3 publiée et vérifiée le 16/11/2026.
 - [x] **Sécurité (V5.4.3, 16/11/2026)** : le mot de passe du bloc-notes n'est plus conservé qu'en empreinte PBKDF2-SHA256 salée (`src/utils/notepadLock.ts`), ancienne valeur en clair convertie puis supprimée, sauvegarde v3 sans mot de passe. Détail dans `changelog.md`.
+- [x] **Sauvegarde v4 (V5.4.4, 19/11/2026)** : les six clés oubliées par l'export (flashcards personnelles, boîtes de révision, coffres, XP de révision, préférences d'accueil, cours terminé) sont exportées et réimportées ; mentions légales en lien absolu vers le portail, préalable à la publication sur `edu.hylst.fr`.
 
 ## Liste des cours
 

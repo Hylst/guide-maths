@@ -673,7 +673,8 @@ export default function InfoModal({ isOpen, onClose }: InfoModalProps) {
           {/* Footer Bar */}
           <div className="px-6 md:px-8 py-4 bg-muted/20 border-t border-border-strong/40 flex items-center justify-between gap-2.5">
             <a
-              href="/mentions-legales.html"
+              href="https://hylst.fr/mentions-legales.html"
+              rel="noopener"
               className="text-2xs font-semibold text-muted-text hover:text-foreground underline underline-offset-2"
             >
               Mentions légales et confidentialité

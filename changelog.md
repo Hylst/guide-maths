@@ -6,6 +6,12 @@ Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/)
 
 ---
 
+## [V5.4.4] - Sauvegarde complete et liens vers le portail - 2026-11-19
+
+### Corrigé
+- La sauvegarde JSON oubliait six clés du stockage local : flashcards personnelles (`guide_maths_custom_flashcards`) et leurs boîtes de révision (`guide_maths_flashcard_boxes`), coffres ouverts (`maths_chests_claimed`), XP de révision (`maths_review_xp`), préférences d'accueil (`onboarding-preferences`) et cours des lois continues terminé (`MATH_T_CONT_completed`). Un changement d'appareil, de navigateur ou d'adresse du site les perdait. Format v4 : ces clés sont exportées telles quelles sous `extra` et réimportées d'après une liste fermée ; une sauvegarde v3 reste importable.
+- Lien « Mentions légales et confidentialité » en adresse absolue vers le portail (`https://hylst.fr/mentions-legales.html`) : il reste valable quand l'application est servie depuis un sous-domaine (`edu.hylst.fr`).
+
 ## [Maintenance] - 2026-11-17
 
 - Licence : GNU AGPL v3 ou ultérieure (fichier `LICENSE`, section Licence du README). Aucune licence n'était déclarée. Rien ne change dans le build publié.

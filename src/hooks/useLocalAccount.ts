@@ -43,6 +43,19 @@ export const AVATAR_PRESETS: AvatarPreset[] = [
   { id: "galileo", emoji: "🔭", label: "Galilée", bgGradient: "linear-gradient(135deg, #f472b6, #b91c1c)" }
 ];
 
+// Cles exportees telles quelles depuis la sauvegarde v4 : flashcards personnelles
+// et boites de revision, coffres ouverts, XP de revision, preferences d'accueil,
+// cours des lois continues termine. Sans elles, un changement d'appareil ou
+// d'adresse du site perdait ces donnees.
+const EXTRA_KEYS = [
+  "guide_maths_custom_flashcards",
+  "guide_maths_flashcard_boxes",
+  "maths_chests_claimed",
+  "maths_review_xp",
+  "onboarding-preferences",
+  "MATH_T_CONT_completed"
+] as const;
+
 const DEFAULT_PROFILE: UserProfile = {
   pseudo: "",
   firstName: "",
@@ -162,8 +175,14 @@ export function useLocalAccount() {
 
   // Export all app data as a JSON string
   const exportData = (): string => {
+    // v4 : cles reprises telles quelles, absentes de la sauvegarde v3
+    const extra: Record<string, string> = {};
+    for (const key of EXTRA_KEYS) {
+      const value = localStorage.getItem(key);
+      if (value !== null) extra[key] = value;
+    }
     const dataObj = {
-      version: 3,
+      version: 4,
       exportedAt: new Date().toISOString(),
       data: {
         profile,
@@ -175,7 +194,8 @@ export function useLocalAccount() {
         onboardingCompleted: localStorage.getItem("onboarding-completed") || "false",
         theme: localStorage.getItem("theme") || "light",
         courseConnections: localStorage.getItem("maths_course_connections") || "[]",
-        quizRush: localStorage.getItem("maths_quizrush") || "null"
+        quizRush: localStorage.getItem("maths_quizrush") || "null",
+        extra
       }
     };
     return JSON.stringify(dataObj, null, 2);
@@ -248,6 +268,14 @@ export function useLocalAccount() {
       // 9. QuizRush daily score (v2+)
       if (data.quizRush) {
         localStorage.setItem("maths_quizrush", data.quizRush);
+      }
+
+      // 10. Cles reprises telles quelles (v4), liste fermee : aucune autre cle n'est ecrite
+      if (data.extra && typeof data.extra === "object") {
+        for (const key of EXTRA_KEYS) {
+          const value = data.extra[key];
+          if (typeof value === "string") localStorage.setItem(key, value);
+        }
       }
 
       return true;

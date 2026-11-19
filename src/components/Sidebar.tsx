@@ -924,7 +924,8 @@ export default function Sidebar({
           </button>
 
           <a
-            href="/mentions-legales.html"
+            href="https://hylst.fr/mentions-legales.html"
+            rel="noopener"
             className="w-full flex items-center gap-3 px-4 py-2 rounded-xl text-[11px] font-semibold text-muted-text hover:text-foreground hover:bg-muted transition-all text-left"
           >
             <Scale className="w-3.5 h-3.5 shrink-0" />
