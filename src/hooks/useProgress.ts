@@ -32,21 +32,24 @@ export interface UserStats {
   reviewCount: number;
 }
 
-export function useProgress() {
-  const [progress, setProgress] = useState<Record<string, CourseProgress>>({});
-  const [triggerReload, setTriggerReload] = useState(0);
-
-  // Load from localStorage on mount
-  useEffect(() => {
+// Lecture synchrone de la progression : l'etat initial est deja la valeur enregistree,
+// si bien que la sauvegarde du premier rendu reecrit cette valeur et jamais un objet vide.
+// Avant V5.4.5, le premier rendu ecrivait {} puis la valeur rechargee ; une page fermee
+// ou rechargee entre les deux (rechargement du service worker) perdait toute la progression.
+function readProgress(): Record<string, CourseProgress> {
+  try {
     const saved = localStorage.getItem('maths_app_progress');
-    if (saved) {
-      try {
-        setProgress(JSON.parse(saved));
-      } catch (e) {
-        console.error('Failed to parse progress from localStorage', e);
-      }
-    }
-  }, []);
+    const parsed = saved ? JSON.parse(saved) : null;
+    return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
+  } catch (e) {
+    console.error('Failed to parse progress from localStorage', e);
+    return {};
+  }
+}
+
+export function useProgress() {
+  const [progress, setProgress] = useState<Record<string, CourseProgress>>(readProgress);
+  const [triggerReload, setTriggerReload] = useState(0);
 
   // Listen to 'storage' events to immediately update glossary XP and other states dynamically
   useEffect(() => {
